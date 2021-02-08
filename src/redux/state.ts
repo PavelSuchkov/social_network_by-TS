@@ -2,7 +2,6 @@
 
 
 export let renderEntireTree = () => {
-    console.log()
 }
 
 export type MessageType = {
