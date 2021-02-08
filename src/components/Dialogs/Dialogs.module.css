@@ -1,0 +1,30 @@
+.dialogs {
+    display: grid;
+    grid-template-columns: 2fr 10fr;
+}
+.dialogs .contentWrapper{
+    display: flex;
+}
+
+.dialogsItems{
+    padding: 10px;
+}
+.dialogsItems .active{
+    color: darkorange;
+}
+
+.dialog{
+    color: #12d34c;
+}
+.messages {
+    padding: 10px;
+}
+.dialog .imgWrapper {
+    height: 60px;
+    width: 80px;
+}
+
+.dialog .imgWrapper img {
+    height: 60px;
+    width: 80px;
+}
