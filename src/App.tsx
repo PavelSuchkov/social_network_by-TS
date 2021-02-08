@@ -11,13 +11,14 @@ import News from "./components/News/News";
 import {AppStateType} from "./redux/state";
 
 
+
 type PropsType = {
-    state: AppStateType
     addPost: (newPost: string) => void
     updateNewPostText: (newText: string) => void
+    state: AppStateType
 }
 
-const App = (props: PropsType) => {
+const App: React.FC<PropsType> = (props) => {
     return (
         <BrowserRouter>
             <div className='app-wrapper'>
@@ -29,7 +30,7 @@ const App = (props: PropsType) => {
                         state={props.state.dialogsPage}/>}/>
 
                     <Route path='/profile' render={() => <Profile
-                        state={props.state.profilePage}
+                        profilePage={props.state.profilePage}
                         addPost={props.addPost}
                         updateNewPostText={props.updateNewPostText}/>}
                     />

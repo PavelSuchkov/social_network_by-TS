@@ -1,10 +1,4 @@
 
-
-
-export let renderEntireTree = () => {
-    console.log()
-}
-
 export type MessageType = {
     id: number
     message: string
@@ -36,7 +30,7 @@ export type AppStateType = {
     dialogsPage: DialogPageType
 }
 
-let state = {
+/*let state = {
 
     profilePage: {
         posts: [
@@ -73,7 +67,7 @@ let state = {
 
 export const  updateNewPostText = (newText: string) => {
     state.profilePage.newPostText = newText;
-    renderEntireTree()
+    onChange()
 }
 
 export const addPost = () => {
@@ -84,11 +78,84 @@ export const addPost = () => {
     }
     state.profilePage.posts.push(newPost);
     state.profilePage.newPostText = '';
-    renderEntireTree()
+    onChange()
+}
+export let onChange = () => {
+    console.log()
 }
 
 export const subscribe = (observer: () => void) => {
-    renderEntireTree = observer;
+    onChange = observer;
+}*/
+
+export type StoreType = {
+    _state: AppStateType
+    updateNewPostText: (newText: string) => void
+    addPost: (postText: string) => void
+    _onChange: () => void
+    subscribe: (callback: () => void) => void
+    getState: () => AppStateType
 }
 
-export default state;
+const store: StoreType = {
+    _state: {
+
+        profilePage: {
+            posts: [
+                {id: 1, message: 'Hi', likesCount: 3},
+                {id: 1, message: 'How r u', likesCount: 5},
+                {id: 1, message: 'it\'s my first post', likesCount: 13},
+                {id: 1, message: 'Любишь пёсиков? =)', likesCount: 33},
+                {id: 1, message: 'London is a capital of great Britain', likesCount: 7},
+                {id: 1, message: 'Live Belarus!', likesCount: 345}
+            ],
+
+            newPostText: ''
+        },
+
+        dialogsPage: {
+            dialogs: [
+                {id: 1, name: 'Pasha'},
+                {id: 2, name: 'Sasha'},
+                {id: 3, name: 'Alexej'},
+                {id: 4, name: 'Dima'},
+                {id: 5, name: 'Shizofreniya'},
+                {id: 6, name: 'freedom_Belarus'}
+            ],
+            messages: [
+                {id: 1, message: 'Hi'},
+                {id: 1, message: 'How r u'},
+                {id: 1, message: 'What is ur name'},
+                {id: 1, message: 'Любишь пёсиков? =)'},
+                {id: 1, message: 'London is a capital of great Britain'},
+                {id: 1, message: 'Live Belarus!'}
+            ]
+        }
+    },
+    addPost () {
+        const newPost: PostType = {
+            id: new Date().getTime(),
+            message: this._state.profilePage.newPostText,
+            likesCount: 0
+        }
+        this._state.profilePage.posts.push(newPost);
+        this._state.profilePage.newPostText = '';
+        this._onChange()
+    },
+    updateNewPostText(newText: string) {
+        this._state.profilePage.newPostText = newText;
+        this._onChange()
+    },
+    _onChange() {
+
+    },
+    subscribe(callback) {
+        this._onChange = callback;
+    },
+    getState(){
+        return this._state
+    }
+
+}
+
+export default store;
