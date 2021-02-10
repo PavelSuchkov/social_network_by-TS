@@ -51,8 +51,6 @@ export type UpdateNewPostTextActionType = {
 
 export type ActionsTypes = AddPostActionType | UpdateNewPostTextActionType
 
-
-
 const store: StoreType = {
     _state: {
 
@@ -65,7 +63,6 @@ const store: StoreType = {
                 {id: 1, message: 'London is a capital of great Britain', likesCount: 7},
                 {id: 1, message: 'Live Belarus!', likesCount: 345}
             ],
-
             newPostText: ''
         },
 
@@ -88,20 +85,6 @@ const store: StoreType = {
             ]
         }
     },
-   /* addPost() {
-        const newPost: PostType = {
-            id: new Date().getTime(),
-            message: this._state.profilePage.newPostText,
-            likesCount: 0
-        }
-        this._state.profilePage.posts.push(newPost);
-        this._state.profilePage.newPostText = '';
-        this._onChange()
-    },
-    updateNewPostText(newText: string) {
-        this._state.profilePage.newPostText = newText;
-        this._onChange()
-    },*/
     _onChange() {
 
     },

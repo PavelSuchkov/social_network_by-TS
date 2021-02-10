@@ -6,8 +6,6 @@ import {ActionsTypes, PostType} from "../../../redux/state";
 type PropsType = {
     posts: PostType[]
     dispatch: (action: ActionsTypes) => void
-    // addPost: (newText: string) => void
-    // updateNewPostText: (newText: string) => void
     newPostText: string
 }
 
@@ -16,13 +14,11 @@ const MyPosts = (props: PropsType) => {
     let postsElements = props.posts.map(p => <Post message={p.message} likesCount={p.likesCount}/>);
 
     const addPost = () => {
-        // props.addPost(props.newPostText);
         props.dispatch({type: "ADD-POST", newPostText: props.newPostText});
     }
 
 
     const onPostChange = (e:ChangeEvent<HTMLTextAreaElement>) =>{
-        // props.updateNewPostText(e.currentTarget.value)
         props.dispatch({type: "UPDATE-NEW-POST-TEXT", newText: props.newPostText})
     }
 

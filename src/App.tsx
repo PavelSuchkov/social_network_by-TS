@@ -11,10 +11,8 @@ import News from "./components/News/News";
 import {ActionsTypes, AddPostActionType, AppStateType, UpdateNewPostTextActionType} from "./redux/state";
 
 
-
 type PropsType = {
-/*    addPost: (newPost: string) => void
-    updateNewPostText: (newText: string) => void*/
+
     dispatch: (action: ActionsTypes) => void
     state: AppStateType
 }
@@ -32,11 +30,7 @@ const App: React.FC<PropsType> = (props) => {
 
                     <Route path='/profile' render={() => <Profile
                         profilePage={props.state.profilePage}
-                        dispatch={props.dispatch}
-                     /*   addPost={props.addPost.bind(props.state)}
-                        updateNewPostText={props.updateNewPostText.bind(props.state)}*/
-                    />}
-                    />
+                        dispatch={props.dispatch}/>}/>
 
                     <Route path='/news' component={News}/>
                     <Route path='/music' component={Music}/>
