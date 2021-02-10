@@ -31,8 +31,8 @@ const App: React.FC<PropsType> = (props) => {
 
                     <Route path='/profile' render={() => <Profile
                         profilePage={props.state.profilePage}
-                        addPost={props.addPost}
-                        updateNewPostText={props.updateNewPostText}/>}
+                        addPost={props.addPost.bind(props.state)}
+                        updateNewPostText={props.updateNewPostText.bind(props.state)}/>}
                     />
 
                     <Route path='/news' component={News}/>

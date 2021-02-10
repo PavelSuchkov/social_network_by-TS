@@ -30,64 +30,6 @@ export type AppStateType = {
     dialogsPage: DialogPageType
 }
 
-/*let state = {
-
-    profilePage: {
-        posts: [
-            {id: 1, message: 'Hi', likesCount: 3},
-            {id: 1, message: 'How r u', likesCount: 5},
-            {id: 1, message: 'it\'s my first post', likesCount: 13},
-            {id: 1, message: 'Любишь пёсиков? =)', likesCount: 33},
-            {id: 1, message: 'London is a capital of great Britain', likesCount: 7},
-            {id: 1, message: 'Live Belarus!', likesCount: 345}
-        ],
-
-        newPostText: ''
-    },
-
-    dialogsPage: {
-        dialogs: [
-            {id: 1, name: 'Pasha'},
-            {id: 2, name: 'Sasha'},
-            {id: 3, name: 'Alexej'},
-            {id: 4, name: 'Dima'},
-            {id: 5, name: 'Shizofreniya'},
-            {id: 6, name: 'freedom_Belarus'}
-        ],
-        messages: [
-            {id: 1, message: 'Hi'},
-            {id: 1, message: 'How r u'},
-            {id: 1, message: 'What is ur name'},
-            {id: 1, message: 'Любишь пёсиков? =)'},
-            {id: 1, message: 'London is a capital of great Britain'},
-            {id: 1, message: 'Live Belarus!'}
-        ]
-    }
-}
-
-export const  updateNewPostText = (newText: string) => {
-    state.profilePage.newPostText = newText;
-    onChange()
-}
-
-export const addPost = () => {
-    const newPost: PostType = {
-        id: new Date().getTime(),
-        message: state.profilePage.newPostText,
-        likesCount: 0
-    }
-    state.profilePage.posts.push(newPost);
-    state.profilePage.newPostText = '';
-    onChange()
-}
-export let onChange = () => {
-    console.log()
-}
-
-export const subscribe = (observer: () => void) => {
-    onChange = observer;
-}*/
-
 export type StoreType = {
     _state: AppStateType
     updateNewPostText: (newText: string) => void
@@ -95,6 +37,7 @@ export type StoreType = {
     _onChange: () => void
     subscribe: (callback: () => void) => void
     getState: () => AppStateType
+    dispatch: () => void
 }
 
 const store: StoreType = {
@@ -154,6 +97,10 @@ const store: StoreType = {
     },
     getState(){
         return this._state
+    },
+
+    dispatch(){
+
     }
 
 }
