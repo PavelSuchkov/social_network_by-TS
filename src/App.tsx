@@ -8,13 +8,14 @@ import {BrowserRouter, Route} from "react-router-dom";
 import Settings from "./components/Settings/Settings";
 import Music from "./components/Music/Music";
 import News from "./components/News/News";
-import {AppStateType} from "./redux/state";
+import {ActionsTypes, AddPostActionType, AppStateType, UpdateNewPostTextActionType} from "./redux/state";
 
 
 
 type PropsType = {
-    addPost: (newPost: string) => void
-    updateNewPostText: (newText: string) => void
+/*    addPost: (newPost: string) => void
+    updateNewPostText: (newText: string) => void*/
+    dispatch: (action: ActionsTypes) => void
     state: AppStateType
 }
 
@@ -31,8 +32,10 @@ const App: React.FC<PropsType> = (props) => {
 
                     <Route path='/profile' render={() => <Profile
                         profilePage={props.state.profilePage}
-                        addPost={props.addPost.bind(props.state)}
-                        updateNewPostText={props.updateNewPostText.bind(props.state)}/>}
+                        dispatch={props.dispatch}
+                     /*   addPost={props.addPost.bind(props.state)}
+                        updateNewPostText={props.updateNewPostText.bind(props.state)}*/
+                    />}
                     />
 
                     <Route path='/news' component={News}/>
