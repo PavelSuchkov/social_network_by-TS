@@ -31,23 +31,16 @@ export type AppStateType = {
 
 export type StoreType = {
     _state: AppStateType
-    // updateNewPostText: (newText: string) => void
-    // addPost: (postText: string) => void
     _onChange: () => void
     subscribe: (callback: () => void) => void
     getState: () => AppStateType
     dispatch: (action: ActionsTypes) => void
 }
 
-export type AddPostActionType = {
-    type: "ADD-POST",
-    newPostText: string
-}
 
-export type UpdateNewPostTextActionType = {
-    type: "UPDATE-NEW-POST-TEXT",
-    newText: string
-}
+export type AddPostActionType = ReturnType<typeof addPostActionCreator>
+
+export type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostActionCreator>
 
 export type ActionsTypes = AddPostActionType | UpdateNewPostTextActionType
 
@@ -111,7 +104,20 @@ const store: StoreType = {
             this._onChange()
         }
     }
+}
 
+export const addPostActionCreator = (newPostText: string) => {
+        return {
+            type: "ADD-POST",
+            newPostText: newPostText
+        }as const
+    }
+
+export const updateNewPostActionCreator = (text: string) => {
+    return {
+        type: "UPDATE-NEW-POST-TEXT",
+        newText: text
+    }as const
 }
 
 export default store;
