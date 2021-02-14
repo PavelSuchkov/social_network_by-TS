@@ -16,5 +16,4 @@ const Profile = (props: propsType) => {
                  dispatch={props.dispatch}/>
     </div>
 }
-
 export default Profile;

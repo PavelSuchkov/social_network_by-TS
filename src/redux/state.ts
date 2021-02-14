@@ -1,3 +1,9 @@
+const ADD_POST = "ADD-POST"
+const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT"
+const UPDATE_NEW_MESSAGE_BODY = "UPDATE-NEW-MESSAGE-BODY"
+const SEND_MESSAGE = "SEND-MESSAGE"
+
+
 export type MessageType = {
     id: number
     message: string
@@ -22,6 +28,7 @@ export type ProfilePageType = {
 export type DialogPageType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
+    newMessageBody: string
 }
 
 export type AppStateType = {
@@ -38,11 +45,17 @@ export type StoreType = {
 }
 
 
-export type AddPostActionType = ReturnType<typeof addPostActionCreator>
+export type AddPostActionType = ReturnType<typeof addPostCreator>
 
-export type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostActionCreator>
+export type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostCreator>
 
-export type ActionsTypes = AddPostActionType | UpdateNewPostTextActionType
+export type updateNewMessageBodyCreator = ReturnType<typeof updateNewMessageBodyCreator>
+
+export type sendMessageCreator = ReturnType<typeof sendMessageCreator>
+
+
+export type ActionsTypes = AddPostActionType | UpdateNewPostTextActionType | updateNewMessageBodyCreator |
+    sendMessageCreator
 
 const store: StoreType = {
     _state: {
@@ -56,7 +69,7 @@ const store: StoreType = {
                 {id: 1, message: 'London is a capital of great Britain', likesCount: 7},
                 {id: 1, message: 'Live Belarus!', likesCount: 345}
             ],
-            newPostText: ''
+            newPostText: 'Type here'
         },
 
         dialogsPage: {
@@ -75,9 +88,12 @@ const store: StoreType = {
                 {id: 1, message: 'Любишь пёсиков? =)'},
                 {id: 1, message: 'London is a capital of great Britain'},
                 {id: 1, message: 'Live Belarus!'}
-            ]
+            ],
+
+            newMessageBody: ''
         }
     },
+
     _onChange() {
 
     },
@@ -89,7 +105,7 @@ const store: StoreType = {
     },
 
     dispatch(action) {
-        if (action.type === "ADD-POST") {
+        if (action.type === ADD_POST) {
             const newPost: PostType = {
                 id: new Date().getTime(),
                 message: action.newPostText,
@@ -99,25 +115,50 @@ const store: StoreType = {
             this._state.profilePage.newPostText = '';
             this._onChange()
 
-        } else if (action.type === "UPDATE-NEW-POST-TEXT") {
+        } else if (action.type === UPDATE_NEW_POST_TEXT ) {
             this._state.profilePage.newPostText = action.newText;
+            this._onChange()
+
+        } else if (action.type === UPDATE_NEW_MESSAGE_BODY) {
+            this._state.dialogsPage.newMessageBody = action.newMessageBody;
+            this._onChange()
+
+        } else if (action.type === SEND_MESSAGE) {
+            let body = this._state.dialogsPage.newMessageBody;
+            this._state.dialogsPage.newMessageBody = '';
+            this._state.dialogsPage.messages.push({id: (this._state.dialogsPage.messages.length),
+                message: body})
             this._onChange()
         }
     }
 }
 
-export const addPostActionCreator = (newPostText: string) => {
+export const addPostCreator = (newPostText: string) => {
         return {
-            type: "ADD-POST",
+            type: ADD_POST,
             newPostText: newPostText
         }as const
     }
 
-export const updateNewPostActionCreator = (text: string) => {
+export const updateNewPostCreator = (newText: string) => {
     return {
-        type: "UPDATE-NEW-POST-TEXT",
-        newText: text
+        type: UPDATE_NEW_POST_TEXT,
+        newText: newText
     }as const
 }
+
+export const updateNewMessageBodyCreator = (body: string) => {
+    return {
+        type: UPDATE_NEW_MESSAGE_BODY,
+        newMessageBody: body
+    } as const
+}
+
+export const sendMessageCreator = () => {
+    return {
+        type: SEND_MESSAGE
+    }as const
+}
+
 
 export default store;
