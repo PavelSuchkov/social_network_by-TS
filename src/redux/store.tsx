@@ -47,7 +47,6 @@ export type ActionsTypes = AddPostActionType | UpdateNewPostTextActionType | upd
 
 const store: StoreType = {
     _state: {
-
         profilePage: {
             posts: [
                 {id: 1, message: 'Hi', likesCount: 3},
@@ -83,7 +82,6 @@ const store: StoreType = {
     },
 
     _onChange() {
-
     },
     subscribe(callback) {
         this._onChange = callback;

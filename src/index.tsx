@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import store from "./redux/state";
+// import store from "./redux/store";
+import store from "./redux/reduxStore";
 
 
 
@@ -14,7 +15,7 @@ import store from "./redux/state";
         document.getElementById('root'));
 }
 renderEntireTree();
-store.subscribe(renderEntireTree);
+store.subscribe( renderEntireTree);
 
 reportWebVitals();
 
