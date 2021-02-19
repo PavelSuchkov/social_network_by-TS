@@ -2,12 +2,13 @@ import React, {ChangeEvent} from 'react';
 import classes from './Dialogs.module.css';
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Mesage";
-import {ActionsTypes, DialogPageType} from "../../redux/store";
-import { sendMessageCreator, updateNewMessageBodyCreator} from "../../redux/dialogsPageReducer";
+import {DialogPageType} from "../../redux/store";
+
 
 type PropsType = {
     dialogsPage: DialogPageType
-    dispatch: (action: ActionsTypes) => void
+    sendMessage: () => void
+    onNewMessageChange: (text: string) => void
 }
 
 const Dialogs = (props: PropsType) => {
@@ -15,13 +16,13 @@ const Dialogs = (props: PropsType) => {
     let messagesElements = props.dialogsPage.messages.map(m => <Message message={m.message}/>);
     let newMessageBody = props.dialogsPage.newMessageBody;
 
-    let onSendMessageClick = () => {
-        debugger
-        props.dispatch(sendMessageCreator())
+    let sendMessage = () => {
+        props.sendMessage();
     }
 
     let onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch(updateNewMessageBodyCreator(e.currentTarget.value))
+        let text = e.currentTarget.value
+        props.onNewMessageChange(text)
     }
 
     return (
@@ -37,7 +38,7 @@ const Dialogs = (props: PropsType) => {
                                        onChange={onNewMessageChange}
                                        placeholder='type message'/></div>
                         <div>
-                            <button onClick={onSendMessageClick}>Send message</button>
+                            <button onClick={sendMessage}>Send message</button>
                         </div>
                     </div>
                 </div>
