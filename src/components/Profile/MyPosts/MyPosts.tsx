@@ -13,7 +13,7 @@ type PropsType = {
 
 const MyPosts = (props: PropsType) => {
 
-    let postsElements = props.posts.map(p => <Post message={p.message} likesCount={p.likesCount}/>);
+    const postsElements = props.posts.map(p => <Post message={p.message} likesCount={p.likesCount}/>);
 
     const addPost = () => {
         props.addPost()

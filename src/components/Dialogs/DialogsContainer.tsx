@@ -12,15 +12,13 @@ type PropsType = {
 }
 
 export const DialogsContainer = (props: PropsType) => {
- /*   let dialogsElement = props.dialogsPage.dialogs.map(d => <DialogItem name={d.name} id={d.id}/>);
-    let messagesElements = props.dialogsPage.messages.map(m => <Message message={m.message}/>);
-    let newMessageBody = props.dialogsPage.newMessageBody;*/
 
-    let onSendMessageClick = () => {
+
+    const onSendMessageClick = () => {
         props.dispatch(sendMessageCreator())
     }
 
-    let onNewMessageChange = (text: string) => {
+    const onNewMessageChange = (text: string) => {
         props.dispatch(updateNewMessageBodyCreator(text))
     }
 

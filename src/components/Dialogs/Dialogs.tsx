@@ -12,15 +12,15 @@ type PropsType = {
 }
 
 const Dialogs = (props: PropsType) => {
-    let dialogsElement = props.dialogsPage.dialogs.map(d => <DialogItem name={d.name} id={d.id}/>);
-    let messagesElements = props.dialogsPage.messages.map(m => <Message message={m.message}/>);
-    let newMessageBody = props.dialogsPage.newMessageBody;
+    const dialogsElement = props.dialogsPage.dialogs.map(d => <DialogItem name={d.name} id={d.id}/>);
+    const messagesElements = props.dialogsPage.messages.map(m => <Message message={m.message}/>);
+    const newMessageBody = props.dialogsPage.newMessageBody;
 
-    let sendMessage = () => {
+    const sendMessage = () => {
         props.sendMessage();
     }
 
-    let onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let text = e.currentTarget.value
         props.onNewMessageChange(text)
     }
@@ -44,7 +44,6 @@ const Dialogs = (props: PropsType) => {
                 </div>
             </div>
         </div>
-
     )
 }
 export default Dialogs;
