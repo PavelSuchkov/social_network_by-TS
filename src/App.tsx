@@ -13,10 +13,10 @@ import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 
 type PropsType = {
     dispatch: (action: ActionsTypes) => void
-    state: AppStateType
+    store: AppStateType
 }
 
-const App: React.FC<PropsType> = (props) => {
+const App/*: React.FC<PropsType>*/ = () => {
     return (
         <BrowserRouter>
             <div className='app-wrapper'>
@@ -24,13 +24,9 @@ const App: React.FC<PropsType> = (props) => {
                 <Navbar/>
                 <div className='app-wrapper-content'>
 
-                    <Route path='/dialogs' render={() => <DialogsContainer
-                        dialogsPage={props.state.dialogsPage}
-                        dispatch={props.dispatch}/>}/>
+                    <Route path='/dialogs' render={() => <DialogsContainer/>}/>
 
-                    <Route path='/profile' render={() => <Profile
-                        profilePage={props.state.profilePage}
-                        dispatch={props.dispatch}/>}/>
+                    <Route path='/profile' render={() => <Profile/>}/>
 
                     <Route path='/news' component={News}/>
                     <Route path='/music' component={Music}/>

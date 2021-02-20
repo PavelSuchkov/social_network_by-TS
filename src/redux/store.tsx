@@ -83,6 +83,7 @@ const store: StoreType = {
 
     _onChange() {
     },
+
     subscribe(callback) {
         this._onChange = callback;
     },
