@@ -9,7 +9,7 @@ import {Provider} from "react-redux";
 
 
 
- let renderEntireTree = () => {
+ // let renderEntireTree = () => {
 
     ReactDOM.render(
         <Provider store={store}>
@@ -17,9 +17,9 @@ import {Provider} from "react-redux";
         </Provider>,
         document.getElementById('root'));
 
-}
-renderEntireTree();
-store.subscribe( renderEntireTree);
+// }
+// renderEntireTree();
+// store.subscribe( renderEntireTree);
 
 reportWebVitals();
 
