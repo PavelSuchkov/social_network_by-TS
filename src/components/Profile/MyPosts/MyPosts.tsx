@@ -1,7 +1,7 @@
 import React, {ChangeEvent} from 'react';
 import classes from './MyPosts.module.css';
 import Post from "./Post/Post";
-import { PostType} from "../../../redux/store";
+import {PostType} from "../../../redux/store";
 
 
 type PropsType = {
@@ -13,13 +13,13 @@ type PropsType = {
 
 const MyPosts = (props: PropsType) => {
 
-    const postsElements = props.posts.map(p => <Post message={p.message} likesCount={p.likesCount}/>);
+    const postsElements = props.posts.map(p => <Post message={p.message} likesCount={p.likesCount} key={p.id}/>);
 
     const addPost = () => {
         props.addPost()
     }
 
-    const onPostChange = (e:ChangeEvent<HTMLTextAreaElement>) =>{
+    const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let text = e.currentTarget.value
         props.updateNewPostText(text)
     }
@@ -28,7 +28,7 @@ const MyPosts = (props: PropsType) => {
     return <div className={classes.postsBlock}>
         <h3>My posts</h3>
         <div>
-            <textarea onChange={onPostChange}  value={props.newPostText}/>
+            <textarea onChange={onPostChange} value={props.newPostText}/>
         </div>
         <div>
             <button onClick={addPost} className={classes.postButton}>Add post</button>

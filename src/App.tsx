@@ -23,11 +23,8 @@ const App/*: React.FC<PropsType>*/ = () => {
                 <Header/>
                 <Navbar/>
                 <div className='app-wrapper-content'>
-
                     <Route path='/dialogs' render={() => <DialogsContainer/>}/>
-
                     <Route path='/profile' render={() => <Profile/>}/>
-
                     <Route path='/news' component={News}/>
                     <Route path='/music' component={Music}/>
                     <Route path='/settings' component={Settings}/>
