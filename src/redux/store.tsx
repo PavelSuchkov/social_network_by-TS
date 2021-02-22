@@ -1,5 +1,6 @@
 import profilePageReducer, {AddPostActionType, UpdateNewPostTextActionType} from "./profilePageReducer";
 import dialogsPageReducer, {sendMessageCreator, updateNewMessageBodyCreator} from "./dialogsPageReducer";
+import usersPageReducer, {followActionCreator, setUsersActionCreator, unFollowActionCreator} from "./usersPageReducer";
 
 
 export type MessageType = {
@@ -17,6 +18,20 @@ export type PostType = {
     message: string
     likesCount: number
 }
+export type UserType = {
+    id: number,
+    followed: boolean,
+    fullName: string,
+    status: string,
+    location: {
+        city: string,
+        country: string
+    }
+}
+
+export type UsersPageType = {
+    users: Array<UserType>
+}
 
 export type ProfilePageType = {
     posts: Array<PostType>
@@ -30,6 +45,7 @@ export type DialogPageType = {
 }
 
 export type AppStateType = {
+    usersPage: UsersPageType
     profilePage: ProfilePageType
     dialogsPage: DialogPageType
 }
@@ -43,7 +59,7 @@ export type StoreType = {
 }
 
 export type ActionsTypes = AddPostActionType | UpdateNewPostTextActionType | updateNewMessageBodyCreator |
-    sendMessageCreator
+    sendMessageCreator | followActionCreator | unFollowActionCreator | setUsersActionCreator
 
 const store: StoreType = {
     _state: {
@@ -57,6 +73,13 @@ const store: StoreType = {
                 {id: 1, message: 'Live Belarus!', likesCount: 345}
             ],
             newPostText: ''
+        },
+
+        usersPage: {
+            users: [{
+                id: 1, followed: false, fullName: 'Pavel', status: 'I\'m studiing now. Do not disturb!!',
+                location: {city: 'M.Horka', country: 'Belarus'}
+            }]
         },
 
         dialogsPage: {
@@ -94,6 +117,7 @@ const store: StoreType = {
     dispatch(action) {
         this._state.profilePage = profilePageReducer(this._state.profilePage, action)
         this._state.dialogsPage = dialogsPageReducer(this._state.dialogsPage, action)
+        this._state.usersPage = usersPageReducer(this._state.usersPage, action)
         this._onChange()
     }
 }
