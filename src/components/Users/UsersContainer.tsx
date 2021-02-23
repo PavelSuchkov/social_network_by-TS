@@ -8,7 +8,7 @@ import {followActionCreator, setUsersActionCreator, unFollowActionCreator} from 
 
 let mapStateToProps = (state: AppStateType) => {
     return {
-        userPage: state.usersPage
+        usersPage: state.usersPage
     }
 }
 

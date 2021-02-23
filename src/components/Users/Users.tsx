@@ -13,7 +13,7 @@ type propsType = {
 export const Users = (props: propsType) => {
     return <div>
         {
-            props.userPage.users.map(u => <div key={u.id}>
+            props.usersPage.users.map(u => <div key={u.id}>
                 <span>
                     <div><img className={styles.avatar}
                               src="https://www.freeiconspng.com/uploads/smile-transparent-background-9.png"
