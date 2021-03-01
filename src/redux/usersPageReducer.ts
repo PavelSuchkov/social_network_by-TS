@@ -7,7 +7,7 @@ const SET_USERS = 'SET-USERS';
 
 let initialState = {
     users: [
-        {
+  /*      {
             id: 1, followed: false, fullName: 'Pavel', status: 'I\'m studiing now. Do not disturb!!',
             location: {city: 'M.Horka', country: 'Belarus'}
         },
@@ -22,7 +22,7 @@ let initialState = {
         {
             id: 5, followed: true, fullName: 'Ivan', status: 'Holidays!!!',
             location: {city: 'Mink', country: 'Belarus'}
-        },
+        }*/
     ]
 }
 
@@ -50,7 +50,7 @@ const UsersPageReducer = (state: UsersPageType = initialState, action: ActionsTy
                 })
             }
         case SET_USERS:
-            return {...state, users: [...state.users, action.user]}
+            return {...state, users: [...state.users, ...action.users]}
 
         default:
             return state
@@ -74,10 +74,10 @@ export const unFollowActionCreator = (userId: number) => {
 
 }
 
-export const setUsersActionCreator = (user: UserType) => {
+export const setUsersActionCreator = (users: UserType[]) => {
     return {
         type: SET_USERS,
-        user: user
+        users
     } as const
 }
 

@@ -18,7 +18,7 @@ export type PostType = {
     message: string
     likesCount: number
 }
-export type UserType = {
+/*export type UserType = {
     id: number,
     followed: boolean,
     fullName: string,
@@ -27,6 +27,18 @@ export type UserType = {
         city: string,
         country: string
     }
+}*/
+
+export type UserType = {
+    name: string,
+    id: number,
+    uniqueUrlName: string | null,
+    photos: {
+        small: string | null,
+        large: string | null
+    },
+    followed: boolean,
+    status: string | null
 }
 
 export type UsersPageType = {
@@ -76,9 +88,14 @@ const store: StoreType = {
         },
 
         usersPage: {
+            /*   users: [{
+                   id: 1, followed: false, fullName: 'Pavel', status: 'I\'m studiing now. Do not disturb!!',
+                   location: {city: 'M.Horka', country: 'Belarus'}
+               }]*/
+
             users: [{
-                id: 1, followed: false, fullName: 'Pavel', status: 'I\'m studiing now. Do not disturb!!',
-                location: {city: 'M.Horka', country: 'Belarus'}
+                name: 'Pavel', id: 1, uniqueUrlName: null, photos: {small: null, large: null},
+                followed: false, status: 'I\'m studiing now. Do not disturb!!'
             }]
         },
 

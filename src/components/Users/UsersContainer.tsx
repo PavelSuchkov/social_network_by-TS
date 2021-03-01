@@ -1,18 +1,30 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Users} from "./Users";
-import {AppStateType, UserType} from "../../redux/store";
+import {AppStateType, UsersPageType, UserType} from "../../redux/store";
 import {Dispatch} from "redux";
 import {followActionCreator, setUsersActionCreator, unFollowActionCreator} from "../../redux/usersPageReducer";
+import UsersCls from "./UsersCls";
 
+type MSTPropsType = {
+    userPage: UsersPageType
+}
 
-let mapStateToProps = (state: AppStateType) => {
+type MDTPropsType = {
+    follow: (userId: number) => void,
+    unFollow: (userId: number) => void,
+    setUsers: (user: Array<UserType>) => void
+}
+
+export type UsersPropsType = MSTPropsType & MDTPropsType
+
+let mapStateToProps = (state: AppStateType): MSTPropsType => {
     return {
-        usersPage: state.usersPage
+        userPage: state.usersPage
     }
 }
 
-let mapDispatchToProps = (dispatch: Dispatch) => {
+let mapDispatchToProps = (dispatch: Dispatch): MDTPropsType => {
     return {
         follow: (userId: number) => {
             dispatch(followActionCreator(userId))
@@ -20,10 +32,10 @@ let mapDispatchToProps = (dispatch: Dispatch) => {
         unFollow: (userId: number) => {
             dispatch(unFollowActionCreator(userId))
         },
-        setUsers: (user: UserType) => {
-            dispatch(setUsersActionCreator(user))
+        setUsers: (users: Array<UserType>) => {
+            dispatch(setUsersActionCreator(users))
         }
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Users)
+export default connect(mapStateToProps, mapDispatchToProps)(UsersCls)
