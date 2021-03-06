@@ -1,26 +1,38 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Users} from "./Users";
 import {AppStateType, UsersPageType, UserType} from "../../redux/store";
 import {Dispatch} from "redux";
-import {followActionCreator, setUsersActionCreator, unFollowActionCreator} from "../../redux/usersPageReducer";
-import UsersCls from "./UsersCls";
+import {
+    followActionCreator,
+    setCurrentPageActionCreator,
+    setUsersActionCreator, setUsersTotalCountActionCreator,
+    unFollowActionCreator
+} from "../../redux/usersPageReducer";
+import Users from "./Users";
 
 type MSTPropsType = {
     userPage: UsersPageType
+    pageSize: number
+    totalUsersCount: number
+    currentPage: 1 | number
 }
 
 type MDTPropsType = {
     follow: (userId: number) => void,
-    unFollow: (userId: number) => void,
+    unFollow: (userId: number) => void
     setUsers: (user: Array<UserType>) => void
+    setCurrentPage: (currentPage: number) => void
+    setTotalUsersCount: (totalCount: number) => void
 }
 
 export type UsersPropsType = MSTPropsType & MDTPropsType
 
 let mapStateToProps = (state: AppStateType): MSTPropsType => {
     return {
-        userPage: state.usersPage
+        userPage: state.usersPage,
+        pageSize: state.usersPage.pageSize,
+        totalUsersCount: state.usersPage.totalUsersCount,
+        currentPage: state.usersPage.currentPage
     }
 }
 
@@ -34,8 +46,14 @@ let mapDispatchToProps = (dispatch: Dispatch): MDTPropsType => {
         },
         setUsers: (users: Array<UserType>) => {
             dispatch(setUsersActionCreator(users))
+        },
+        setCurrentPage: (pageNumber: number) => {
+            dispatch(setCurrentPageActionCreator(pageNumber))
+        },
+        setTotalUsersCount: (totalCount: number) => {
+            dispatch(setUsersTotalCountActionCreator(totalCount))
         }
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersCls)
+export default connect(mapStateToProps, mapDispatchToProps)(Users)

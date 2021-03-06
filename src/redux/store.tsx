@@ -1,6 +1,12 @@
-import profilePageReducer, {AddPostActionType, UpdateNewPostTextActionType} from "./profilePageReducer";
+import profilePageReducer from "./profilePageReducer";
 import dialogsPageReducer, {sendMessageCreator, updateNewMessageBodyCreator} from "./dialogsPageReducer";
-import usersPageReducer, {followActionCreator, setUsersActionCreator, unFollowActionCreator} from "./usersPageReducer";
+import usersPageReducer, {
+    followActionCreator,
+    setUsersActionCreator,
+    unFollowActionCreator,
+    setCurrentPageActionCreator,
+    setUsersTotalCountActionCreator
+} from "./usersPageReducer";
 
 
 export type MessageType = {
@@ -18,16 +24,6 @@ export type PostType = {
     message: string
     likesCount: number
 }
-/*export type UserType = {
-    id: number,
-    followed: boolean,
-    fullName: string,
-    status: string,
-    location: {
-        city: string,
-        country: string
-    }
-}*/
 
 export type UserType = {
     name: string,
@@ -43,6 +39,9 @@ export type UserType = {
 
 export type UsersPageType = {
     users: Array<UserType>
+    pageSize: number
+    totalUsersCount: number
+    currentPage:  number
 }
 
 export type ProfilePageType = {
@@ -67,11 +66,12 @@ export type StoreType = {
     _onChange: () => void
     subscribe: (callback: () => void) => void
     getState: () => AppStateType
-    dispatch: (action: ActionsTypes) => void
+    dispatch: (action: any) => void
 }
 
-export type ActionsTypes = AddPostActionType | UpdateNewPostTextActionType | updateNewMessageBodyCreator |
-    sendMessageCreator | followActionCreator | unFollowActionCreator | setUsersActionCreator
+// export type ActionsTypes = AddPostActionType | UpdateNewPostTextActionType | updateNewMessageBodyCreator |
+//     sendMessageCreator | followActionCreator | unFollowActionCreator | setUsersActionCreator | setCurrentPageActionCreator |
+//     setUsersTotalCountActionCreator
 
 const store: StoreType = {
     _state: {
@@ -96,7 +96,10 @@ const store: StoreType = {
             users: [{
                 name: 'Pavel', id: 1, uniqueUrlName: null, photos: {small: null, large: null},
                 followed: false, status: 'I\'m studiing now. Do not disturb!!'
-            }]
+            }],
+            pageSize: 0,
+            totalUsersCount: 0,
+            currentPage: 1
         },
 
         dialogsPage: {
@@ -131,7 +134,7 @@ const store: StoreType = {
         return this._state
     },
 
-    dispatch(action) {
+    dispatch(action: any) {
         this._state.profilePage = profilePageReducer(this._state.profilePage, action)
         this._state.dialogsPage = dialogsPageReducer(this._state.dialogsPage, action)
         this._state.usersPage = usersPageReducer(this._state.usersPage, action)

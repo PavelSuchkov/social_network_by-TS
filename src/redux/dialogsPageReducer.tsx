@@ -1,4 +1,4 @@
-import {ActionsTypes, DialogPageType} from "./store"
+import {DialogPageType} from "./store"
 
 const UPDATE_NEW_MESSAGE_BODY = "UPDATE-NEW-MESSAGE-BODY"
 const SEND_MESSAGE = "SEND-MESSAGE"
@@ -23,7 +23,7 @@ let initialState =  {
         newMessageBody: ''
 }
 
-const dialogsPageReducer = (state: DialogPageType = initialState, action: ActionsTypes) => {
+const dialogsPageReducer = (state: DialogPageType = initialState, action: ActionsType) => {
 
     let stateCopy;
 
@@ -47,9 +47,12 @@ const dialogsPageReducer = (state: DialogPageType = initialState, action: Action
     }
 }
 
-export type updateNewMessageBodyCreator = ReturnType<typeof updateNewMessageBodyCreator>
+type ActionsType =  ReturnType<typeof updateNewMessageBodyCreator> | ReturnType<typeof sendMessageCreator>
 
+/*
+export type updateNewMessageBodyCreator = ReturnType<typeof updateNewMessageBodyCreator>
 export type sendMessageCreator = ReturnType<typeof sendMessageCreator>
+*/
 
 
 export const updateNewMessageBodyCreator = (body: string) => {
