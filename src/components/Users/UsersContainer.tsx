@@ -8,7 +8,7 @@ import {
     setUsersActionCreator, setUsersTotalCountActionCreator,
     unFollowActionCreator
 } from "../../redux/usersPageReducer";
-import Users from "./Users";
+import UsersAPIComponent from "./UsersAPIComponent";
 
 type MSTPropsType = {
     userPage: UsersPageType
@@ -18,7 +18,7 @@ type MSTPropsType = {
 }
 
 type MDTPropsType = {
-    follow: (userId: number) => void,
+    follow: (userId: number) => void
     unFollow: (userId: number) => void
     setUsers: (user: Array<UserType>) => void
     setCurrentPage: (currentPage: number) => void
@@ -56,4 +56,4 @@ let mapDispatchToProps = (dispatch: Dispatch): MDTPropsType => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Users)
+export default connect(mapStateToProps, mapDispatchToProps)(UsersAPIComponent)
