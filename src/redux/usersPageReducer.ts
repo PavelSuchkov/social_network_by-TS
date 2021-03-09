@@ -57,12 +57,12 @@ const UsersPageReducer = (state: InitialType = initialState, action: ActionsType
     }
 }
 type ActionsType =
-    | ReturnType<typeof followActionCreator>
-    | ReturnType<typeof unFollowActionCreator>
-    | ReturnType<typeof setUsersActionCreator>
-    | ReturnType<typeof setCurrentPageActionCreator>
-    | ReturnType<typeof setUsersTotalCountActionCreator>
-    | ReturnType<typeof toggleIsFetchingActionCreator>
+    | ReturnType<typeof follow>
+    | ReturnType<typeof unFollow>
+    | ReturnType<typeof setUsers>
+    | ReturnType<typeof setCurrentPage>
+    | ReturnType<typeof setTotalUsersCount>
+    | ReturnType<typeof toggleIsFetching>
 
 // export type followActionCreator = ReturnType<typeof followActionCreator>
 // export type unFollowActionCreator = ReturnType<typeof unFollowActionCreator>
@@ -70,35 +70,34 @@ type ActionsType =
 // export type setCurrentPageActionCreator = ReturnType<typeof setCurrentPageActionCreator>
 // export type setUsersTotalCountActionCreator = ReturnType<typeof setUsersTotalCountActionCreator>
 
-export const followActionCreator = (userId: number) => ({ type: FOLLOW, userId} as const)
+export const follow = (userId: number) => ({ type: FOLLOW, userId} as const)
 
-export const unFollowActionCreator = (userId: number) => {
+export const unFollow = (userId: number) => {
     return {
         type: UNFOLLOW,
         userId: userId
     } as const
 
 }
-
-export const setUsersActionCreator = (users: UserType[]) => {
+export const setUsers = (users: UserType[]) => {
     return {
         type: SET_USERS,
         users
     } as const
 }
 
-export const setCurrentPageActionCreator = (currentPage: number) => {
+export const setCurrentPage = (currentPage: number) => {
     return {
         type: SET_CURRENT_PAGE,
         currentPage
     } as const
 }
 
-export const setUsersTotalCountActionCreator = (totalUsersCount: number) => ({
+export const setTotalUsersCount = (totalUsersCount: number) => ({
     type: SET_TOTAL_COUNT, totalUsersCount: totalUsersCount} as const)
 
 
-export const toggleIsFetchingActionCreator = (isFetching: boolean) => ({
+export const toggleIsFetching = (isFetching: boolean) => ({
     type: TOGGLE_ISFETCHING, isFetching: isFetching} as const)
 
 export default UsersPageReducer;

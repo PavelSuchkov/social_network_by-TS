@@ -1,11 +1,11 @@
 import profilePageReducer from "./profilePageReducer";
 import dialogsPageReducer, {sendMessageCreator, updateNewMessageBodyCreator} from "./dialogsPageReducer";
 import usersPageReducer, {
-    followActionCreator,
-    setUsersActionCreator,
-    unFollowActionCreator,
-    setCurrentPageActionCreator,
-    setUsersTotalCountActionCreator
+    follow,
+    setUsers,
+    unFollow,
+    setCurrentPage,
+    setTotalUsersCount
 } from "./usersPageReducer";
 
 
