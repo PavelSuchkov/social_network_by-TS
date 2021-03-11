@@ -1,19 +1,29 @@
 import React from 'react';
-import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import MyPostsContainer from "./MyPosts/MyPostsContainer";
-import {AppStateType, ProfilePageType} from "../../redux/store";
 import Profile from "./Profile";
 import axios from "axios";
 import {connect} from "react-redux";
-import {setUserProfileCreator} from "../../redux/profilePageReducer";
+import {ProfileResponseType, setUserProfileCreator} from "../../redux/profilePageReducer";
+import {RootReduxState} from "../../redux/reduxStore";
+
+export type ProfileMapStateToPropsType = {
+    profile: ProfileResponseType
+}
+
+export type ProfileMapDispatchToPropsType = {
+    setUserProfileCreator: (profile: ProfileResponseType) =>  void
+}
+
+export type ProfileOwnProps = {
+
+}
 
 
-
-class ProfileContainer extends React.Component<any>{
+class ProfileContainer extends React.Component<ProfileMapDispatchToPropsType & ProfileMapStateToPropsType>{
 
     componentDidMount() {
         axios.get(`https://social-network.samuraijs.com/api/1.0/profile/2`)
             .then(response => {
+
                 this.props.setUserProfileCreator(response.data);
             });
     }
@@ -25,8 +35,10 @@ class ProfileContainer extends React.Component<any>{
     }
 }
 
-const mapStateToProps = (state: AppStateType) => ({
+const mapStateToProps = (state: RootReduxState): ProfileMapStateToPropsType => ({
     profile: state.profilePage.profile
-})
+});
+
+
 
 export default connect(mapStateToProps, {setUserProfileCreator})(ProfileContainer);

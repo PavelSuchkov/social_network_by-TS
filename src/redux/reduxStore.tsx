@@ -11,6 +11,9 @@ let reducers = combineReducers({
 
 })
 
+export type RootReduxState = ReturnType<typeof reducers>
+
+
 let store = createStore(reducers)
 
 

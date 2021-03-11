@@ -1,4 +1,4 @@
-import state, {PostType, ProfilePageType} from "./store";
+// import state, {PostType, ProfilePageType} from "./store";
 
 const ADD_POST = "ADD-POST"
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT"
@@ -15,6 +15,40 @@ let initialState = {
         ],
         newPostText: '',
         profile: null
+}
+
+export type PostType = {
+    id: number
+    message: string
+    likesCount: number
+}
+
+export type ProfileResponseType = {
+    aboutMe: string | null
+    contacts: {
+        facebook: string | null
+        github: string | null
+        instagram: string | null
+        mainLink: string | null
+        twitter: string | null
+        vk: string | null
+        website: string | null
+        youtube: string | null
+    }
+    fullName: string | null
+    lookingForAJob: boolean | null
+    lookingForAJobDescription: string | null
+    photos: {
+        large: string | null | undefined
+        small: string | null | undefined
+    }
+    userId: number | string
+} | null
+
+export type ProfilePageType = {
+    posts: Array<PostType>
+    newPostText: string
+    profile: ProfileResponseType
 }
 
 const profilePageReducer = (state: ProfilePageType = initialState, action: ActionsType) => {
@@ -67,7 +101,7 @@ export const updateNewPostCreator = (newText: string) => {
     }as const
 }
 
-export const setUserProfileCreator = (profile: any) => {
+export const setUserProfileCreator = (profile: ProfileResponseType) => {
     return {
         type: SET_USER_PROFILE,
         profile

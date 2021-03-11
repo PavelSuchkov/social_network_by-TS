@@ -22,7 +22,7 @@ const App = () => {
                     <Route path='/dialogs' render={
                         () => <DialogsContainer/>}/>
                     <Route path='/profile' render={
-                        () => <ProfileContainer/>}/>
+                        () => <ProfileContainer />}/>
                     <Route path='/users' render={
                         () => <UsersContainer/>}/>
                     <Route path='/news' component={News}/>

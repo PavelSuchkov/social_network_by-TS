@@ -13,6 +13,7 @@ import {
 import axios from "axios";
 import {Users} from "./Users.";
 import {Preloader} from "../common/Preloader/Preloader";
+import {RootReduxState} from "../../redux/reduxStore";
 
 type MSTPropsType = {
     userPage: UsersPageType
@@ -31,20 +32,20 @@ type MDTPropsType = {
     toggleIsFetching: (isFetching: boolean) => void
 }
 
-/*export type UsersPropsType = MSTPropsType & MDTPropsType*/
+export type UsersPropsType = MSTPropsType & MDTPropsType
 
-type UsersPropsType = {
-    follow: (userId: number) => void,
-    unFollow: (userId: number) => void
-    setUsers: (user: Array<UserType>) => void
-    setCurrentPage: (currentPage: number) => void
-    toggleIsFetching: (isFetching: boolean) => void
-    setTotalUsersCount: (totalCount: number) => void
-    userPage: UsersPageType
-    pageSize: number
-    totalUsersCount: number
-    currentPage: number
-}
+// type UsersPropsType = {
+//     follow: (userId: number) => void,
+//     unFollow: (userId: number) => void
+//     setUsers: (user: Array<UserType>) => void
+//     setCurrentPage: (currentPage: number) => void
+//     toggleIsFetching: (isFetching: boolean) => void
+//     setTotalUsersCount: (totalCount: number) => void
+//     userPage: UsersPageType
+//     pageSize: number
+//     totalUsersCount: number
+//     currentPage: number
+// }
 
 class UsersContainer extends React.Component<UsersPropsType> {
 
@@ -86,7 +87,7 @@ class UsersContainer extends React.Component<UsersPropsType> {
     }
 }
 
-const mapStateToProps = (state: AppStateType): MSTPropsType => {
+const mapStateToProps = (state: RootReduxState): MSTPropsType => {
     return {
         userPage: state.usersPage,
         pageSize: state.usersPage.pageSize,

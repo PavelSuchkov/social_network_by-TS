@@ -19,11 +19,7 @@ export type DialogType = {
     name: string
 }
 
-export type PostType = {
-    id: number
-    message: string
-    likesCount: number
-}
+
 
 export type UserType = {
     name: string,
@@ -45,10 +41,38 @@ export type UsersPageType = {
     isFetching: boolean
 }
 
+export type PostType = {
+    id: number
+    message: string
+    likesCount: number
+}
+
+export type ProfileResponseType = {
+    aboutMe: string | null
+    contacts: {
+        facebook: string | null
+        github: string | null
+        instagram: string | null
+        mainLink: string | null
+        twitter: string | null
+        vk: string | null
+        website: string | null
+        youtube: string | null
+    }
+    fullName: string | null
+    lookingForAJob: boolean | null
+    lookingForAJobDescription: string | null
+    photos: {
+        large: string | null
+        small: string | null
+    }
+    userId: number | string
+} | null
+
 export type ProfilePageType = {
     posts: Array<PostType>
     newPostText: string
-    profile: any
+    profile: ProfileResponseType
 }
 
 export type DialogPageType = {
@@ -139,7 +163,7 @@ const store: StoreType = {
     },
 
     dispatch(action: any) {
-        this._state.profilePage = profilePageReducer(this._state.profilePage, action)
+        // this._state.profilePage = profilePageReducer(this._state.profilePage, action)
         this._state.dialogsPage = dialogsPageReducer(this._state.dialogsPage, action)
         this._state.usersPage = usersPageReducer(this._state.usersPage, action)
         this._onChange()
