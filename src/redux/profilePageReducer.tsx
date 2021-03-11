@@ -2,6 +2,7 @@ import state, {PostType, ProfilePageType} from "./store";
 
 const ADD_POST = "ADD-POST"
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT"
+const SET_USER_PROFILE = "SET-USER-PROFILE"
 
 let initialState = {
         posts: [
@@ -12,7 +13,8 @@ let initialState = {
             {id: 1, message: 'London is a capital of great Britain', likesCount: 7},
             {id: 1, message: 'Live Belarus!', likesCount: 345}
         ],
-        newPostText: ''
+        newPostText: '',
+        profile: null
 }
 
 const profilePageReducer = (state: ProfilePageType = initialState, action: ActionsType) => {
@@ -38,6 +40,10 @@ const profilePageReducer = (state: ProfilePageType = initialState, action: Actio
                 newPostText: ''
             }
         }
+
+        case SET_USER_PROFILE: {
+           return  {...state, profile: action.profile}
+        }
         default:
             return state
     }
@@ -45,6 +51,7 @@ const profilePageReducer = (state: ProfilePageType = initialState, action: Actio
 type ActionsType =
     | ReturnType<typeof addPostCreator>
     | ReturnType<typeof updateNewPostCreator>
+    | ReturnType<typeof setUserProfileCreator>
 
 export const addPostCreator = (newPostText: string) => {
     return {
@@ -57,6 +64,13 @@ export const updateNewPostCreator = (newText: string) => {
     return {
         type: UPDATE_NEW_POST_TEXT,
         newText: newText
+    }as const
+}
+
+export const setUserProfileCreator = (profile: any) => {
+    return {
+        type: SET_USER_PROFILE,
+        profile
     }as const
 }
 

@@ -48,6 +48,7 @@ export type UsersPageType = {
 export type ProfilePageType = {
     posts: Array<PostType>
     newPostText: string
+    profile: any
 }
 
 export type DialogPageType = {
@@ -85,7 +86,8 @@ const store: StoreType = {
                 {id: 1, message: 'London is a capital of great Britain', likesCount: 7},
                 {id: 1, message: 'Live Belarus!', likesCount: 345}
             ],
-            newPostText: ''
+            newPostText: '',
+            profile: null
         },
 
         usersPage: {

@@ -86,7 +86,7 @@ class UsersContainer extends React.Component<UsersPropsType> {
     }
 }
 
-let mapStateToProps = (state: AppStateType): MSTPropsType => {
+const mapStateToProps = (state: AppStateType): MSTPropsType => {
     return {
         userPage: state.usersPage,
         pageSize: state.usersPage.pageSize,
