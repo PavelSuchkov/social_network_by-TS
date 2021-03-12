@@ -4,14 +4,14 @@ import {Preloader} from "../../common/Preloader/Preloader";
 import {ProfileResponseType} from "../../../redux/store";
 
 type profileInfoPropsType = {
-    profile: any
+
+    profile: ProfileResponseType | null
 }
 
 const ProfileInfo = (props: profileInfoPropsType) => {
     if(!props.profile){
         return <Preloader/>
     }
-
 
     return (
         <div>

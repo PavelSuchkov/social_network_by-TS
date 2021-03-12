@@ -48,31 +48,31 @@ export type PostType = {
 }
 
 export type ProfileResponseType = {
-    aboutMe: string | null
+    aboutMe: string
     contacts: {
-        facebook: string | null
-        github: string | null
-        instagram: string | null
-        mainLink: string | null
-        twitter: string | null
-        vk: string | null
-        website: string | null
-        youtube: string | null
+        facebook: string
+        github: string
+        instagram: string
+        mainLink: string
+        twitter: string
+        vk: string
+        website: string
+        youtube: string
     }
-    fullName: string | null
-    lookingForAJob: boolean | null
-    lookingForAJobDescription: string | null
+    fullName: string
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
     photos: {
-        large: string | null
-        small: string | null
+        large: string
+        small: string
     }
     userId: number | string
-} | null
+}
 
-export type ProfilePageType = {
+type ProfilePageType = {
     posts: Array<PostType>
     newPostText: string
-    profile: ProfileResponseType
+    profile: ProfileResponseType | null
 }
 
 export type DialogPageType = {
