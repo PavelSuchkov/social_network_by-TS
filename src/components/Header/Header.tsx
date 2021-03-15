@@ -2,7 +2,6 @@ import React from 'react';
 import {NavLink} from 'react-router-dom';
 import classes from './Header.module.css';
 import {initialStateSetUserType} from "../../redux/authReducer";
-import {authOwnPropsType, mapStateToPropsType} from "./HeaderContainer";
 
 type authPropsType = {
     login: string | null

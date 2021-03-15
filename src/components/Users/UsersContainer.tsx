@@ -1,7 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import {AppStateType, UsersPageType, UserType} from "../../redux/store";
-import {Dispatch} from "redux";
+import {UsersPageType, UserType} from "../../redux/store";
 import {
     follow,
     setCurrentPage,
@@ -34,24 +33,15 @@ type MDTPropsType = {
 
 export type UsersPropsType = MSTPropsType & MDTPropsType
 
-// type UsersPropsType = {
-//     follow: (userId: number) => void,
-//     unFollow: (userId: number) => void
-//     setUsers: (user: Array<UserType>) => void
-//     setCurrentPage: (currentPage: number) => void
-//     toggleIsFetching: (isFetching: boolean) => void
-//     setTotalUsersCount: (totalCount: number) => void
-//     userPage: UsersPageType
-//     pageSize: number
-//     totalUsersCount: number
-//     currentPage: number
-// }
+
 
 class UsersContainer extends React.Component<UsersPropsType> {
 
     componentDidMount() {
         this.props.toggleIsFetching(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
+            withCredentials: true
+        })
             .then(response => {
                 this.props.toggleIsFetching(false);
                 this.props.setUsers(response.data.items);
@@ -62,7 +52,9 @@ class UsersContainer extends React.Component<UsersPropsType> {
     onPageChanged = (pageNumber: number) => {
         this.props.setCurrentPage(pageNumber);
         this.props.toggleIsFetching(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`, {
+            withCredentials: true
+        })
             .then(response => {
                 this.props.toggleIsFetching(false);
                 this.props.setUsers(response.data.items)
