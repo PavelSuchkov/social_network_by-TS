@@ -3,7 +3,7 @@ const ADD_POST = "ADD-POST"
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT"
 const SET_USER_PROFILE = "SET-USER-PROFILE"
 
-let initialState: InitialProfileState = {
+let initialState: InitialProfileStateType = {
     posts: [
         {id: 1, message: 'Hi', likesCount: 3},
         {id: 1, message: 'How r u', likesCount: 5},
@@ -17,7 +17,7 @@ let initialState: InitialProfileState = {
 }
 
 
-export type InitialProfileState = {
+export type InitialProfileStateType = {
     posts: Array<PostType>
     newPostText: string
     profile: ProfileResponseType | null
@@ -52,7 +52,7 @@ export type ProfileResponseType = {
 }
 
 
-const profilePageReducer = (state: InitialProfileState = initialState, action: ActionsType): InitialProfileState => {
+const profilePageReducer = (state: InitialProfileStateType = initialState, action: ActionsType): InitialProfileStateType => {
 
     switch (action.type) {
 
