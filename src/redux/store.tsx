@@ -39,6 +39,7 @@ export type UsersPageType = {
     totalUsersCount: number
     currentPage:  number
     isFetching: boolean
+    followingInProgress: boolean
 }
 
 export type PostType = {
@@ -127,7 +128,9 @@ const store: StoreType = {
             pageSize: 0,
             totalUsersCount: 0,
             currentPage: 1,
-            isFetching: false
+            isFetching: false,
+            followingInProgress: true
+
         },
 
         dialogsPage: {
@@ -165,7 +168,7 @@ const store: StoreType = {
     dispatch(action: any) {
         // this._state.profilePage = profilePageReducer(this._state.profilePage, action)
         this._state.dialogsPage = dialogsPageReducer(this._state.dialogsPage, action)
-        this._state.usersPage = usersPageReducer(this._state.usersPage, action)
+        // this._state.usersPage = usersPageReducer(this._state.usersPage, action)
         this._onChange()
     }
 }

@@ -13,6 +13,8 @@ type UsersPageType = {
     userPhoto: string
     follow: (userId: number) => void
     unFollow: (userId: number) => void
+    followingInProgress: boolean
+    toggleFollowingInProgress: (isFetching: boolean) => void
 
 }
 
@@ -45,20 +47,24 @@ export const Users = (props: UsersPageType) => {
                     </div>
                     <div>
                         {u.followed ?
-                            <button onClick={() => {
+                            <button disabled={props.followingInProgress} onClick={() => {
+                                props.toggleFollowingInProgress(true);
                                 usersAPI.unFollow(u.id).then(response => {
                                     if (response.data.resultCode === 0) {
                                         props.unFollow(u.id)
                                     }
+                                    props.toggleFollowingInProgress(false);
                                 });
 
 
                             }}>UnFollow</button>
-                            : <button onClick={() => {
+                            : <button disabled={props.followingInProgress} onClick={() => {
+                                props.toggleFollowingInProgress(true);
                                 usersAPI.follow(u.id).then(response => {
                                     if (response.data.resultCode === 0) {
                                         props.follow(u.id)
                                     }
+                                    props.toggleFollowingInProgress(false);
                                 });
 
                             }}>Follow</button>}
