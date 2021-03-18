@@ -8,18 +8,13 @@ import {Provider} from "react-redux";
 
 
 
-
- // let renderEntireTree = () => {
-
     ReactDOM.render(
         <Provider store={store}>
             <App />
         </Provider>,
         document.getElementById('root'));
 
-// }
-// renderEntireTree();
-// store.subscribe( renderEntireTree);
+
 
 reportWebVitals();
 

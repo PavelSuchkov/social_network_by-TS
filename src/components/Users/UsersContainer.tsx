@@ -1,13 +1,15 @@
 import React from "react";
 import {connect} from "react-redux";
-import {UsersPageType, UserType} from "../../redux/store";
 import {
     follow,
+    InitialType,
     setCurrentPage,
     setTotalUsersCount,
-    setUsers, toggleFollowingInProgress,
+    setUsers,
+    toggleFollowingInProgress,
     toggleIsFetching,
-    unFollow
+    unFollow,
+    UserType
 } from "../../redux/usersPageReducer";
 import {Users} from "./Users.";
 import {Preloader} from "../common/Preloader/Preloader";
@@ -15,12 +17,13 @@ import {RootReduxState} from "../../redux/reduxStore";
 import {usersAPI} from "../../api/api";
 
 type MSTPropsType = {
-    userPage: UsersPageType
+    users: Array<UserType>
+    userPage: InitialType
     pageSize: number
     totalUsersCount: number
     currentPage: 1 | number
     isFetching: boolean
-    followingInProgress: boolean
+    followingInProgress: Array<number>
 }
 
 type MDTPropsType = {
@@ -30,7 +33,7 @@ type MDTPropsType = {
     setCurrentPage: (currentPage: number) => void
     setTotalUsersCount: (totalCount: number) => void
     toggleIsFetching: (isFetching: boolean) => void
-    toggleFollowingInProgress: (isFetching: boolean) => void
+    toggleFollowingInProgress: (isFetching: boolean, id: number) => void
 }
 
 export type UsersPropsType = MSTPropsType & MDTPropsType
@@ -67,12 +70,12 @@ class UsersContainer extends React.Component<UsersPropsType> {
 
     render() {
         return <>
-            {this.props.userPage.isFetching ? <Preloader/> : null}
+            {this.props.isFetching ? <Preloader/> : null}
             <Users userPhoto={this.userPhoto}
                    totalUsersCount={this.props.totalUsersCount}
                    pageSize={this.props.pageSize}
                    currentPage={this.props.currentPage}
-                   users={this.props.userPage.users}
+                   users={this.props.users}
                    follow={this.props.follow}
                    unFollow={this.props.unFollow}
                    followingInProgress={this.props.followingInProgress}
@@ -85,6 +88,7 @@ class UsersContainer extends React.Component<UsersPropsType> {
 
 const mapStateToProps = (state: RootReduxState): MSTPropsType => {
     return {
+        users: state.usersPage.users,
         userPage: state.usersPage,
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
