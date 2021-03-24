@@ -15,6 +15,7 @@ type UsersPageType = {
     unFollow: (userId: number) => void
     followingInProgress: Array<number>
     toggleFollowingInProgress: (isFetching: boolean, id: number) => void
+    // getUsersThunkCreator: (/*currentPage: number, pageSize: number*/) => void
 
 }
 

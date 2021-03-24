@@ -1,11 +1,12 @@
-import {combineReducers, createStore} from "redux";
+import {combineReducers, createStore, applyMiddleware} from "redux";
 import profilePageReducer from "./profilePageReducer";
 import dialogsPageReducer from "./dialogsPageReducer";
 import usersPageReducer from "./usersPageReducer"
 import {authReducer} from "./authReducer";
+import thunkMiddleware from "redux-thunk"
 
 
-let reducers = combineReducers({
+const reducers = combineReducers({
     profilePage: profilePageReducer,
     dialogsPage: dialogsPageReducer,
     usersPage: usersPageReducer,
@@ -15,7 +16,7 @@ let reducers = combineReducers({
 export type RootReduxState = ReturnType<typeof reducers>
 
 
-let store = createStore(reducers)
+const store = createStore(reducers, applyMiddleware(thunkMiddleware))
 
 
 // @ts-ignore
