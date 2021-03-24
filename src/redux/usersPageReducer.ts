@@ -1,6 +1,5 @@
-// import {UserType} from "./store";
-
 import {usersAPI} from "../api/api";
+import {Dispatch} from "redux";
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -22,18 +21,8 @@ export type UserType = {
     followed: boolean,
     status: string | null
 }
-/*
-export type UsersPageType = {
-    users: Array<UserType>
-    pageSize: number
-    totalUsersCount: number
-    currentPage:  number
-    isFetching: boolean
-    followingInProgress: Array<number>
-}
-*/
 
- const initialState = {
+const initialState = {
     users: [] as Array<UserType>,
     pageSize: 50,
     totalUsersCount: 0,
@@ -85,8 +74,8 @@ const UsersPageReducer = (state: InitialType = initialState, action: ActionsType
             return {
                 ...state,
                 followingInProgress: action.isFetching
-                ? [...state.followingInProgress, action.userId]
-                 : state.followingInProgress.filter(id => id !== action.userId)
+                    ? [...state.followingInProgress, action.userId]
+                    : state.followingInProgress.filter(id => id !== action.userId)
             }
 
         default:
@@ -97,24 +86,17 @@ const UsersPageReducer = (state: InitialType = initialState, action: ActionsType
 
 }
 type ActionsType =
-    | ReturnType<typeof follow>
-    | ReturnType<typeof unFollow>
+    | ReturnType<typeof followSuccess>
+    | ReturnType<typeof unFollowSuccess>
     | ReturnType<typeof setUsers>
     | ReturnType<typeof setCurrentPage>
     | ReturnType<typeof setTotalUsersCount>
     | ReturnType<typeof toggleIsFetching>
     | ReturnType<typeof toggleFollowingInProgress>
 
+export const followSuccess = (userId: number) => ({type: FOLLOW, userId} as const)
 
-// export type followActionCreator = ReturnType<typeof followActionCreator>
-// export type unFollowActionCreator = ReturnType<typeof unFollowActionCreator>
-// export type setUsersActionCreator = ReturnType<typeof setUsersActionCreator>
-// export type setCurrentPageActionCreator = ReturnType<typeof setCurrentPageActionCreator>
-// export type setUsersTotalCountActionCreator = ReturnType<typeof setUsersTotalCountActionCreator>
-
-export const follow = (userId: number) => ({type: FOLLOW, userId} as const)
-
-export const unFollow = (userId: number) => {
+export const unFollowSuccess = (userId: number) => {
     return {
         type: UNFOLLOW,
         userId: userId
@@ -150,31 +132,38 @@ export const toggleFollowingInProgress = (isFetching: boolean, userId: number) =
 } as const)
 
 
-export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
-   return (dispatch: any) => {                                                     //need to fix
+export const getUsers = (currentPage: number, pageSize: number) => {
+    return (dispatch: Dispatch) => {                                                     //need to fix
         dispatch(toggleIsFetching(true));
         usersAPI.getUsers(currentPage, pageSize).then(data => {
             dispatch(toggleIsFetching(false));
             dispatch(setUsers(data.items));
             dispatch(setTotalUsersCount(data.totalCount));
+            dispatch(setCurrentPage(currentPage))
+        });
+    }
+}
+export const follow = (id: number) => {
+    return (dispatch: Dispatch) => {                                                     //need to fix
+        dispatch(toggleFollowingInProgress(true, id));
+        usersAPI.follow(id).then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(followSuccess(id))
+            }
+            dispatch(toggleFollowingInProgress(false, id));
+        });
+    }
+}
+export const unFollow = (id: number) => {
+    return (dispatch: Dispatch) => {                                                     //need to fix
+        dispatch(toggleFollowingInProgress(true, id));
+        usersAPI.unFollow(id).then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(unFollowSuccess(id))
+            }
+            dispatch(toggleFollowingInProgress(false, id));
         });
     }
 }
 
 export default UsersPageReducer;
-/*      {
-          id: 1, followed: false, fullName: 'Pavel', status: 'I\'m studiing now. Do not disturb!!',
-          location: {city: 'M.Horka', country: 'Belarus'}
-      },
-      {
-          id: 2, followed: true, fullName: 'Vovka', status: 'Relax! take it easy',
-          location: {city: 'Sebastopol', country: 'RF'}
-      },
-      {
-          id: 3, followed: false, fullName: 'Alexey', status: 'Hardly work', location:
-              {city: 'M.Horka', country: 'Belarus'}
-      },
-      {
-          id: 5, followed: true, fullName: 'Ivan', status: 'Holidays!!!',
-          location: {city: 'Mink', country: 'Belarus'}
-      }*/

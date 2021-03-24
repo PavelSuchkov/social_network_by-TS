@@ -1,20 +1,18 @@
 import React from "react";
 import {connect} from "react-redux";
 import {
-    follow, getUsersThunkCreator,
+    follow,
+    followSuccess,
+    getUsers,
     InitialType,
     setCurrentPage,
-    setTotalUsersCount,
-    setUsers,
-    toggleFollowingInProgress,
-    toggleIsFetching,
     unFollow,
+    unFollowSuccess,
     UserType
 } from "../../redux/usersPageReducer";
 import {Users} from "./Users.";
 import {Preloader} from "../common/Preloader/Preloader";
 import {RootReduxState} from "../../redux/reduxStore";
-import {usersAPI} from "../../api/api";
 
 type MSTPropsType = {
     users: Array<UserType>
@@ -27,40 +25,25 @@ type MSTPropsType = {
 }
 
 type MDTPropsType = {
-    follow: (userId: number) => void
-    unFollow: (userId: number) => void
-    setUsers: (user: Array<UserType>) => void
+    followSuccess: (userId: number) => void
+    unFollowSuccess: (userId: number) => void
     setCurrentPage: (currentPage: number) => void
-    setTotalUsersCount: (totalCount: number) => void
-    toggleIsFetching: (isFetching: boolean) => void
-    toggleFollowingInProgress: (isFetching: boolean, id: number) => void
-    getUsersThunkCreator: (currentPage: number, pageSize: number) => void
+    getUsers: (currentPage: number, pageSize: number) => void
+    follow: (id: number) => void
+    unFollow: (id: number) => void
 }
 
 export type UsersPropsType = MSTPropsType & MDTPropsType
 
 
-
 class UsersContainer extends React.Component<UsersPropsType> {
 
     componentDidMount() {
-        this.props.getUsersThunkCreator(this.props.currentPage, this.props.pageSize)
-       /*
-        this.props.toggleIsFetching(true);
-        usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
-                this.props.toggleIsFetching(false);
-                this.props.setUsers(data.items);
-                this.props.setTotalUsersCount(data.totalCount);
-            });*/
+        this.props.getUsers(this.props.currentPage, this.props.pageSize)
     }
 
     onPageChanged = (pageNumber: number) => {
-        this.props.setCurrentPage(pageNumber);
-        this.props.toggleIsFetching(true);
-        usersAPI.getUsers(pageNumber, this.props.pageSize).then(data => {
-                this.props.toggleIsFetching(false);
-                this.props.setUsers(data.items)
-            });
+        this.props.getUsers(pageNumber, this.props.pageSize)
     }
 
     userPhoto = "https://www.freeiconspng.com/uploads/smile-transparent-background-9.png"
@@ -73,11 +56,12 @@ class UsersContainer extends React.Component<UsersPropsType> {
                    pageSize={this.props.pageSize}
                    currentPage={this.props.currentPage}
                    users={this.props.users}
-                   follow={this.props.follow}
-                   unFollow={this.props.unFollow}
+                   followSuccess={this.props.followSuccess}
+                   unFollowSuccess={this.props.unFollowSuccess}
                    followingInProgress={this.props.followingInProgress}
                    onPageChanged={this.onPageChanged}
-                   toggleFollowingInProgress={this.props.toggleFollowingInProgress}
+                   follow={this.props.follow}
+                   unFollow={this.props.unFollow}
             />
         </>
     }
@@ -98,5 +82,4 @@ const mapStateToProps = (state: RootReduxState): MSTPropsType => {
 
 
 export default connect(mapStateToProps, {
-    follow, unFollow, setUsers, setCurrentPage, setTotalUsersCount,
-    toggleIsFetching, toggleFollowingInProgress, getUsersThunkCreator}) (UsersContainer)
+    followSuccess,unFollowSuccess, setCurrentPage, follow, unFollow, getUsers}) (UsersContainer)

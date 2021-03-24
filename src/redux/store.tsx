@@ -1,12 +1,12 @@
 import profilePageReducer from "./profilePageReducer";
 import dialogsPageReducer, {sendMessageCreator, updateNewMessageBodyCreator} from "./dialogsPageReducer";
-import usersPageReducer, {
-    follow,
+/*import usersPageReducer, {
+    followSuccess,
     setUsers,
-    unFollow,
+    unFollowSuccess,
     setCurrentPage,
-    setTotalUsersCount
-} from "./usersPageReducer";
+    setTotalUsersCount*/
+// } from "./usersPageReducer";
 
 //
 // export type MessageType = {
