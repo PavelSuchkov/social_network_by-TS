@@ -56,7 +56,6 @@ const UsersPageReducer = (state: InitialType = initialState, action: ActionsType
                 })
             }
         case SET_USERS:
-            // return {...state, users: [...state.users, ...action.users]}
             return {...state, users: action.users}
 
         case SET_CURRENT_PAGE:
@@ -80,8 +79,6 @@ const UsersPageReducer = (state: InitialType = initialState, action: ActionsType
 
         default:
             return state
-
-
     }
 
 }
@@ -128,12 +125,12 @@ export const toggleIsFetching = (isFetching: boolean) => ({
 
 
 export const toggleFollowingInProgress = (isFetching: boolean, userId: number) => ({
-    type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching: isFetching, userId
+    type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId
 } as const)
 
 
 export const getUsers = (currentPage: number, pageSize: number) => {
-    return (dispatch: Dispatch) => {                                                     //need to fix
+    return (dispatch: Dispatch) => {
         dispatch(toggleIsFetching(true));
         usersAPI.getUsers(currentPage, pageSize).then(data => {
             dispatch(toggleIsFetching(false));
@@ -144,7 +141,7 @@ export const getUsers = (currentPage: number, pageSize: number) => {
     }
 }
 export const follow = (id: number) => {
-    return (dispatch: Dispatch) => {                                                     //need to fix
+    return (dispatch: Dispatch) => {
         dispatch(toggleFollowingInProgress(true, id));
         usersAPI.follow(id).then(response => {
             if (response.data.resultCode === 0) {
@@ -155,7 +152,7 @@ export const follow = (id: number) => {
     }
 }
 export const unFollow = (id: number) => {
-    return (dispatch: Dispatch) => {                                                     //need to fix
+    return (dispatch: Dispatch) => {
         dispatch(toggleFollowingInProgress(true, id));
         usersAPI.unFollow(id).then(response => {
             if (response.data.resultCode === 0) {

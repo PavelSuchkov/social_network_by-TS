@@ -6,11 +6,11 @@ import {initialStateSetUserType} from "../../redux/authReducer";
 type authPropsType = {
     login: string | null
     isAuth: boolean
-    setAuthUserData: (userData: initialStateSetUserType) => void
+    // setAuthUserData: (userData: initialStateSetUserType) => void
 }
 
 const Header = (props: authPropsType) => {
-
+        debugger;
     return (
         <header className={classes.header}>
             <img className={classes.picture}
