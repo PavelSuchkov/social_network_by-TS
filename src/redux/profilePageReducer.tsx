@@ -50,7 +50,7 @@ export type ProfileResponseType = {
         large: string
         small: string
     }
-    userId: number/* | string*/
+    userId: number
 }
 
 
@@ -111,7 +111,7 @@ export const setUserProfile = (profile: ProfileResponseType) => {
     } as const
 }
 
-export const getUserProfile = (userId: number /*string*/) => (dispatch: Dispatch) =>  {
+export const getUserProfile = (userId: number) => (dispatch: Dispatch) =>  {
     usersAPI.getProfile(userId)
         .then(response => {
             dispatch(setUserProfile(response.data));
