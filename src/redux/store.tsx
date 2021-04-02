@@ -1,5 +1,5 @@
 import profilePageReducer from "./profilePageReducer";
-import dialogsPageReducer, {sendMessageCreator, updateNewMessageBodyCreator} from "./dialogsPageReducer";
+import dialogsPageReducer, {sendMessage, updateNewMessageBody} from "./dialogsPageReducer";
 /*import usersPageReducer, {
     followSuccess,
     setUsers,

@@ -13,6 +13,7 @@ import {
 import {Users} from "./Users.";
 import {Preloader} from "../common/Preloader/Preloader";
 import {RootReduxState} from "../../redux/reduxStore";
+import {withAuthRedirect} from "../../hoc/WithAuthRedirect";
 
 type MSTPropsType = {
     users: Array<UserType>
@@ -81,5 +82,5 @@ const mapStateToProps = (state: RootReduxState): MSTPropsType => {
 
 
 
-export default connect(mapStateToProps, {
-    followSuccess,unFollowSuccess, setCurrentPage, follow, unFollow, getUsers}) (UsersContainer)
+export default withAuthRedirect(connect(mapStateToProps, {
+    followSuccess,unFollowSuccess, setCurrentPage, follow, unFollow, getUsers}) (UsersContainer))
