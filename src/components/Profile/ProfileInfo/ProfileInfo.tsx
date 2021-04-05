@@ -15,9 +15,9 @@ const ProfileInfo = (props: profileInfoPropsType) => {
 
     return (
         <div>
-            <div>
+           {/* <div>
                 <img src="https://www.shutterstock.com/blog/wp-content/uploads/sites/5/2019/07/Man-Silhouette.jpg" alt=""/>
-            </div>
+            </div>*/}
             <div className={classes.descriptionBlock}>
                 <img src={props.profile.photos.large}/>
                 AVA + description
