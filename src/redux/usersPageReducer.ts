@@ -1,6 +1,5 @@
 import {usersAPI} from "../api/api";
 import {Dispatch} from "redux";
-
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET-USERS';
@@ -22,7 +21,7 @@ export type UserType = {
     status: string | null
 }
 
-const initialState = {
+const initialState  = {
     users: [] as Array<UserType>,
     pageSize: 50,
     totalUsersCount: 0,
@@ -32,7 +31,7 @@ const initialState = {
 }
 export type InitialType = typeof initialState
 
-const UsersPageReducer = (state: InitialType = initialState, action: ActionsType): InitialType => {
+export const UsersPageReducer = (state: InitialType = initialState, action: ActionsType): InitialType => {
     switch (action.type) {
         case FOLLOW:
             return {
