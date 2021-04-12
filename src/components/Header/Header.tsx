@@ -1,16 +1,14 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 import classes from './Header.module.css';
-import {initialStateSetUserType} from "../../redux/authReducer";
 
 type authPropsType = {
     login: string | null
     isAuth: boolean
-    // setAuthUserData: (userData: initialStateSetUserType) => void
+
 }
 
 const Header = (props: authPropsType) => {
-        debugger;
     return (
         <header className={classes.header}>
             <img className={classes.picture}

@@ -1,5 +1,4 @@
-import React, {ChangeEvent, useCallback, useEffect, useState} from 'react';
-import {Preloader} from "../../common/Preloader/Preloader";
+import React, {ChangeEvent, useState} from 'react';
 
 
 type StatusPropsType = {
@@ -12,7 +11,7 @@ const ProfileStatus = (props: StatusPropsType) => {
     const [editMode, setEditMode] = useState<boolean>(false);
     const [status, setStatus] = useState<string>(props.status);
 
-    const toggleEditMode = () => {
+    const editModeOn = () => {
         setEditMode(true)
         setStatus(props.status)
     }
@@ -29,7 +28,7 @@ const ProfileStatus = (props: StatusPropsType) => {
     return (
         <div>{!editMode
             ? <div>
-                <span onDoubleClick={toggleEditMode}>{props.status ? props.status : '----'}</span>
+                <span onDoubleClick={editModeOn}>{props.status ? props.status : '----'}</span>
             </div>
 
             : <div>
