@@ -26,7 +26,7 @@ type MapDispatchPropsType = {
     updateUserStatus: (status: string) => void
 }
 
-type PropsType = MapDispatchPropsType & ProfileMapStateToPropsType & ProfileOwnProps & RouteComponentProps<RouteType>
+type PropsType = MapDispatchPropsType & ProfileMapStateToPropsType & RouteComponentProps<RouteType>
 
 
 class ProfileContainer extends React.Component<PropsType> {

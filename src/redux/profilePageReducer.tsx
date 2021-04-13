@@ -2,7 +2,6 @@ import {Dispatch} from "redux";
 import {profileAPI, usersAPI} from "../api/api";
 
 const ADD_POST = "ADD-POST"
-const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT"
 const SET_USER_PROFILE = "SET-USER-PROFILE"
 const SET_STATUS = "SET-STATUS"
 
@@ -15,7 +14,6 @@ let initialState: InitialProfileStateType = {
         {id: 1, message: 'London is a capital of great Britain', likesCount: 7},
         {id: 1, message: 'Live Belarus!', likesCount: 345}
     ],
-    newPostText: '',
     profile: null,
     status: 'My status'
 }
@@ -23,7 +21,6 @@ let initialState: InitialProfileStateType = {
 
 export type InitialProfileStateType = {
     posts: Array<PostType>
-    newPostText: string
     profile: ProfileResponseType | null
     status: string
 }
@@ -61,13 +58,6 @@ const profilePageReducer = (state: InitialProfileStateType = initialState, actio
 
     switch (action.type) {
 
-        case UPDATE_NEW_POST_TEXT: {
-            return {
-                ...state,
-                newPostText: action.newText
-            }
-        }
-
         case ADD_POST: {
             const newPost: PostType = {
                 id: new Date().getTime(),
@@ -76,8 +66,7 @@ const profilePageReducer = (state: InitialProfileStateType = initialState, actio
             }
             return {
                 ...state,
-                posts: [...state.posts, newPost],
-                newPostText: ''
+                posts: [ ...state.posts, newPost],
             }
         }
 
@@ -96,7 +85,6 @@ const profilePageReducer = (state: InitialProfileStateType = initialState, actio
 }
 type ActionsType =
     | ReturnType<typeof addPost>
-    | ReturnType<typeof updateNewPost>
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setStatus>
 
@@ -104,13 +92,6 @@ export const addPost = (newPostText: string) => {
     return {
         type: ADD_POST,
         newPostText: newPostText
-    } as const
-}
-
-export const updateNewPost = (newText: string) => {
-    return {
-        type: UPDATE_NEW_POST_TEXT,
-        newText: newText
     } as const
 }
 

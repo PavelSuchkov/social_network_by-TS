@@ -5,7 +5,6 @@ import Message from "./Message/Mesage";
 import {DialogPageType} from "../../redux/dialogsPageReducer";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 
-
 type PropsType = {
     dialogsPage: DialogPageType
     updateNewMessageBody: (text: string) => void
@@ -23,7 +22,6 @@ const Dialogs = (props: PropsType) => {
     const addNewMessage = (value: FormDataType) => {
         props.sendMessage(value.newMessageBody);
     }
-
 
     return (
         <div className={classes.dialogs}>
@@ -53,7 +51,7 @@ const AddMessageForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     )
 }
 
-let AddMessageReduxForm = reduxForm<FormDataType>({
+const AddMessageReduxForm = reduxForm<FormDataType>({
     form: "dialogAddMessageForm"
 })(AddMessageForm)
 

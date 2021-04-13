@@ -1,4 +1,4 @@
-import profilePageReducer, {addPost, InitialProfileStateType, setStatus, updateNewPost} from "./profilePageReducer";
+import profilePageReducer, {addPost, InitialProfileStateType, setStatus} from "./profilePageReducer";
 
 
 let startState: InitialProfileStateType;
@@ -10,7 +10,6 @@ beforeEach(() => {
             {id: 1, message: 'How r u', likesCount: 5},
 
         ],
-        newPostText: '',
         profile: null,
         status: 'My status'
     }
@@ -25,15 +24,7 @@ test('correct adding of post', () => {
     expect(endState.posts.length).toBe(3)
 })
 
-test('Updating of new post is correct', () => {
 
-    const text = 'New next';
-    const action = updateNewPost(text)
-
-    const endState = profilePageReducer(startState, action);
-    expect(endState.newPostText).toBe(text)
-
-})
 
 test('Status changes correctly', () => {
 

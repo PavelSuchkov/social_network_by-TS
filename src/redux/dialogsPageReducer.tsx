@@ -9,7 +9,6 @@ export type MessageType = {
 export type DialogPageType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
-    // newMessageBody: string
 }
 
 export type DialogType = {
@@ -33,8 +32,7 @@ let initialState =  {
         {id: 1, message: 'Любишь пёсиков? =)'},
         {id: 1, message: 'London is a capital of great Britain'},
         {id: 1, message: 'Live Belarus!'}
-    ]/*,
-        newMessageBody: ''*/
+    ]
 }
 
 const dialogsPageReducer = (state: DialogPageType = initialState, action: ActionsType) => {
@@ -42,17 +40,11 @@ const dialogsPageReducer = (state: DialogPageType = initialState, action: Action
 
 
     switch (action.type) {
-       /* case UPDATE_NEW_MESSAGE_BODY:{
-            return {
-                ...state,
-                newMessageBody: action.newMessageBody
-            };
-        }*/
+
         case SEND_MESSAGE:{
             let body = action.newMessageBody;
             return  {
                 ...state,
-                // newMessageBody: '',
                 messages: [...state.messages, {id: (state.messages.length), message: body}]
             };
         }
@@ -61,15 +53,7 @@ const dialogsPageReducer = (state: DialogPageType = initialState, action: Action
     }
 }
 
-type ActionsType = /* ReturnType<typeof updateNewMessageBody> |*/ ReturnType<typeof sendMessage>
-
-
-/*export const updateNewMessageBody = (body: string) => {
-    return {
-        type: UPDATE_NEW_MESSAGE_BODY,
-        newMessageBody: body
-    } as const
-}*/
+type ActionsType = ReturnType<typeof sendMessage>
 
 export const sendMessage = (newMessageBody: string) => {
     return {
