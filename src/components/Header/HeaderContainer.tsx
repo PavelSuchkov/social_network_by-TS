@@ -12,15 +12,15 @@ export type mapStateToPropsType = {
 }
 
 export type authOwnPropsType = {
-    getAuthUserData: () => void
+    // getAuthUserData: () => void
     logout: () => void
 }
 
 class HeaderContainer extends React.Component<authOwnPropsType & mapStateToPropsType> {   //??
 
-    componentDidMount() {
-        this.props.getAuthUserData()
-    }
+    // componentDidMount() {
+    //     this.props.getAuthUserData()
+    // }
 
     render() {
         return <Header {...this.props} /> //???
