@@ -18,7 +18,6 @@ let initialState: InitialProfileStateType = {
     status: 'My status'
 }
 
-
 export type InitialProfileStateType = {
     posts: Array<PostType>
     profile: ProfileResponseType | null

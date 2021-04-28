@@ -10,6 +10,9 @@ import {withAuthRedirect} from "../../hoc/WithAuthRedirect";
 type ProfileMapStateToPropsType = {
     profile: ProfileResponseType | null
     status: string
+    authorizedUserId:  number | null
+    isAuth: boolean
+    // userId: number
 }
 
 type RouteType = {
@@ -33,8 +36,8 @@ class ProfileContainer extends React.Component<PropsType> {
 
     componentDidMount() {
         let userId = +this.props.match.params.userId;
-        if (!userId) {
-            userId = 13489;
+        if (!userId ) {
+            userId =this.props.authorizedUserId ?  this.props.authorizedUserId : 2;
         }
         this.props.getUserProfile(userId);
         this.props.getUserStatus(userId)
@@ -42,7 +45,8 @@ class ProfileContainer extends React.Component<PropsType> {
 
     render() {
         return <div>
-            <Profile {...this.props} profile={this.props.profile}
+            <Profile {...this.props}
+                     profile={this.props.profile}
                      status={this.props.status} />
         </div>
     }
@@ -50,7 +54,9 @@ class ProfileContainer extends React.Component<PropsType> {
 
 const mapStateToProps = (state: RootReduxState): ProfileMapStateToPropsType => ({
     profile: state.profilePage.profile,
-    status: state.profilePage.status
+    status: state.profilePage.status,
+    authorizedUserId: state.authorization.id,
+    isAuth: state.authorization.isAuth
 
 });
 
