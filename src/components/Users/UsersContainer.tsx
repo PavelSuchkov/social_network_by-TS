@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {
     follow,
     followSuccess,
-    getUsers,
+    requestUsers,
     InitialType,
     setCurrentPage,
     unFollow,
@@ -15,6 +15,14 @@ import {Preloader} from "../common/Preloader/Preloader";
 import {RootReduxState} from "../../redux/reduxStore";
 import {withAuthRedirect} from "../../hoc/WithAuthRedirect";
 import {compose} from "redux";
+import {
+    getCurrentPage,
+    getFollowingInProgress,
+    getIsFetching,
+    getPageSize,
+    getTotalUsersCount, getUserPage,
+    getUsers
+} from "../../redux/users-selectors";
 
 type MSTPropsType = {
     users: Array<UserType>
@@ -30,7 +38,7 @@ type MDTPropsType = {
     followSuccess: (userId: number) => void
     unFollowSuccess: (userId: number) => void
     setCurrentPage: (currentPage: number) => void
-    getUsers: (currentPage: number, pageSize: number) => void
+    requestUsers: (currentPage: number, pageSize: number) => void
     follow: (id: number) => void
     unFollow: (id: number) => void
 }
@@ -41,11 +49,11 @@ export type UsersPropsType = MSTPropsType & MDTPropsType
 class UsersContainer extends React.Component<UsersPropsType> {
 
     componentDidMount() {
-        this.props.getUsers(this.props.currentPage, this.props.pageSize)
+        this.props.requestUsers(this.props.currentPage, this.props.pageSize)
     }
 
     onPageChanged = (pageNumber: number) => {
-        this.props.getUsers(pageNumber, this.props.pageSize)
+        this.props.requestUsers(pageNumber, this.props.pageSize)
     }
 
     userPhoto = "https://www.freeiconspng.com/uploads/smile-transparent-background-9.png"
@@ -69,7 +77,7 @@ class UsersContainer extends React.Component<UsersPropsType> {
     }
 }
 
-const mapStateToProps = (state: RootReduxState): MSTPropsType => {
+/*const mapStateToProps = (state: RootReduxState): MSTPropsType => {
     return {
         users: state.usersPage.users,
         userPage: state.usersPage,
@@ -79,11 +87,23 @@ const mapStateToProps = (state: RootReduxState): MSTPropsType => {
         isFetching: state.usersPage.isFetching,
         followingInProgress: state.usersPage.followingInProgress
     }
+}*/
+
+const mapStateToProps = (state: RootReduxState): MSTPropsType => {
+    return {
+        users: getUsers(state),
+        userPage: getUserPage(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        followingInProgress: getFollowingInProgress(state)
+    }
 }
 
 export default compose<React.ComponentType>(
     (connect(mapStateToProps, {
-        followSuccess,unFollowSuccess, setCurrentPage, follow, unFollow, getUsers})),
+        followSuccess,unFollowSuccess, setCurrentPage, follow, unFollow, requestUsers})),
     withAuthRedirect
 )(UsersContainer)
 
