@@ -3,8 +3,8 @@ import {connect} from "react-redux";
 import {
     follow,
     followSuccess,
-    requestUsers,
     InitialType,
+    requestUsers,
     setCurrentPage,
     unFollow,
     unFollowSuccess,
@@ -20,7 +20,8 @@ import {
     getFollowingInProgress,
     getIsFetching,
     getPageSize,
-    getTotalUsersCount, getUserPage,
+    getTotalUsersCount,
+    getUserPage,
     getUsers
 } from "../../redux/users-selectors";
 
@@ -77,20 +78,10 @@ class UsersContainer extends React.Component<UsersPropsType> {
     }
 }
 
-/*const mapStateToProps = (state: RootReduxState): MSTPropsType => {
-    return {
-        users: state.usersPage.users,
-        userPage: state.usersPage,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress
-    }
-}*/
 
 const mapStateToProps = (state: RootReduxState): MSTPropsType => {
     return {
+        // users: getUsers(state),
         users: getUsers(state),
         userPage: getUserPage(state),
         pageSize: getPageSize(state),
