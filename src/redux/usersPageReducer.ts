@@ -63,10 +63,8 @@ export const UsersPageReducer = (state: InitialType = initialState, action: Acti
         case SET_TOTAL_COUNT:
             return {...state, totalUsersCount: action.totalUsersCount}
 
-
         case TOGGLE_IS_FETCHING:
             return {...state, isFetching: action.isFetching}
-
 
         case TOGGLE_IS_FOLLOWING_PROGRESS:
             return {

@@ -5,6 +5,6 @@ import React from "react";
 
 export const Preloader = () => {
     return <div>
-    <img src={preloader_gears} style={ {width: 100, backgroundColor: "transparent"} }/>
-</div>
+        <img src={preloader_gears} style={{width: 100, backgroundColor: "transparent"}}/>
+    </div>
 }

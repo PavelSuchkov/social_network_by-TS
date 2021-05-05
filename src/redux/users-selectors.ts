@@ -3,8 +3,6 @@ import {createSelector} from "reselect";
 import {UserType} from "./usersPageReducer";
 
 
-
-
 const getUsersSelector = (state: RootReduxState) => {
    return  state.usersPage.users;
 }
