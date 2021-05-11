@@ -19,7 +19,6 @@ beforeEach(() => {
 test('Sending of message is correctly works', () => {
 
     const newMessageBody = 'new message was add';
-    // const action = sendMessage;
     const endState = dialogsPageReducer(startState, sendMessage(newMessageBody));
     expect(endState.messages.length).toBe(3);
     expect(endState.messages[2].message).toBe(newMessageBody);

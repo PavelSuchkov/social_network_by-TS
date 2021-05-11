@@ -8,7 +8,6 @@ beforeEach(() => {
         posts: [
             {id: 1, message: 'Hi', likesCount: 3},
             {id: 1, message: 'How r u', likesCount: 5},
-
         ],
         profile: null,
         status: 'My status'
