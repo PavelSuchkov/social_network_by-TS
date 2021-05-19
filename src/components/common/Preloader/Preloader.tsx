@@ -4,7 +4,7 @@ import React from "react";
 
 
 export const Preloader = () => {
-    return <div>
+    return <div style={{position: "fixed", top: "50%", textAlign: "center", width: "55%"}}>
         <img src={preloader_gears} style={{width: 100, backgroundColor: "transparent"}}/>
     </div>
 }
