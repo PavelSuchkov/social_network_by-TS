@@ -37,8 +37,6 @@ let initialState =  {
 
 const dialogsPageReducer = (state: DialogPageType = initialState, action: ActionsType) => {
 
-
-
     switch (action.type) {
 
         case SEND_MESSAGE:{
