@@ -2,7 +2,7 @@ import {getAuthUserData} from "./authReducer";
 import {ThunkAction} from "redux-thunk";
 import {RootReduxState} from "./reduxStore";
 
-const INITIALIZED_SUCCESS = 'INITIALIZED_SUCCESS';
+const INITIALIZED_SUCCESS = 'app/INITIALIZED_SUCCESS';
 
 let initialState = {
     initialized: false
