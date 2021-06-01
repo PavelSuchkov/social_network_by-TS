@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './FormsControls.module.css'
-import {WrappedFieldMetaProps, WrappedFieldProps} from "redux-form";
+import {Field, WrappedFieldMetaProps, WrappedFieldProps} from "redux-form";
 
 
 type FormControlPropsType = {
@@ -8,9 +8,9 @@ type FormControlPropsType = {
 }
 
 export const Textarea: React.FC<FormControlPropsType & WrappedFieldProps> =
-    ({input, meta, ...props}) => {
+    ({input, meta: {touched, error}, ...props}) => {
 
-    const hasError = meta.touched && meta.error
+    const hasError = touched && error
 
     return (
         <div className={styles.formControl }>
@@ -18,15 +18,15 @@ export const Textarea: React.FC<FormControlPropsType & WrappedFieldProps> =
                 <textarea  className={hasError && styles.formInputError}
                     {...input} {...props}/>
             </div>
-            {hasError && <span className={styles.error}>{meta.error}</span> }
+            {hasError && <span className={styles.error}>{error}</span> }
         </div>
     )
 }
 
 export const Input: React.FC<FormControlPropsType & WrappedFieldProps> =
-    ({input, meta, ...props}) => {
+    ({input, meta: {touched, error}, ...props}) => {
 
-        const hasError = meta.touched && meta.error
+        const hasError = touched && error
 
         return (
             <div className={styles.formControl}>
@@ -34,7 +34,14 @@ export const Input: React.FC<FormControlPropsType & WrappedFieldProps> =
                     <input  className={hasError && styles.formInputError}
                         {...input} {...props}/>
                 </div>
-                {hasError && <span className={styles.error}>{meta.error}</span> }
+                {hasError && <span className={styles.error}>{error}</span> }
             </div>
         )
+    }
+
+    export const createField = (placeholder: string, name: string, validators: Array<Function> | undefined, component: any) => {
+        return <Field placeholder={placeholder}
+                      name={name}
+                      validate={[validators]}
+                      component={component}/>
     }

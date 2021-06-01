@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Navbar from "./components/NavBar/Navbar";
-import {BrowserRouter, Route, withRouter} from "react-router-dom";
+import {BrowserRouter, HashRouter, Route, withRouter} from "react-router-dom";
 import Settings from "./components/Settings/Settings";
 import Music from "./components/Music/Music";
 import News from "./components/News/News";
@@ -41,7 +41,7 @@ class App extends React.Component<authOwnPropsType & mapStateToPropsType> {
             return <Preloader/>
         }
         return (
-            <BrowserRouter>
+            <HashRouter>
                 <div className='app-wrapper'>
                     <HeaderContainer/>
                     <Navbar/>
@@ -59,7 +59,7 @@ class App extends React.Component<authOwnPropsType & mapStateToPropsType> {
                         <Route path='/settings' component={Settings}/>
                     </div>
                 </div>
-            </BrowserRouter>);
+            </HashRouter>);
     }
 }
 

@@ -1,8 +1,6 @@
 import {usersAPI} from "../api/api";
-import {Dispatch} from "redux";
 import {ThunkAction} from "redux-thunk";
 import {RootReduxState} from "./reduxStore";
-import {updateObjectInArray} from "../utils/object-helpers";
 
 const FOLLOW = 'users/FOLLOW';
 const UNFOLLOW = 'users/UNFOLLOW';

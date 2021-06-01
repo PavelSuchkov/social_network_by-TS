@@ -1,55 +1,73 @@
-import React from "react";
+import React, {FC} from "react";
 import styles from "./Users.module.css";
 import {UserType} from "../../redux/usersPageReducer";
 import {NavLink} from "react-router-dom";
+import {Paginator} from "./Paginator";
 
 type UsersPageType = {
     totalUsersCount: number
     pageSize: number
     currentPage: number
-    onPageChanged: (pageNumber: number) => void
+    onPageChanged: (pageNumber: number) => void // !!! includenly
     users: Array<UserType>
     userPhoto: string
-    followSuccess: (userId: number) => void
-    unFollowSuccess: (userId: number) => void
+    // followSuccess: (userId: number) => void
+    // unFollowSuccess: (userId: number) => void
     followingInProgress: Array<number>
     follow: (id: number) => void
     unFollow: (id: number) => void
 }
 
-export const Users = (props: UsersPageType) => {
+export const Users: FC<UsersPageType> = ({totalUsersCount, pageSize,
+                                         currentPage, onPageChanged,
+                                         users, userPhoto,
+                                         // followSuccess, unFollowSuccess,
+                                         followingInProgress, follow,
+                                         unFollow}) => {
 
 
-    let pageCount = Math.ceil(props.totalUsersCount / props.pageSize);
+
+// export const Users = ({totalUsersCount}):UsersPageType => {
+
+
+    let pageCount = Math.ceil(totalUsersCount / pageSize);
     let pages = [];
     for (let i = 1; i <= pageCount; i++) {
         pages.push(i)
     }
 
     return <div>
-        <div>
-            {pages.map(p => {
-                return <span key={p} className={(props.currentPage === p) ? styles.selectedPage : ''}
-                             onClick={() => {props.onPageChanged(p)
-                             }}>{p}</span>
-            })}
-        </div>
+        {/*<div>*/}
+        {/*    {pages.map(p => {*/}
+        {/*        return <span key={p} className={(props.currentPage === p) ? styles.selectedPage : ''}*/}
+        {/*                     onClick={() => {props.onPageChanged(p)*/}
+        {/*                     }}>{p}</span>*/}
+        {/*    })}*/}
+        {/*</div>*/}
+        <Paginator totalUsersCount={totalUsersCount}
+                   pageSize={pageSize}
+                   currentPage={currentPage}
+                   onPageChanged={onPageChanged}/>
         {
-            props.users.map(u => <div key={u.id}>
+            users.map(u => <div key={u.id}>
                 <span>
                     <div>
                        <NavLink to={'/profile/' + u.id}> <img className={styles.avatar}
-                                                              src={u.photos.small != null ? u.photos.small : props.userPhoto}
+                                                              src={u.photos.small != null ? u.photos.small : userPhoto}
                                                               alt="smile"/>
                               </NavLink>
                     </div>
                     <div>
                         {u.followed ?
-                            <button disabled={props.followingInProgress.some(id => id === u.id)}
-                                    onClick={() => {props.unFollow(u.id)}}>UnFollow</button>
+                            <button disabled={followingInProgress.some(id => id === u.id)}
+                                    onClick={() => {
+                                        unFollow(u.id)
+                                    }}>UnFollow</button>
 
-                            : <button disabled={props.followingInProgress.some(id => id === u.id)}
-                                      onClick={() => {props.follow(u.id)}}>Follow</button>}
+                            : <button disabled={followingInProgress.some(id => id === u.id)}
+                                      onClick={() => {
+                                          follow(u.id)
+                                      }}>Follow</button>}
                     </div>
                 </span>
                 <span>
