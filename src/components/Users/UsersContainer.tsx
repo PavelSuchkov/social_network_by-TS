@@ -97,6 +97,3 @@ export default compose<React.ComponentType>(
         followSuccess,unFollowSuccess, setCurrentPage, follow, unFollow, requestUsers})),
     withAuthRedirect
 )(UsersContainer)
-
-// export default withAuthRedirect(connect(mapStateToProps, {
-//     followSuccess,unFollowSuccess, setCurrentPage, follow, unFollow, getUsers}) (UsersContainer))
