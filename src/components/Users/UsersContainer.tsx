@@ -10,7 +10,7 @@ import {
     unFollowSuccess,
     UserType
 } from "../../redux/usersPageReducer";
-import {Users} from "./Users.";
+import {Users} from "./Users";
 import {Preloader} from "../common/Preloader/Preloader";
 import {RootReduxState} from "../../redux/reduxStore";
 import {withAuthRedirect} from "../../hoc/WithAuthRedirect";
