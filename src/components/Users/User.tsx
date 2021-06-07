@@ -2,7 +2,7 @@ import React, {FC} from "react";
 import styles from "./Users.module.css";
 import {UserType} from "../../redux/usersPageReducer";
 import {NavLink} from "react-router-dom";
-import {Paginator} from "./Paginator";
+import {Paginator} from "../common/Paginator/Paginator";
 
 type UserPageType = {
     userPhoto: string

@@ -3,7 +3,7 @@ import React, {ChangeEvent, useEffect, useState} from 'react';
 
 type StatusPropsType = {
     status: string
-    updateUserStatus: (status: string) => void
+    updateUserStatus?: (status: string) => void
 }
 
 const ProfileStatus = (props: StatusPropsType) => {
@@ -26,7 +26,7 @@ const ProfileStatus = (props: StatusPropsType) => {
 
     const updateStatus = () => {
         setEditMode(false)
-        props.updateUserStatus(status)
+       props.updateUserStatus && props.updateUserStatus(status)
     }
 
     return (

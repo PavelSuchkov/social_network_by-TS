@@ -1,6 +1,6 @@
 import React, {FC} from "react";
 import {UserType} from "../../redux/usersPageReducer";
-import {Paginator} from "./Paginator";
+import {Paginator} from "../common/Paginator/Paginator";
 import {User} from "./User";
 
 type UsersPageType = {
@@ -22,15 +22,15 @@ export const Users: FC<UsersPageType> = ({
                                              followingInProgress, follow, unFollow
                                          }) => {
 
-    let pageCount = Math.ceil(totalUsersCount / pageSize);
-    let pages = [];
-    for (let i = 1; i <= pageCount; i++) {
-        pages.push(i)
-    }
+    // let pageCount = Math.ceil(totalUsersCount / pageSize);
+    // let pages = [];
+    // for (let i = 1; i <= pageCount; i++) {
+    //     pages.push(i)
+    // }
 
     return <div>
 
-        <Paginator totalUsersCount={totalUsersCount}
+        <Paginator totalItemsCount={totalUsersCount}
                    pageSize={pageSize}
                    currentPage={currentPage}
                    onPageChanged={onPageChanged}/>
