@@ -12,7 +12,8 @@ type UsersPageType = {
 export const Paginator: FC<UsersPageType> = ({currentPage,
                                                  pageSize,
                                                  totalItemsCount,
-                                                 onPageChanged, portionSize= 20}) => {
+                                                 onPageChanged,
+                                                 portionSize= 20}) => {
 
 
     let pagesCount = Math.ceil(totalItemsCount / pageSize);
