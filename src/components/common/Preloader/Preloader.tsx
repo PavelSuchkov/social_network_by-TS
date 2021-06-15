@@ -1,5 +1,4 @@
 import preloader_spinner from "../../../assets/images/preloader_spinner.svg";
-import preloader_gears from "../../../assets/images/preloader_gears.svg";
 import React from "react";
 
 

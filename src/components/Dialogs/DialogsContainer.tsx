@@ -15,7 +15,8 @@ let mapStateToProps = (state: RootReduxState) => {
 }
 
 export const DialogsContainer = compose<React.ComponentType>(
-    connect(mapStateToProps, {sendMessage/*, updateNewMessageBody*/}),
+    connect(mapStateToProps, {sendMessage}),
     withAuthRedirect
 )(Dialogs)
 
+export default DialogsContainer

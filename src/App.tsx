@@ -5,7 +5,8 @@ import {HashRouter, Route} from "react-router-dom";
 import Settings from "./components/Settings/Settings";
 import Music from "./components/Music/Music";
 import News from "./components/News/News";
-import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
+// import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
+
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
@@ -15,6 +16,7 @@ import store, {RootReduxState} from "./redux/reduxStore";
 import {compose} from "redux";
 import {initializeApp} from "./redux/appReducer";
 import {Preloader} from './components/common/Preloader/Preloader';
+import {withSuspense} from "./hoc/WithSuspense";
 
 
 export type mapStateToPropsType = {
@@ -26,6 +28,8 @@ export type mapStateToPropsType = {
 export type authOwnPropsType = {
     initializeApp: () => void
 }
+
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 
 
 class App extends React.Component<authOwnPropsType & mapStateToPropsType> {
@@ -45,8 +49,7 @@ class App extends React.Component<authOwnPropsType & mapStateToPropsType> {
                     <HeaderContainer/>
                     <Navbar/>
                     <div className='app-wrapper-content'>
-                        <Route path='/dialogs' render={
-                            () => <DialogsContainer/>}/>
+                        <Route path='/dialogs' render={withSuspense(DialogsContainer)}/>
                         <Route path='/profile/:userId?' render={
                             () => <ProfileContainer/>}/>
                         <Route path='/users' render={
