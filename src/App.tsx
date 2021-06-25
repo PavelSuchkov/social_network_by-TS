@@ -20,8 +20,6 @@ import {withSuspense} from "./hoc/WithSuspense";
 
 
 export type mapStateToPropsType = {
-    // login: string | null
-    // isAuth: boolean
     initialized: boolean
 }
 
