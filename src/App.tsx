@@ -42,7 +42,7 @@ class App extends React.Component<authOwnPropsType & mapStateToPropsType> {
             return <Preloader/>
         }
         return (
-            <HashRouter>
+            <HashRouter basename={process.env.PUBLIC_URL}>
                 <div className='app-wrapper'>
                     <HeaderContainer/>
                     <Navbar/>
