@@ -22,11 +22,6 @@ export const Users: FC<UsersPageType> = ({
                                              followingInProgress, follow, unFollow
                                          }) => {
 
-    // let pageCount = Math.ceil(totalUsersCount / pageSize);
-    // let pages = [];
-    // for (let i = 1; i <= pageCount; i++) {
-    //     pages.push(i)
-    // }
 
     return <div>
 

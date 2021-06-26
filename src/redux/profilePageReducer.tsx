@@ -1,10 +1,12 @@
 import {profileAPI, usersAPI} from "../api/api";
 import {ThunkAction} from "redux-thunk";
 import {RootReduxState} from "./reduxStore";
+import {Dispatch} from "redux";
 
 const ADD_POST = "profile/ADD-POST"
 const SET_USER_PROFILE = "profile/SET-USER-PROFILE"
 const SET_STATUS = "profile/SET-STATUS"
+const SAVE_PHOTO_SUCCESS = "profile/SAVE_PHOTO_SUCCESS"
 
 let initialState: InitialProfileStateType = {
     posts: [
@@ -54,8 +56,7 @@ export type ProfileResponseType = {
 }
 
 
-const profilePageReducer = (state: InitialProfileStateType = initialState, action: ActionsType): InitialProfileStateType => {
-
+const profilePageReducer = (state: InitialProfileStateType = initialState, action: ActionsType): any => {
     switch (action.type) {
 
         case ADD_POST: {
@@ -79,6 +80,17 @@ const profilePageReducer = (state: InitialProfileStateType = initialState, actio
                 ...state, status: action.status
             }
         }
+        case SAVE_PHOTO_SUCCESS: {
+            return {
+                ...state,
+                profile: {
+                    ...state.profile,
+                    photos: {
+                        ...state.profile?.photos, large: action.photos
+                    }
+                }
+            }
+        }
 
         default:
             return state
@@ -88,6 +100,7 @@ type ActionsType =
     | ReturnType<typeof addPost>
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setStatus>
+    | ReturnType<typeof savePhotoSuccess>
 
 export const addPost = (newPostText: string) => {
     return {
@@ -107,6 +120,13 @@ export const setStatus = (status: string) => {
     return {
         type: SET_STATUS,
         status
+    } as const
+}
+
+export const savePhotoSuccess = (photos: string) => {
+    return {
+        type: SAVE_PHOTO_SUCCESS,
+        photos
     } as const
 }
 export type ThunkType = ThunkAction<void, RootReduxState, unknown, ActionsType>
@@ -129,6 +149,13 @@ export const updateUserStatus = (status: string): ThunkType =>
             if (response.data.resultCode === 0) {
                 dispatch(setStatus(status));
             }
+}
+
+export const savePhoto = (file: File) => async (dispatch: Dispatch) => {
+    let response = await profileAPI.updatePhoto(file)
+    if(response.data.resultCode === 0){
+        dispatch(savePhotoSuccess(response.data.data.photos.large))
+    }
 }
 
 export default profilePageReducer;

@@ -24,6 +24,7 @@ import {
     getUserPage,
     getUsers
 } from "../../redux/users-selectors";
+import avatar from "./../../assets/images/avatar/avatar.png"
 
 type MSTPropsType = {
     users: Array<UserType>
@@ -57,7 +58,8 @@ class UsersContainer extends React.Component<UsersPropsType> {
         this.props.requestUsers(pageNumber, this.props.pageSize)
     }
 
-    userPhoto = "https://www.freeiconspng.com/uploads/smile-transparent-background-9.png"
+    // userPhoto = "https://www.freeiconspng.com/uploads/smile-transparent-background-9.png";
+    userPhoto = avatar;
 
     render() {
         return <>
@@ -67,8 +69,6 @@ class UsersContainer extends React.Component<UsersPropsType> {
                    pageSize={this.props.pageSize}
                    currentPage={this.props.currentPage}
                    users={this.props.users}
-                   // followSuccess={this.props.followSuccess}
-                   // unFollowSuccess={this.props.unFollowSuccess}
                    followingInProgress={this.props.followingInProgress}
                    onPageChanged={this.onPageChanged}
                    follow={this.props.follow}
@@ -81,7 +81,6 @@ class UsersContainer extends React.Component<UsersPropsType> {
 
 const mapStateToProps = (state: RootReduxState): MSTPropsType => {
     return {
-        // users: getUsers(state),
         users: getUsers(state),
         userPage: getUserPage(state),
         pageSize: getPageSize(state),

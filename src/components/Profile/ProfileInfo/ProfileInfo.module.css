@@ -4,3 +4,7 @@ img{
 .descriptionBlock{
     padding: 15px;
 }
+
+.mainPhoto {
+    max-width: 200px;
+}

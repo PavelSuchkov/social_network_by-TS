@@ -38,7 +38,6 @@ export const UsersPageReducer = (state: InitialType = initialState, action: Acti
         case FOLLOW:
             return {
                 ...state,
-                // users: updateObjectInArray(state.users, action.userId, 'id', {followed: true} )
                 users: state.users.map(u => {
                     if (u.id === action.userId) {
                         return {...u, followed: true}
