@@ -67,7 +67,7 @@ const profilePageReducer = (state: InitialProfileStateType = initialState, actio
             }
             return {
                 ...state,
-                posts: [...state.posts, newPost],
+                posts: [ newPost, ...state.posts]
             }
         }
 
