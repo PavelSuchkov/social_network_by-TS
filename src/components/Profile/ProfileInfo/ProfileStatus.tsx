@@ -6,7 +6,7 @@ type StatusPropsType = {
     updateUserStatus?: (status: string) => void
 }
 
-const ProfileStatus = (props: StatusPropsType) => {
+export const ProfileStatus = (props: StatusPropsType) => {
 
     const [editMode, setEditMode] = useState<boolean>(false);
     const [status, setStatus] = useState<string>(props.status);
@@ -30,13 +30,13 @@ const ProfileStatus = (props: StatusPropsType) => {
     }
 
     return (
-        <div>{!editMode
+        <div> {!editMode
             ? <div>
-                <span onDoubleClick={editModeOn}>{props.status ? props.status : '----'}</span>
+                Status: <b> <span onDoubleClick={editModeOn}>{props.status ? props.status : '----'}</span> </b>
             </div>
 
             : <div>
-                <input value={status} onChange={onChange} autoFocus={true} onBlur={updateStatus}/>
+                Status:  <input value={status} onChange={onChange} autoFocus={true} onBlur={updateStatus}/>
             </div>
         }
         </div>
