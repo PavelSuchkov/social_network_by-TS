@@ -21,8 +21,8 @@ import {
     getIsFetching,
     getPageSize,
     getTotalUsersCount,
-    getUserPage,
-    getUsers
+    getUsers,
+    getUsersPage
 } from "../../redux/users-selectors";
 import avatar from "./../../assets/images/avatar/avatar.png"
 
@@ -82,7 +82,7 @@ class UsersContainer extends React.Component<UsersPropsType> {
 const mapStateToProps = (state: RootReduxState): MSTPropsType => {
     return {
         users: getUsers(state),
-        userPage: getUserPage(state),
+        userPage: getUsersPage(state),
         pageSize: getPageSize(state),
         totalUsersCount: getTotalUsersCount(state),
         currentPage: getCurrentPage(state),

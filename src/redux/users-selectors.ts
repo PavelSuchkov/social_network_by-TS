@@ -1,36 +1,46 @@
 import {RootReduxState} from "./reduxStore";
 import {createSelector} from "reselect";
-import {UserType} from "./usersPageReducer";
+import {InitialType, UserType} from "./usersPageReducer";
 
 
 const getUsersSelector = (state: RootReduxState) => {
-   return  state.usersPage.users;
+    return state.usersPage.users;
 }
 
-export const getUsers =  createSelector(getUsersSelector, (users: Array<UserType>) => {
+export const getUsers = createSelector(getUsersSelector, (users: Array<UserType>) => {
     return users
 })
 
-export const getUserPage = (state: RootReduxState) => {
-   return state.usersPage;
+const getUserPageSelector = (state: RootReduxState) => {
+    return state.usersPage;
 }
 
-export const getPageSize = (state: RootReduxState) => {
-    return  state.usersPage.pageSize;
+export const getUsersPage = createSelector(getUserPageSelector, (usersPage: InitialType) => {
+    return usersPage
+})
+
+
+const getPageSizeSelector = (state: RootReduxState) => {
+    return state.usersPage.pageSize;
 }
+
+export const getPageSize = createSelector(getPageSizeSelector, (pageSize: number) => {
+    return pageSize
+})
+
 
 export const getTotalUsersCount = (state: RootReduxState) => {
-    return  state.usersPage.totalUsersCount;
+    return state.usersPage.totalUsersCount;
 }
 
 export const getCurrentPage = (state: RootReduxState) => {
-    return  state.usersPage.currentPage;
+    return state.usersPage.currentPage;
 }
 
 export const getIsFetching = (state: RootReduxState) => {
-    return  state.usersPage.isFetching;
+    return state.usersPage.isFetching;
 }
 export const getFollowingInProgress = (state: RootReduxState) => {
-    return  state.usersPage.followingInProgress;
+    return state.usersPage.followingInProgress;
 }
 
