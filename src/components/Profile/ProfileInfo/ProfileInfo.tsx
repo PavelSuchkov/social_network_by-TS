@@ -27,8 +27,6 @@ const ProfileInfo = (props: profileInfoPropsType) => {
         return <Preloader/>
     }
 
-
-
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             if (e.target.files[0].type !== 'image/jpeg' && 'image/png' && 'image/jpg') {
@@ -39,8 +37,6 @@ const ProfileInfo = (props: profileInfoPropsType) => {
             }
         }
     }
-
-
 
     return (
         <div>
@@ -84,8 +80,8 @@ const ProfileData = (props: ProfileDataType) => {
             </div>
             <div>
                 Contacts: {props.profile.contacts && Object.keys(props.profile.contacts).map(key => {
-                // @ts-ignore
-                return <Contact key={key} contactTitle={key} contactValue={props.profile.contacts[key]}/>
+
+                return <Contact key={key} contactTitle={key} contactValue={props.profile.contacts[key as keyof ContactType]}/>
             })}
             </div>
             <button onClick={props.toggleEditMode}>Edit</button>
@@ -93,9 +89,20 @@ const ProfileData = (props: ProfileDataType) => {
     </div>
 }
 
-type ContactsType = {
+export type ContactsType = {
     contactTitle: string,
     contactValue: any
+}
+
+type ContactType = {
+    facebook: string
+    website: string
+    vk: string
+    twitter: string
+    instagram: string
+    youtube: string
+    github: string
+    mainLink: string
 }
 
 export const Contact = (contacts: ContactsType) => {
