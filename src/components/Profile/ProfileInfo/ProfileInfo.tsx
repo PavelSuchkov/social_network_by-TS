@@ -1,9 +1,10 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import classes from './ProfileInfo.module.css';
 import {Preloader} from "../../common/Preloader/Preloader";
 import {ProfileResponseType} from "../../../redux/profilePageReducer";
 import ProfileStatus from "./ProfileStatus";
 import avatar from "./../../../assets/images/avatar/avatar.png"
+import {ProfileDataForm} from "./profileDataForm";
 
 type profileInfoPropsType = {
 
@@ -15,9 +16,18 @@ type profileInfoPropsType = {
 }
 
 const ProfileInfo = (props: profileInfoPropsType) => {
+
+    const [editMode, setEditMode] = useState<boolean>(false);
+
+    const toggleEditMode = () => {
+        editMode ? setEditMode(false) : setEditMode(true)
+    }
+
     if (!props.profile) {
         return <Preloader/>
     }
+
+
 
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -30,26 +40,34 @@ const ProfileInfo = (props: profileInfoPropsType) => {
         }
     }
 
+
+
     return (
         <div>
             <div className={classes.descriptionBlock}>
-                <ProfileData profile={props.profile} isOwner={props.isOwner} onMainPhotoSelected={onMainPhotoSelected} />
-                <ProfileStatus status={props.status} updateUserStatus={props.updateUserStatus}  />
+                <img src={props.profile.photos.large || avatar} className={classes.mainPhoto}/>
+                {props.isOwner && <input type={'file'} onChange={(e) => {
+                    e.currentTarget.value.length !== 0 && onMainPhotoSelected(e)
+                }}/>}
+                {editMode ? <ProfileDataForm profile={props.profile} isOwner={props.isOwner} onMainPhotoSelected={onMainPhotoSelected}
+                                             editMode={editMode} toggleEditMode={toggleEditMode}/>
+                : <ProfileData profile={props.profile} isOwner={props.isOwner} onMainPhotoSelected={onMainPhotoSelected}
+                               editMode={editMode} toggleEditMode={toggleEditMode}/>}
+
+                <ProfileStatus status={props.status} updateUserStatus={props.updateUserStatus}/>
             </div>
         </div>
     )
 }
-type ProfileDataType = {
+export type ProfileDataType = {
     profile: ProfileResponseType
     isOwner: boolean
+    editMode: boolean
+    toggleEditMode: () => void
     onMainPhotoSelected: any
 }
 const ProfileData = (props: ProfileDataType) => {
-  return  <div>
-        <img src={props.profile.photos.large || avatar} className={classes.mainPhoto}/>
-        {props.isOwner && <input type={'file'} onChange={(e) => {
-            e.currentTarget.value.length !== 0 && props.onMainPhotoSelected(e)
-        }}/>}
+    return <div>
         <div>
             <div>
                 Full name: {props.profile.fullName}
@@ -70,17 +88,17 @@ const ProfileData = (props: ProfileDataType) => {
                 return <Contact key={key} contactTitle={key} contactValue={props.profile.contacts[key]}/>
             })}
             </div>
+            <button onClick={props.toggleEditMode}>Edit</button>
         </div>
     </div>
 }
 
 type ContactsType = {
     contactTitle: string,
-    contactValue: string
+    contactValue: any
 }
 
-const Contact = (contacts: ContactsType) => {
+export const Contact = (contacts: ContactsType) => {
     return <div className={classes.contact}><b>{contacts.contactTitle}</b>: {contacts.contactValue}</div>
 }
-
 export default ProfileInfo;
