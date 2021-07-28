@@ -80,7 +80,6 @@ const ProfileData = (props: ProfileDataType) => {
             </div>
             <div>
                 Contacts: {props.profile.contacts && Object.keys(props.profile.contacts).map(key => {
-
                 return <Contact key={key} contactTitle={key} contactValue={props.profile.contacts[key as keyof ContactType]}/>
             })}
             </div>
@@ -92,6 +91,7 @@ const ProfileData = (props: ProfileDataType) => {
 export type ContactsType = {
     contactTitle: string,
     contactValue: any
+    onChange?: (e: string | ChangeEvent<any>) => void
 }
 
 type ContactType = {
