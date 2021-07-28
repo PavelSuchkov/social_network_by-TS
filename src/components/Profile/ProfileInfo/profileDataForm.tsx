@@ -29,7 +29,8 @@ export const ProfileDataForm = (props: ProfileDataType) => {
     return <form onSubmit={formik.handleSubmit}>
         <div>
             Full name: {props.profile.fullName} <input type="text" name={'fullName'}
-                                                       placeholder={props.profile.fullName} onChange={formik.handleChange}
+                                                       placeholder={props.profile.fullName}
+                                                       onChange={formik.handleChange}
         />
         </div>
         <div>
@@ -40,7 +41,8 @@ export const ProfileDataForm = (props: ProfileDataType) => {
             Looking for a job: {props.profile.lookingForAJobDescription}
         </div>}
         <div>
-            About me: <input type="text" name={'aboutMe'} onChange={formik.handleChange} value={props.profile.aboutMe}/>
+            About me: <input type="text" name={'aboutMe'} onChange={formik.handleChange}
+                             placeholder={props.profile.aboutMe}/>
         </div>
         <div>
             Contacts: {props.profile.contacts && Object.keys(props.profile.contacts).map(key => {
