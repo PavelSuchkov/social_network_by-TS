@@ -7,7 +7,10 @@ import {saveProfile} from "../../../redux/profilePageReducer";
 import {RootReduxState} from "../../../redux/reduxStore";
 
 
+
+
 export const ProfileDataForm = (props: ProfileDataType) => {
+// export const ProfileDataForm: React.FC<InjectedFormProps<ProfileDataType>> = ({handleSubmit, error,  }) => {
 
     const dispatch = useDispatch();
     const userId = useSelector<RootReduxState, number>((state) => state.profilePage.profile.userId)
@@ -38,7 +41,7 @@ export const ProfileDataForm = (props: ProfileDataType) => {
         }
 
     });
-    return <form onSubmit={formik.handleSubmit}>
+    return <form onSubmit={formik.handleSubmit}  >
         <div>
             Full name: {props.profile.fullName} <input type="text" name={'fullName'}
                                                        placeholder={props.profile.fullName}
@@ -64,6 +67,8 @@ export const ProfileDataForm = (props: ProfileDataType) => {
         })}
 
         </div>
+
+        {/*{formik.errors ? <div style={{color: 'red'}}>{formik.errors}</div> : null}*/}
 
         {props.isOwner && <div>
             <button type="submit">Confirm edits</button>

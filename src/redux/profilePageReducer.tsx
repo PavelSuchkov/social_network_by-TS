@@ -1,6 +1,7 @@
 import {profileAPI, usersAPI} from "../api/api";
 import {ThunkAction} from "redux-thunk";
 import {RootReduxState} from "./reduxStore";
+import {stopSubmit} from "redux-form";
 const ADD_POST = "profile/ADD-POST"
 const SET_USER_PROFILE = "profile/SET-USER-PROFILE"
 const SET_STATUS = "profile/SET-STATUS"
@@ -199,13 +200,12 @@ export const saveProfile = (profile: ProfileResponseType): ThunkType =>
 
     async (dispatch, getState) => {
     const id =  getState().authorization.id
-        debugger
         let response = await profileAPI.updateProfile(profile);
         if(response.data.resultCode === 0){
-            let response1 = await usersAPI.getProfile(id)
-            debugger
-            dispatch(setUserProfile(response1.data));
-            // dispatch(saveProfileContactsSuccess(response.data));
+            let response = await usersAPI.getProfile(id)
+            dispatch(setUserProfile(response.data));
+        } else {
+            dispatch(stopSubmit("update-profile", {_error: response.data.messages[0]}) as ActionsType)
         }
     }
 
