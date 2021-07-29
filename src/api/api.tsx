@@ -1,4 +1,5 @@
 import axios from "axios";
+import {ProfileResponseType, ProfileUpdateType} from "../redux/profilePageReducer";
 
 
 export const instance = axios.create({
@@ -54,6 +55,10 @@ export const profileAPI = {
             headers: {
                 'Content-Type' : 'multipart/form-data'
             }
+        });
+    },
+    updateProfile(profile: ProfileResponseType) {
+        return instance.put(`/profile/` , profile, {
         });
     }
 }

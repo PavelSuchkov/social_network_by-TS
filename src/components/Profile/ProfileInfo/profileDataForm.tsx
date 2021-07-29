@@ -1,29 +1,40 @@
 import React from "react";
-import {ContactsType, ProfileDataType} from "./ProfileInfo";
-import {useFormik} from "formik";
+import {ContactsType, ContactType, ProfileDataType} from "./ProfileInfo";
+import {useFormik, Form, useFormikContext} from "formik";
 import classes from "./ProfileInfo.module.css";
+import {useDispatch, useSelector} from "react-redux";
+import {saveProfile} from "../../../redux/profilePageReducer";
+import {RootReduxState} from "../../../redux/reduxStore";
+
 
 export const ProfileDataForm = (props: ProfileDataType) => {
 
-    const formik = useFormik({
+    const dispatch = useDispatch();
+    const userId = useSelector<RootReduxState, number>((state) => state.profilePage.profile.userId)
 
+    const formik = useFormik({
         initialValues: {
+            userId: userId,
             fullName: props.profile.fullName,
             aboutMe: props.profile.aboutMe,
-            facebook: props.profile.contacts.facebook,
-            website: props.profile.contacts.website,
-            vk: props.profile.contacts.vk,
-            twitter: props.profile.contacts.twitter,
-            instagram: props.profile.contacts.instagram,
-            youtube: props.profile.contacts.youtube,
-            github: props.profile.contacts.github,
-            mainLink: props.profile.contacts.mainLink,
+            lookingForAJob: true,
+            lookingForAJobDescription: 'yes this is description',
+            contacts: {
+                facebook: props.profile.contacts.facebook,
+                website: props.profile.contacts.website,
+                vk: props.profile.contacts.vk,
+                twitter: props.profile.contacts.twitter,
+                instagram: props.profile.contacts.instagram,
+                youtube: props.profile.contacts.youtube,
+                github: props.profile.contacts.github,
+                mainLink: props.profile.contacts.mainLink,
+            }
         },
-
         onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
+            dispatch(saveProfile(values))
+            console.log(JSON.stringify(values, null, 2));
             formik.resetForm();
-        },
+        }
 
     });
     return <form onSubmit={formik.handleSubmit}>
@@ -50,9 +61,13 @@ export const ProfileDataForm = (props: ProfileDataType) => {
                                 contactValue={props.profile.contacts[key as keyof ContactType]}
                                 onChange={formik.handleChange}/>
         })}
+
         </div>
-        <button type="submit">Confirm edits</button>
-        <button onClick={props.toggleEditMode}>Save</button>
+
+        {props.isOwner && <div>
+            <button type="submit">Confirm edits</button>
+            <button onClick={props.toggleEditMode}>Save</button>
+        </div>}
     </form>
 }
 
@@ -63,14 +78,5 @@ export const ContactForm = (contacts: ContactsType) => {
                                                                                    onChange={contacts.onChange}/></div>
 }
 
-type ContactType = {
-    facebook: string
-    website: string
-    vk: string
-    twitter: string
-    instagram: string
-    youtube: string
-    github: string
-    mainLink: string
-}
+
 

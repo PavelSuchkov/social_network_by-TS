@@ -5,6 +5,8 @@ const ADD_POST = "profile/ADD-POST"
 const SET_USER_PROFILE = "profile/SET-USER-PROFILE"
 const SET_STATUS = "profile/SET-STATUS"
 const SAVE_PHOTO_SUCCESS = "profile/SAVE_PHOTO_SUCCESS"
+const SAVE_PROFILE_SUCCESS = "profile/SAVE_PROFILE_SUCCESS"
+
 
 let initialState: InitialProfileStateType = {
     posts: [
@@ -46,11 +48,29 @@ export type ProfileResponseType = {
     fullName: string
     lookingForAJob: boolean
     lookingForAJobDescription: string
-    photos: {
+    photos?: {
         large: string
         small: string
     }
     userId: number
+}
+
+export type ProfileUpdateType = {
+    userId: number
+    fullName: string
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    aboutMe: string
+    contacts: {
+        facebook: string | null
+        github: string | null
+        instagram: string | null
+        mainLink: string | null
+        twitter: string | null
+        vk: string | null
+        website: string | null
+        youtube: string | null
+    }
 }
 
 
@@ -90,6 +110,13 @@ const profilePageReducer = (state: InitialProfileStateType = initialState, actio
             }
         }
 
+        case SAVE_PROFILE_SUCCESS: {
+            return {
+                ...state,
+                profile: action.profile
+            }
+        }
+
         default:
             return state
     }
@@ -99,6 +126,7 @@ type ActionsType =
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setStatus>
     | ReturnType<typeof savePhotoSuccess>
+    | ReturnType<typeof saveProfileSuccess>
 
 export const addPost = (newPostText: string) => {
     return {
@@ -127,6 +155,13 @@ export const savePhotoSuccess = (photos: string) => {
         photos
     } as const
 }
+export const saveProfileSuccess = (profile: ProfileResponseType) => {
+    return {
+        type: SAVE_PROFILE_SUCCESS,
+        profile
+    } as const
+}
+
 export type ThunkType = ThunkAction<void, RootReduxState, unknown, ActionsType>
 
 export const getUserProfile = (userId: number): ThunkType =>
@@ -153,8 +188,18 @@ export const savePhoto = (file: File): ThunkType =>
     async (dispatch) => {
     let response = await profileAPI.updatePhoto(file)
     if(response.data.resultCode === 0){
+        debugger
         dispatch(savePhotoSuccess(response.data.data.photos.large))
     }
 }
+
+export const saveProfile = (profile: ProfileResponseType): ThunkType =>
+    async (dispatch) => {
+        let response = await profileAPI.updateProfile(profile);
+        if(response.data.resultCode === 0){
+            let response = await usersAPI.getProfile(profile.userId)
+            dispatch(setUserProfile(response.data));
+        }
+    }
 
 export default profilePageReducer;

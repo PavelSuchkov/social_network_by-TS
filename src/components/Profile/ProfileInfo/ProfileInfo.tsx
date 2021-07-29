@@ -41,7 +41,8 @@ const ProfileInfo = (props: profileInfoPropsType) => {
     return (
         <div>
             <div className={classes.descriptionBlock}>
-                <img src={props.profile.photos.large || avatar} className={classes.mainPhoto}/>
+                {props.profile.photos?.large ? <img src={props.profile.photos.large || avatar} className={classes.mainPhoto}/> : avatar }
+
                 {props.isOwner && <input type={'file'} onChange={(e) => {
                     e.currentTarget.value.length !== 0 && onMainPhotoSelected(e)
                 }}/>}
@@ -73,7 +74,7 @@ const ProfileData = (props: ProfileDataType) => {
             </div>
             {props.profile.lookingForAJob &&
             <div>
-                Looking for a job: {props.profile.lookingForAJobDescription}
+                Looking for a description: {props.profile.lookingForAJobDescription}
             </div>}
             <div>
                 About me: {props.profile.aboutMe}
@@ -83,7 +84,8 @@ const ProfileData = (props: ProfileDataType) => {
                 return <Contact key={key} contactTitle={key} contactValue={props.profile.contacts[key as keyof ContactType]}/>
             })}
             </div>
-            <button onClick={props.toggleEditMode}>Edit</button>
+            {props.isOwner && <button onClick={props.toggleEditMode}>Edit</button>}
+
         </div>
     </div>
 }
@@ -94,7 +96,7 @@ export type ContactsType = {
     onChange?: (e: string | ChangeEvent<any>) => void
 }
 
-type ContactType = {
+export type ContactType = {
     facebook: string
     website: string
     vk: string
