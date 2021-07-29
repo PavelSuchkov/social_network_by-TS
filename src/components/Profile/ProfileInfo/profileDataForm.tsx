@@ -34,6 +34,7 @@ export const ProfileDataForm = (props: ProfileDataType) => {
             dispatch(saveProfile(values))
             console.log(JSON.stringify(values, null, 2));
             formik.resetForm();
+            props.toggleEditMode()
         }
 
     });
@@ -66,15 +67,15 @@ export const ProfileDataForm = (props: ProfileDataType) => {
 
         {props.isOwner && <div>
             <button type="submit">Confirm edits</button>
-            <button onClick={props.toggleEditMode}>Save</button>
         </div>}
     </form>
 }
 
 export const ContactForm = (contacts: ContactsType) => {
     return <div className={classes.contact}><b>{contacts.contactTitle}</b>: <input type="text"
-                                                                                   name={contacts.contactTitle}
-                                                                                   placeholder={contacts.contactTitle}
+                                                                                   name={"contacts." + contacts.contactTitle}
+                                                                                   placeholder={contacts.contactValue}
+                                                                                   // value={contacts.contactValue}
                                                                                    onChange={contacts.onChange}/></div>
 }
 

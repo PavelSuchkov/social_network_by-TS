@@ -5,7 +5,7 @@ const ADD_POST = "profile/ADD-POST"
 const SET_USER_PROFILE = "profile/SET-USER-PROFILE"
 const SET_STATUS = "profile/SET-STATUS"
 const SAVE_PHOTO_SUCCESS = "profile/SAVE_PHOTO_SUCCESS"
-const SAVE_PROFILE_SUCCESS = "profile/SAVE_PROFILE_SUCCESS"
+const SAVE_PROFILE_CONTACTS = "profile/SAVE_PROFILE_CONTACTS"
 
 
 let initialState: InitialProfileStateType = {
@@ -90,7 +90,7 @@ const profilePageReducer = (state: InitialProfileStateType = initialState, actio
         }
 
         case SET_USER_PROFILE: {
-            return {...state, profile: action.profile}
+            return {...state, profile: action.profile, contacts: action.profile.contacts}
         }
 
         case SET_STATUS: {
@@ -110,10 +110,12 @@ const profilePageReducer = (state: InitialProfileStateType = initialState, actio
             }
         }
 
-        case SAVE_PROFILE_SUCCESS: {
+        case SAVE_PROFILE_CONTACTS: {
+            debugger
             return {
                 ...state,
-                profile: action.profile
+                profile: action.profile,
+                contacts: action.profile.contacts
             }
         }
 
@@ -126,7 +128,7 @@ type ActionsType =
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setStatus>
     | ReturnType<typeof savePhotoSuccess>
-    | ReturnType<typeof saveProfileSuccess>
+    | ReturnType<typeof saveProfileContactsSuccess>
 
 export const addPost = (newPostText: string) => {
     return {
@@ -155,9 +157,9 @@ export const savePhotoSuccess = (photos: string) => {
         photos
     } as const
 }
-export const saveProfileSuccess = (profile: ProfileResponseType) => {
+export const saveProfileContactsSuccess = (profile: ProfileResponseType) => {
     return {
-        type: SAVE_PROFILE_SUCCESS,
+        type: SAVE_PROFILE_CONTACTS,
         profile
     } as const
 }
@@ -194,11 +196,16 @@ export const savePhoto = (file: File): ThunkType =>
 }
 
 export const saveProfile = (profile: ProfileResponseType): ThunkType =>
-    async (dispatch) => {
+
+    async (dispatch, getState) => {
+    const id =  getState().authorization.id
+        debugger
         let response = await profileAPI.updateProfile(profile);
         if(response.data.resultCode === 0){
-            let response = await usersAPI.getProfile(profile.userId)
-            dispatch(setUserProfile(response.data));
+            let response1 = await usersAPI.getProfile(id)
+            debugger
+            dispatch(setUserProfile(response1.data));
+            // dispatch(saveProfileContactsSuccess(response.data));
         }
     }
 

@@ -108,6 +108,6 @@ export type ContactType = {
 }
 
 export const Contact = (contacts: ContactsType) => {
-    return <div className={classes.contact}><b>{contacts.contactTitle}</b>: {contacts.contactValue}</div>
+    return <div className={classes.contact}><b>{contacts.contactTitle}</b>: <a href={contacts.contactValue}>{contacts.contactValue}</a></div>
 }
 export default ProfileInfo;

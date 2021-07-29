@@ -9,14 +9,14 @@ const SET_USER_DATA = 'auth/SET-USER-DATA';
 
 
 const initialState: initialStateSetUserType = {
-    id: null,
+    id: 0,
     email: null,
     login: null,
     isAuth: false
 }
 
 export type initialStateSetUserType = {
-    id: number | null
+    id: number
     email: string | null
     login: string | null
     isAuth: boolean
@@ -77,7 +77,7 @@ export const login = (email: string, password: string, rememberMe: boolean)
 export const logout = (): ThunkType => async (dispatch) => {
    let response = await authAPI.logout()
             if (response.data.resultCode === 0) {
-                dispatch(setAuthUserData({id: null, email: null, login: null, isAuth: false}))
+                dispatch(setAuthUserData({id: 0, email: null, login: null, isAuth: false}))
             }
 }
 
