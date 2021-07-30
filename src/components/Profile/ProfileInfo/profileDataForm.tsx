@@ -1,27 +1,26 @@
 import React from "react";
 import {ContactsType, ContactType, ProfileDataType} from "./ProfileInfo";
-import {useFormik, Form, useFormikContext} from "formik";
+import {useFormik} from "formik";
 import classes from "./ProfileInfo.module.css";
 import {useDispatch, useSelector} from "react-redux";
 import {saveProfile} from "../../../redux/profilePageReducer";
 import {RootReduxState} from "../../../redux/reduxStore";
-
-
+import {current} from "@reduxjs/toolkit";
 
 
 export const ProfileDataForm = (props: ProfileDataType) => {
 // export const ProfileDataForm: React.FC<InjectedFormProps<ProfileDataType>> = ({handleSubmit, error,  }) => {
 
     const dispatch = useDispatch();
-    const userId = useSelector<RootReduxState, number>((state) => state.profilePage.profile.userId)
+    const userId = useSelector<RootReduxState, number>((state) => state.profilePage.profile.userId);
 
     const formik = useFormik({
         initialValues: {
             userId: userId,
             fullName: props.profile.fullName,
             aboutMe: props.profile.aboutMe,
-            lookingForAJob: true,
-            lookingForAJobDescription: 'yes this is description',
+            lookingForAJob: props.profile.lookingForAJob,
+            lookingForAJobDescription: props.profile.lookingForAJobDescription,
             contacts: {
                 facebook: props.profile.contacts.facebook,
                 website: props.profile.contacts.website,
@@ -49,11 +48,14 @@ export const ProfileDataForm = (props: ProfileDataType) => {
         />
         </div>
         <div>
-            Looking for a job: {props.profile.lookingForAJob ? 'yes' : 'no'}
+            Looking for a job:
+            <input name={'lookingForAJob'}  type="checkbox" onChange={(e) => (!e.currentTarget.value)}/>
         </div>
         {props.profile.lookingForAJob &&
         <div>
-            Looking for a job: {props.profile.lookingForAJobDescription}
+            Looking for a job description: {/*{props.profile.lookingForAJobDescription}*/}
+            <input type="text" name={'lookingForAJobDescription'} onChange={formik.handleChange}
+                   placeholder={props.profile.lookingForAJobDescription}/>
         </div>}
         <div>
             About me: <input type="text" name={'aboutMe'} onChange={formik.handleChange}

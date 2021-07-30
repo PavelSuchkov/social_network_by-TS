@@ -205,7 +205,8 @@ export const saveProfile = (profile: ProfileResponseType): ThunkType =>
             let response = await usersAPI.getProfile(id)
             dispatch(setUserProfile(response.data));
         } else {
-            dispatch(stopSubmit("update-profile", {_error: response.data.messages[0]}) as ActionsType)
+            dispatch(stopSubmit("update-profile", {_error: response.data.messages[0]}) as ActionsType);
+            return Promise.reject(response.data.messages[0]);
         }
     }
 

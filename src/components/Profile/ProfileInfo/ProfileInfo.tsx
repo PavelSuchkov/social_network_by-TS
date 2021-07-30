@@ -70,6 +70,7 @@ const ProfileData = (props: ProfileDataType) => {
                 Full name: {props.profile.fullName}
             </div>
             <div>
+                {/*Looking for a job: {props.profile.lookingForAJob ? 'yes' : 'no'}*/}
                 Looking for a job: {props.profile.lookingForAJob ? 'yes' : 'no'}
             </div>
             {props.profile.lookingForAJob &&
