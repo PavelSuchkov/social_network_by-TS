@@ -13,13 +13,13 @@ export type FormDataType = {
     email: string
     password: string
     rememberMe: boolean
+    captchaUrl?: string | null| undefined
+    captcha?: string
 }
 
 const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit, error}) => {
-
     return <form onSubmit={handleSubmit}>
         <div>
-            {/*{createField('Email', 'email', [required], Input)}*/}
             <Field placeholder={'Email'} name={'email'} validate={[required]} component={Input}/>
         </div>
         <div>
@@ -28,6 +28,7 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit, err
         <div>
             <Field component={Input} name={'rememberMe'} type={'checkbox'}/> Remember me
         </div>
+
         { error && <div className={styles.formSummaryError}>
             {error}
         </div> }
@@ -43,26 +44,30 @@ const LoginReduxForm = reduxForm<FormDataType>({
 
 type LoginProps = {
     isAuth: boolean
-    login: (email: string, password: string, rememberMe: boolean) => void
+    login: (email: string, password: string, rememberMe: boolean, captcha?: string) => void
+    captchaUrl?: string | null | undefined
 }
 const Login = (props: LoginProps) => {
 
     const onSubmit = (formData: FormDataType) => {
-        props.login(formData.email, formData.password, formData.rememberMe)
+        props.login(formData.email, formData.password, formData.rememberMe, formData.captcha)
     }
 
     if (props.isAuth) {
         return <Redirect to={'/profile'}/>
     }
-
+    console.log(props)
     return <div>
+
         <h1>Login</h1>
-        <LoginReduxForm onSubmit={onSubmit}/>
+        <LoginReduxForm onSubmit={onSubmit}
+        />
     </div>
 }
 
 const mapStateToProps = (state: RootReduxState) => ({
-    isAuth: state.authorization.isAuth
+    isAuth: state.authorization.isAuth,
+    captchaUrl: state.authorization.captchaUrl
 })
 
-export default connect(mapStateToProps, {login}) (Login)
+// export default connect(mapStateToProps, {login}) (Login)

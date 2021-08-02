@@ -5,7 +5,6 @@ import classes from "./ProfileInfo.module.css";
 import {useDispatch, useSelector} from "react-redux";
 import {saveProfile} from "../../../redux/profilePageReducer";
 import {RootReduxState} from "../../../redux/reduxStore";
-import {current} from "@reduxjs/toolkit";
 
 
 export const ProfileDataForm = (props: ProfileDataType) => {
@@ -34,7 +33,6 @@ export const ProfileDataForm = (props: ProfileDataType) => {
         },
         onSubmit: values => {
             dispatch(saveProfile(values))
-            console.log(JSON.stringify(values, null, 2));
             formik.resetForm();
             props.toggleEditMode()
         }
@@ -69,8 +67,6 @@ export const ProfileDataForm = (props: ProfileDataType) => {
         })}
 
         </div>
-
-        {/*{formik.errors ? <div style={{color: 'red'}}>{formik.errors}</div> : null}*/}
 
         {props.isOwner && <div>
             <button type="submit">Confirm edits</button>
