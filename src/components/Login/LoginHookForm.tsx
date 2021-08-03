@@ -42,6 +42,7 @@ const LoginForm = (props: ForLoginPropsType) => {
         },
 
         onSubmit: values => {
+            debugger
         dispatch(login(values.email, values.password, values.rememberMe, values.captcha));
         formik.resetForm();
     }
@@ -69,7 +70,7 @@ const LoginForm = (props: ForLoginPropsType) => {
         </div>
         <div>
             {props.captchaUrl && <img src={props.captchaUrl}/>}
-            {props.captchaUrl && <input type={'text'} placeholder={'Symbols from image'} name={'captcha'}/>}
+            {props.captchaUrl && <input type={'text'} placeholder={'Symbols from image'} name={'captcha'} onChange={formik.handleChange}/>}
         </div>
         <button type="submit">Yes</button>
 

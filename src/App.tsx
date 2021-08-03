@@ -1,11 +1,10 @@
 import React from 'react';
 import './App.css';
 import Navbar from "./components/NavBar/Navbar";
-import {HashRouter, Route} from "react-router-dom";
+import {BrowserRouter, HashRouter, Redirect, Route, Switch} from "react-router-dom";
 import Settings from "./components/Settings/Settings";
 import Music from "./components/Music/Music";
 import News from "./components/News/News";
-import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/LoginHookForm";
@@ -26,6 +25,7 @@ export type authOwnPropsType = {
 }
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
+const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
 
 
 class App extends React.Component<authOwnPropsType & mapStateToPropsType> {
@@ -40,24 +40,32 @@ class App extends React.Component<authOwnPropsType & mapStateToPropsType> {
             return <Preloader/>
         }
         return (
-            <HashRouter basename={process.env.PUBLIC_URL}>
+            <BrowserRouter basename={process.env.PUBLIC_URL}>
                 <div className='app-wrapper'>
                     <HeaderContainer/>
                     <Navbar/>
                     <div className='app-wrapper-content'>
-                        <Route path='/dialogs' render={withSuspense(DialogsContainer)}/>
-                        <Route path='/profile/:userId?' render={
-                            () => <ProfileContainer/>}/>
-                        <Route path='/users' render={
-                            () => <UsersContainer/>}/>
-                        <Route path='/login' render={
-                            () => <Login/>}/>
-                        <Route path='/news' component={News}/>
-                        <Route path='/music' component={Music}/>
-                        <Route path='/settings' component={Settings}/>
+                        <Switch>
+
+                            <Route exact path='/' render={() => <Redirect to={'/profile'}/>}/>
+
+                            <Route path='/dialogs' render={withSuspense(DialogsContainer)}/>
+
+                            <Route path='/profile/:userId?' render={
+                                () => <ProfileContainer/>}/>
+
+                            <Route path='/users' render={withSuspense(UsersContainer)}/>
+
+                            <Route path='/login' render={
+                                () => <Login/>}/>
+
+                            <Route path='/news' component={News}/>
+                            <Route path='/music' component={Music}/>
+                            <Route path='/settings' component={Settings}/>
+                        </Switch>
                     </div>
                 </div>
-            </HashRouter>);
+            </BrowserRouter>);
     }
 }
 
@@ -65,10 +73,10 @@ const mapStateToProps = (state: RootReduxState): mapStateToPropsType => ({
     initialized: state.initialization.initialized
 })
 
-let AppContainer = compose(
+const AppContainer = compose(
     connect(mapStateToProps, {initializeApp}))(App);
 
-let MainApp = () => {
+const MainApp = () => {
     return <Provider store={store}>
         <AppContainer/>
     </Provider>

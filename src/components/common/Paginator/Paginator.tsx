@@ -35,14 +35,7 @@ export const Paginator: FC<UsersPageType> = ({currentPage,
                 return <span key={p} className={(currentPage === p) ? styles.selectedPage : styles.pageNumber}
                              onClick={() => {onPageChanged(p)}}>{p}</span>
             })}
-        {/*<div>*/}
-        {/*    {pages.map(p => {*/}
-        {/*        return <span key={p} className={(currentPage === p) ? styles.selectedPage : ''}*/}
-        {/*                     onClick={() => {*/}
-        {/*                         onPageChanged(p)*/}
-        {/*                     }}>{p}</span>*/}
-        {/*    })}*/}
-        {/*</div>*/}
+
         { portionCount > portionNumber &&
         <button onClick={() => setPortionNumber(portionNumber + 1) }>next</button>}
     </div>

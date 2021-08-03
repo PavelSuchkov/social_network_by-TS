@@ -70,4 +70,4 @@ const mapStateToProps = (state: RootReduxState) => ({
     captchaUrl: state.authorization.captchaUrl
 })
 
-// export default connect(mapStateToProps, {login}) (Login)
+export default connect(mapStateToProps, {login}) (Login)
