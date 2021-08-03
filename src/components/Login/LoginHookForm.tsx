@@ -8,6 +8,11 @@ import {useFormik} from "formik";
 type ForLoginPropsType = {
     captchaUrl: string | undefined | null
 }
+type FormikErrorType = {
+    email?: string
+    password?: string
+    rememberMe?: boolean
+}
 
 const LoginForm = (props: ForLoginPropsType) => {
 
@@ -17,27 +22,50 @@ const LoginForm = (props: ForLoginPropsType) => {
         initialValues: {
             email: '',
             password: '',
-            checkbox: true,
+            rememberMe: true,
             captcha: ''
+        },
+        validate: (values) => {
+            const errors: FormikErrorType = {};
+            if (!values.email) {
+                errors.email = 'Required';
+            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+                errors.email = 'Invalid email address';
+            }
+
+            if (!values.password) {
+                errors.password = 'password Required';
+            } else if (values.password.length < 3) {
+                errors.password = 'Must be more then 2 chars';
+            }
+            return errors;
         },
 
         onSubmit: values => {
-        dispatch(login(values.email, values.password, values.checkbox, values.captcha));
+        dispatch(login(values.email, values.password, values.rememberMe, values.captcha));
         formik.resetForm();
     }
 
 })
-
-    return <form onSubmit={formik.handleSubmit}>
-
+    return <form onSubmit={formik.handleSubmit} name={'login'}>
         <div>
-            <input type={'text'} placeholder={'Email'} name={'email'} onChange={formik.handleChange}/>
+            <input type={'text'} placeholder={'Email'} name={'email'}
+                   onChange={formik.handleChange} onBlur={formik.handleBlur}/>
+            {
+                formik.touched.email && formik.errors.email
+                    ? <div style={{'color': 'red'}}>{formik.errors.email}</div> : null
+            }
         </div>
         <div>
-            <input placeholder={'Password'} name={'password'} type={'password'} onChange={formik.handleChange}/>
+            <input placeholder={'Password'} name={'password'} type={'password'}
+                   onChange={formik.handleChange} onBlur={formik.handleBlur}/>
+            {
+                formik.touched.password && formik.errors.password
+                    ? <div style={{'color': 'red'}}>{formik.errors.password}</div> : null
+            }
         </div>
         <div>
-            <input name={'rememberMe'} type={'checkbox'} onChange={formik.handleChange}/> Remember me
+            <input name={'rememberMe'} type={'checkbox'} checked={formik.values.rememberMe} onChange={formik.handleChange}/> Remember me
         </div>
         <div>
             {props.captchaUrl && <img src={props.captchaUrl}/>}
@@ -56,7 +84,6 @@ type LoginProps = {
 }
 const Login = (props: LoginProps) => {
 
-
     if (props.isAuth) {
         return <Redirect to={'/profile'}/>
     }
@@ -64,7 +91,6 @@ const Login = (props: LoginProps) => {
     return <div>
         <h1>Login</h1>
         <LoginForm captchaUrl={props.captchaUrl}/>
-
     </div>
 }
 

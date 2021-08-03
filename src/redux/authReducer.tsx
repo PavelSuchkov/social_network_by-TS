@@ -70,8 +70,9 @@ export const getAuthUserData = () => async (dispatch: Dispatch) => {
 
 export type ThunkType = ThunkAction<void, RootReduxState, unknown, ActionsType>
 
-export const login = (email: string, password: string, rememberMe: boolean, captcha?: string)
+export const login = (email: string, password: string, rememberMe: boolean, captcha?: string )
     : ThunkType => async (dispatch) => {
+    debugger
     let response = await authAPI.login(email, password, rememberMe, captcha)
     if (response.data.resultCode === 0) {
         dispatch(getAuthUserData());
