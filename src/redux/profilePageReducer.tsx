@@ -2,11 +2,13 @@ import {profileAPI, usersAPI} from "../api/api";
 import {ThunkAction} from "redux-thunk";
 import {RootReduxState} from "./reduxStore";
 import {stopSubmit} from "redux-form";
+
 const ADD_POST = "profile/ADD-POST"
 const SET_USER_PROFILE = "profile/SET-USER-PROFILE"
 const SET_STATUS = "profile/SET-STATUS"
 const SAVE_PHOTO_SUCCESS = "profile/SAVE_PHOTO_SUCCESS"
 const SAVE_PROFILE_CONTACTS = "profile/SAVE_PROFILE_CONTACTS"
+const SET_ERROR = "profile/SET_ERROR"
 
 
 let initialState: InitialProfileStateType = {
@@ -19,13 +21,15 @@ let initialState: InitialProfileStateType = {
         {id: 1, message: 'Live Belarus!', likesCount: 345}
     ],
     profile: null,
-    status: 'My status'
+    status: 'My status',
+    error: null
 }
 
 export type InitialProfileStateType = {
     posts: Array<PostType>
     profile: ProfileResponseType | null
     status: string
+    error: string | null
 }
 
 export type PostType = {
@@ -86,7 +90,7 @@ const profilePageReducer = (state: InitialProfileStateType = initialState, actio
             }
             return {
                 ...state,
-                posts: [ newPost, ...state.posts]
+                posts: [newPost, ...state.posts]
             }
         }
 
@@ -112,13 +116,19 @@ const profilePageReducer = (state: InitialProfileStateType = initialState, actio
         }
 
         case SAVE_PROFILE_CONTACTS: {
-            debugger
             return {
                 ...state,
                 profile: action.profile,
                 contacts: action.profile.contacts
             }
         }
+        case SET_ERROR: {
+            return {
+                ...state,
+                error: action.error
+            }
+        }
+
 
         default:
             return state
@@ -130,6 +140,7 @@ type ActionsType =
     | ReturnType<typeof setStatus>
     | ReturnType<typeof savePhotoSuccess>
     | ReturnType<typeof saveProfileContactsSuccess>
+    | ReturnType<typeof setError>
 
 export const addPost = (newPostText: string) => {
     return {
@@ -164,6 +175,12 @@ export const saveProfileContactsSuccess = (profile: ProfileResponseType) => {
         profile
     } as const
 }
+export const setError = (error: string | null) => {
+    return {
+        type: SET_ERROR,
+        error
+    } as const
+}
 
 export type ThunkType = ThunkAction<void, RootReduxState, unknown, ActionsType>
 
@@ -181,27 +198,30 @@ export const getUserStatus = (userId: number): ThunkType =>
 
 export const updateUserStatus = (status: string): ThunkType =>
     async (dispatch) => {
-        let response = await profileAPI.updateStatus(status)
-            if (response.data.resultCode === 0) {
-                dispatch(setStatus(status));
-            }
-}
+        const response = await profileAPI.updateStatus(status)
+        if (response.data.resultCode === 0) {
+            dispatch(setStatus(status));
+            dispatch(setError(null));
+        } else {
+            // return Promise.reject(response.data.messages[0])
+                dispatch(setError(response.data.messages[0]));
+        }
+    }
 
 export const savePhoto = (file: File): ThunkType =>
     async (dispatch) => {
-    let response = await profileAPI.updatePhoto(file)
-    if(response.data.resultCode === 0){
-        debugger
-        dispatch(savePhotoSuccess(response.data.data.photos.large))
+        let response = await profileAPI.updatePhoto(file)
+        if (response.data.resultCode === 0) {
+            dispatch(savePhotoSuccess(response.data.data.photos.large))
+        }
     }
-}
 
 export const saveProfile = (profile: ProfileResponseType): ThunkType =>
 
     async (dispatch, getState) => {
-    const id =  getState().authorization.id
+        const id = getState().authorization.id
         let response = await profileAPI.updateProfile(profile);
-        if(response.data.resultCode === 0){
+        if (response.data.resultCode === 0) {
             let response = await usersAPI.getProfile(id)
             dispatch(setUserProfile(response.data));
         } else {

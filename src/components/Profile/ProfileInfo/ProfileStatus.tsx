@@ -1,4 +1,6 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
+import {useSelector} from "react-redux";
+import {RootReduxState} from "../../../redux/reduxStore";
 
 
 type StatusPropsType = {
@@ -10,6 +12,7 @@ export const ProfileStatus = (props: StatusPropsType) => {
 
     const [editMode, setEditMode] = useState<boolean>(false);
     const [status, setStatus] = useState<string>(props.status);
+    const errorText = useSelector<RootReduxState, string | null>( state => state.profilePage.error)
 
     useEffect( () => {
         setStatus(props.status)
@@ -39,6 +42,7 @@ export const ProfileStatus = (props: StatusPropsType) => {
                 Status:  <input value={status} onChange={onChange} autoFocus={true} onBlur={updateStatus}/>
             </div>
         }
+            {errorText? <span style={{'color': 'red'}}>{errorText}</span> : null}
         </div>
 
     )
