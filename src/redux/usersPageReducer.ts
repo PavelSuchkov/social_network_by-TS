@@ -143,7 +143,7 @@ export const requestUsers = (currentPage: number, pageSize: number): ThunkType =
     }
 }
 
-// const followUnfollowFlow = async (dispatch: any, id: number, apiMethod: (id: number) => any, actionCreator: (id: number) => any) => {
+// const followUnfollowFlow = async (dispatch: Dispatch, id: number, apiMethod: (id: number) => any, actionCreator: (id: number) => any) => {
 //     dispatch(toggleFollowingInProgress(true, id));
 //     const response = await apiMethod(id)
 //     if (response.data.resultCode === 0) {
