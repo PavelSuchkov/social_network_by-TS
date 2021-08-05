@@ -46,7 +46,6 @@ class App extends React.Component<authOwnPropsType & mapStateToPropsType> {
                     <Navbar/>
                     <div className='app-wrapper-content'>
                         <Switch>
-
                             <Route exact path='/' render={() => <Redirect to={'/profile'}/>}/>
 
                             <Route path='/dialogs' render={withSuspense(DialogsContainer)}/>
