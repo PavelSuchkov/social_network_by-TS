@@ -26,15 +26,15 @@ export type UserType = {
 
 const initialState = {
     users: [] as Array<UserType>,
-    pageSize: 50,
+    pageSize: 20,
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: true,
     followingInProgress: [] as Array<number> // Array of usersId
 }
-export type InitialType = typeof initialState
+export type UsersInitialType = typeof initialState
 
-export const UsersPageReducer = (state: InitialType = initialState, action: ActionsType): InitialType => {
+export const UsersPageReducer = (state: UsersInitialType = initialState, action: ActionsType): UsersInitialType => {
     switch (action.type) {
         case FOLLOW:
             return {

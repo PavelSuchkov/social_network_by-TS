@@ -20,7 +20,27 @@ let initialState: InitialProfileStateType = {
         {id: 1, message: 'London is a capital of great Britain', likesCount: 7},
         {id: 1, message: 'Live Belarus!', likesCount: 345}
     ],
-    profile: null,
+    profile: {
+        aboutMe: '',
+        contacts: {
+            facebook: '',
+            github: '',
+            instagram: '',
+            mainLink: '',
+            twitter: '',
+            vk: '',
+            website: '',
+            youtube: '',
+        },
+        fullName: '',
+        lookingForAJob: false,
+        lookingForAJobDescription: '',
+        photos: {
+            large: '',
+            small: '',
+        },
+        userId: 0
+    },
     status: 'My status',
     error: null
 }
@@ -30,6 +50,8 @@ export type InitialProfileStateType = {
     profile: ProfileResponseType | null
     status: string
     error: string | null
+    // contacts: ContactsType
+    // photos: PhotosType
 }
 
 export type PostType = {
@@ -54,8 +76,8 @@ export type ProfileResponseType = {
     lookingForAJob: boolean
     lookingForAJobDescription: string
     photos?: {
-        large: string
-        small: string
+        large?: string
+        small?: string
     }
     userId: number
 }
@@ -66,16 +88,23 @@ export type ProfileUpdateType = {
     lookingForAJob: boolean
     lookingForAJobDescription: string
     aboutMe: string
-    contacts: {
-        facebook: string | null
-        github: string | null
-        instagram: string | null
-        mainLink: string | null
-        twitter: string | null
-        vk: string | null
-        website: string | null
-        youtube: string | null
-    }
+    contacts: ContactsType
+    photos?: PhotosType
+}
+
+type ContactsType = {
+    facebook: string | null
+    github: string | null
+    instagram: string | null
+    mainLink: string | null
+    twitter: string | null
+    vk: string | null
+    website: string | null
+    youtube: string | null
+}
+type PhotosType = {
+    large?: string | null
+    small?: string | null
 }
 
 

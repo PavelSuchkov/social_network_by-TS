@@ -22,7 +22,6 @@ export const Users: FC<UsersPageType> = ({
                                              followingInProgress, follow, unFollow
                                          }) => {
 
-
     return <div>
 
         <Paginator totalItemsCount={totalUsersCount}
@@ -36,7 +35,6 @@ export const Users: FC<UsersPageType> = ({
                                  unFollow={unFollow}
                                  userPhoto={userPhoto}
                                  followingInProgress={followingInProgress}/>)
-
         }
     </div>
 

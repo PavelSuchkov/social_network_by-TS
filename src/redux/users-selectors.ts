@@ -1,6 +1,6 @@
 import {RootReduxState} from "./reduxStore";
 import {createSelector} from "reselect";
-import {InitialType, UserType} from "./usersPageReducer";
+import {UsersInitialType, UserType} from "./usersPageReducer";
 
 
 const getUsersSelector = (state: RootReduxState) => {
@@ -15,7 +15,7 @@ const getUserPageSelector = (state: RootReduxState) => {
     return state.usersPage;
 }
 
-export const getUsersPage = createSelector(getUserPageSelector, (usersPage: InitialType) => {
+export const getUsersPage = createSelector(getUserPageSelector, (usersPage: UsersInitialType) => {
     return usersPage
 })
 
@@ -40,6 +40,9 @@ export const getCurrentPage = (state: RootReduxState) => {
 export const getIsFetching = (state: RootReduxState) => {
     return state.usersPage.isFetching;
 }
+// export const getUserPhoto = (state: RootReduxState) => {
+//     return state.usersPage.users[0].photos;
+// }
 export const getFollowingInProgress = (state: RootReduxState) => {
     return state.usersPage.followingInProgress;
 }

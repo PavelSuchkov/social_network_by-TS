@@ -1,6 +1,6 @@
 import UsersPageReducer, {
     followSuccess,
-    InitialType,
+    UsersInitialType,
     setUsers,
     toggleIsFetching,
     unFollowSuccess,
@@ -17,7 +17,7 @@ import UsersPageReducer, {
 //     followingInProgress: [] as Array<number>
 // }
 
-let startState: InitialType;
+let startState: UsersInitialType;
 
 beforeEach(() => {
     startState = {

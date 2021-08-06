@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {
     follow,
     followSuccess,
-    InitialType,
+    UsersInitialType,
     requestUsers,
     setCurrentPage,
     unFollow,
@@ -28,7 +28,7 @@ import avatar from "./../../assets/images/avatar/avatar.png"
 
 type MSTPropsType = {
     users: Array<UserType>
-    userPage: InitialType
+    userPage: UsersInitialType
     pageSize: number
     totalUsersCount: number
     currentPage: 1 | number
@@ -43,6 +43,7 @@ type MDTPropsType = {
     requestUsers: (currentPage: number, pageSize: number) => void
     follow: (id: number) => void
     unFollow: (id: number) => void
+
 }
 
 export type UsersPropsType = MSTPropsType & MDTPropsType
@@ -87,12 +88,11 @@ const mapStateToProps = (state: RootReduxState): MSTPropsType => {
         totalUsersCount: getTotalUsersCount(state),
         currentPage: getCurrentPage(state),
         isFetching: getIsFetching(state),
-        followingInProgress: getFollowingInProgress(state)
+        followingInProgress: getFollowingInProgress(state),
     }
 }
 
 export default compose<React.ComponentType>(
-    (connect(mapStateToProps, {
-        followSuccess,unFollowSuccess, setCurrentPage, follow, unFollow, requestUsers})),
+    (connect/*<MSTPropsType, MDTPropsType, RootReduxState>*/(mapStateToProps, {setCurrentPage, follow, unFollow, requestUsers})),
     withAuthRedirect
 )(UsersContainer)
