@@ -1,6 +1,5 @@
-import {Dispatch} from "redux";
 import {ThunkAction} from "redux-thunk";
-import {authAPI, securityAPI} from "../api/api";
+import {authAPI, ResultCodesEnum, securityAPI} from "../api/api";
 import {RootReduxState} from "./reduxStore";
 import {stopSubmit} from "redux-form"
 
@@ -59,10 +58,10 @@ export const getCaptchaUrlSuccess = (captchaUrl: string) => {
 }
 
 
-export const getAuthUserData = () => async (dispatch: Dispatch) => {
-    let response = await authAPI.me()
-    if (response.data.resultCode === 0) {
-        let {id, email, login} = response.data.data
+export const getAuthUserData = (): ThunkType => async (dispatch) => {
+    let meData = await authAPI.me()
+    if (meData.resultCode === ResultCodesEnum.Success) {
+        let {id, email, login} = meData.data
         dispatch(setAuthUserData({id, email, login, isAuth: true}))
     }
 
@@ -70,18 +69,17 @@ export const getAuthUserData = () => async (dispatch: Dispatch) => {
 
 export type ThunkType = ThunkAction<void, RootReduxState, unknown, ActionsType>
 
-export const login = (email: string, password: string, rememberMe: boolean, captcha?: string )
-    : ThunkType => async (dispatch) => {
-  //  debugger
-    let response = await authAPI.login(email, password, rememberMe, captcha)
-    if (response.data.resultCode === 0) {
+export const login = (email: string, password: string, rememberMe: boolean, captcha?: string ): ThunkType =>
+    async (dispatch) => {
+    let loginData = await authAPI.login(email, password, rememberMe, captcha)
+    if (loginData.resultCode === ResultCodesEnum.Success) {
         dispatch(getAuthUserData());
     } else {
-        if (response.data.resultCode === 10) {
+        if (loginData.resultCode === ResultCodesEnum.CaptchaIsRequired) {
             dispatch(getCaptchaUrl());
         }
-        let message = response.data.messages.length > 0
-            ? response.data.messages[0]
+        let message = loginData.messages.length > 0
+            ? loginData.messages[0]
             : 'Some error'
         dispatch(stopSubmit("login", {_error: message}) as ActionsType);
     }

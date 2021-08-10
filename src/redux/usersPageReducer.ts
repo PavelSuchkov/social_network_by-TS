@@ -128,7 +128,8 @@ export const toggleFollowingInProgress = (isFetching: boolean, userId: number) =
     type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId
 } as const)
 
-export type ThunkType = ThunkAction<void, RootReduxState, unknown, ActionsType>
+export type ThunkType = ThunkAction<Promise<void>, RootReduxState, unknown, ActionsType>
+// export type ThunkType = ThunkAction<void, RootReduxState, unknown, ActionsType>
 
 
 export const requestUsers = (currentPage: number, pageSize: number): ThunkType => {
@@ -143,26 +144,28 @@ export const requestUsers = (currentPage: number, pageSize: number): ThunkType =
     }
 }
 
-// const followUnfollowFlow = async (dispatch: Dispatch, id: number, apiMethod: (id: number) => any, actionCreator: (id: number) => any) => {
-//     dispatch(toggleFollowingInProgress(true, id));
-//     const response = await apiMethod(id)
-//     if (response.data.resultCode === 0) {
-//         dispatch(actionCreator(id))
-//     }
-//     dispatch(toggleFollowingInProgress(false, id));
-// }
-//
-// export const follow1 = (id: number) => {
-//     return async (dispatch: Dispatch) => {
-//         followUnfollowFlow(dispatch, id, usersAPI.follow.bind(usersAPI), followSuccess)
-//     }
-// }
-//
-// export const unFollow1 = (id: number) => {
-//     return async (dispatch: Dispatch) => {
-//         followUnfollowFlow(dispatch, id, usersAPI.unFollow.bind(usersAPI), unFollowSuccess)
-//     }
-// }
+const followUnfollowFlow = async (dispatch: Dispatch, id: number,
+                                  apiMethod: (id: number) => any,
+                                  actionCreator: (id: number) => ActionsType) => {
+    dispatch(toggleFollowingInProgress(true, id));
+    const response = await apiMethod(id)
+    if (response.data.resultCode === 0) {
+        dispatch(actionCreator(id))
+    }
+    dispatch(toggleFollowingInProgress(false, id));
+}
+
+export const follow1 = (id: number) => {
+    return async (dispatch: Dispatch) => {
+        followUnfollowFlow(dispatch, id, usersAPI.follow.bind(usersAPI), followSuccess)
+    }
+}
+
+export const unFollow1 = (id: number) => {
+    return async (dispatch: Dispatch) => {
+        followUnfollowFlow(dispatch, id, usersAPI.unFollow.bind(usersAPI), unFollowSuccess)
+    }
+}
 
 export const follow = (id: number): ThunkType => {
     return async (dispatch) => {
