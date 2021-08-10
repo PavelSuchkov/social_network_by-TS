@@ -63,7 +63,7 @@ export const Input: React.FC<FormControlPropsType & WrappedFieldProps> =
     export const createField = (placeholder: string | undefined,
                                 name: string,
                                 validators: Array<Function> | undefined,
-                                component: string | React.Component | React.FC,
+                                component: React.FC<WrappedFieldProps>,
                                 props = {},
                                 text: string) => {
         return <div>
