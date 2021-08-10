@@ -1,5 +1,5 @@
 
-export const required = (value: string) => {
+export const required = (value: string): string | undefined => {
     if (value)  return undefined;
     return 'Field is required';
 }
