@@ -60,7 +60,7 @@ export const Input: React.FC<FormControlPropsType & WrappedFieldProps> =
         )
     }
 
-    export const createField = (placeholder: string,
+    export const createField = (placeholder: string | undefined,
                                 name: string,
                                 validators: Array<Function> | undefined,
                                 component: string | React.Component | React.FC,
@@ -69,7 +69,7 @@ export const Input: React.FC<FormControlPropsType & WrappedFieldProps> =
         return <div>
         <Field placeholder={placeholder}
                       name={name}
-                      validate={[validators]}
+                      validate={validators}
                       component={component}
                       {...props}/>
                         {text}
