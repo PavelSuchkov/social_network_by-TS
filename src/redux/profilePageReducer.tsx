@@ -247,7 +247,6 @@ export const savePhoto = (file: File): ThunkType =>
     }
 
 export const saveProfile = (profile: ProfileResponseType): ThunkType =>
-
     async (dispatch, getState) => {
         const id = getState().authorization.id
         let data = await profileAPI.updateProfile(profile);

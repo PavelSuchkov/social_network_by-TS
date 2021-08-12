@@ -11,6 +11,10 @@ type LoginResponseDataType = {
         userId: number
 }
 
+type GetCaptchaURLResponseType = {
+    url: string
+}
+
 export const authAPI = {
     me() {
         return instance.get<APIResponseType<MeResponseDataType>>(`auth/me`, {
@@ -27,6 +31,6 @@ export const authAPI = {
 }
 export const securityAPI = {
     getCaptchaUrl() {
-        return instance.get('security/get-captcha-url')
+        return instance.get<GetCaptchaURLResponseType>('security/get-captcha-url').then( res => res.data);
     }
 }
