@@ -4,12 +4,14 @@ import {RootReduxState} from "./reduxStore";
 
 const INITIALIZED_SUCCESS = 'app/INITIALIZED_SUCCESS';
 
-let initialState = {
+const initialState = {
     initialized: false
 }
-type ActionType = ReturnType<typeof initializedSuccess>
+export type InitialAppStateType = typeof initialState;
 
-export const appReducer = (state = initialState, action: ActionType) => {
+
+
+export const appReducer = (state: InitialAppStateType = initialState, action: ActionType): InitialAppStateType => {
 
     switch (action.type) {
 
@@ -22,6 +24,8 @@ export const appReducer = (state = initialState, action: ActionType) => {
         default: return state
     }
 }
+
+type ActionType = ReturnType<typeof initializedSuccess>
 
 export const initializedSuccess = () => ({type: INITIALIZED_SUCCESS}) as const;
 
