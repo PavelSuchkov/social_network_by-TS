@@ -40,10 +40,10 @@ const dialogsPageReducer = (state: DialogPageType = initialState, action: Action
     switch (action.type) {
 
         case SEND_MESSAGE:{
-            let body = action.newMessageBody;
+            // let body = action.newMessageBody;
             return  {
                 ...state,
-                messages: [...state.messages, {id: (state.messages.length), message: body}]
+                messages: [...state.messages, {id: new Date().getTime(), message: action.newMessageBody}]
             };
         }
         default:
