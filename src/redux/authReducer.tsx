@@ -1,7 +1,8 @@
 import {ThunkAction} from "redux-thunk";
-import {authAPI, ResultCodesEnum, securityAPI} from "../api/api";
+import {ResultCodesEnum} from "../api/api";
 import {RootReduxState} from "./reduxStore";
 import {stopSubmit} from "redux-form"
+import {authAPI, securityAPI} from "../api/auth-API";
 
 const SET_USER_DATA = 'auth/SET-USER-DATA';
 const GET_CAPTCHA_URL_SUCCESS = 'auth/GET-CAPTCHA-URL-SUCCESS';
