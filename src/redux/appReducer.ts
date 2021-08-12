@@ -10,7 +10,6 @@ const initialState = {
 export type InitialAppStateType = typeof initialState;
 
 
-
 export const appReducer = (state: InitialAppStateType = initialState, action: ActionType): InitialAppStateType => {
 
     switch (action.type) {
@@ -21,7 +20,8 @@ export const appReducer = (state: InitialAppStateType = initialState, action: Ac
                 initialized: true
             }
         }
-        default: return state
+        default:
+            return state
     }
 }
 
@@ -32,11 +32,11 @@ export const initializedSuccess = () => ({type: INITIALIZED_SUCCESS}) as const;
 export type ThunkType = ThunkAction<void, RootReduxState, unknown, ActionType>
 
 export const initializeApp = (): ThunkType =>
-   async (dispatch) => {
-       let response = await dispatch(getAuthUserData());
-                            dispatch(initializedSuccess())
+    async (dispatch) => {
+        await dispatch(getAuthUserData());
+              dispatch(initializedSuccess())
 
-}
+    }
 
 
 

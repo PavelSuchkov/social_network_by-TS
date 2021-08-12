@@ -24,7 +24,7 @@ export type initialStateSetUserType = {
     captchaUrl?: string | null
 }
 
-export const authReducer = (state: initialStateSetUserType = initialState, action: ActionsType) => {
+export const authReducer = (state: initialStateSetUserType = initialState, action: ActionsType): initialStateSetUserType => {
 
     switch (action.type) {
         case SET_USER_DATA:
@@ -86,15 +86,17 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
     }
 }
 
-export const getCaptchaUrl = (): ThunkType => async (dispatch) => {
+export const getCaptchaUrl = (): ThunkType =>
+    async (dispatch) => {
     const data = await securityAPI.getCaptchaUrl();
     const captchaUrl = data.url;
     dispatch(getCaptchaUrlSuccess(captchaUrl))
 }
 
-export const logout = (): ThunkType => async (dispatch) => {
+export const logout = (): ThunkType =>
+    async (dispatch) => {
     let response = await authAPI.logout()
-    if (response.data.resultCode === 0) {
+    if (response.data.resultCode === ResultCodesEnum.Success) {
         dispatch(setAuthUserData({id: 0, email: null, login: null, isAuth: false}))
     }
 }
