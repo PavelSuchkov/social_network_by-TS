@@ -170,8 +170,8 @@ export const requestUsers = (currentPage: number, pageSize: number): ThunkType =
 export const follow = (id: number): ThunkType => {
     return async (dispatch) => {
         dispatch(toggleFollowingInProgress(true, id));
-        let response = await usersAPI.follow(id)
-        if (response.resultCode === 0) {
+        let data = await usersAPI.follow(id)
+        if (data.resultCode === 0) {
             dispatch(followSuccess(id))
         }
         dispatch(toggleFollowingInProgress(false, id));

@@ -42,7 +42,7 @@ let initialState: InitialProfileStateType = {
         },
         userId: 0
     },
-    status: 'My status',
+    status: '',
     error: null
 }
 

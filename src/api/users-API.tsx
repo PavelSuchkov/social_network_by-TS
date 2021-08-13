@@ -3,6 +3,7 @@ import {profileAPI} from "./profile-API";
 
 
 export const usersAPI = {
+
     getUsers(currentPage: number, pageSize: number) {
         return instance.get<GetItemsType>(`users?page=${currentPage}&count=${pageSize}`).then(response => {
             return response.data;

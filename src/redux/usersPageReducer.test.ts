@@ -4,7 +4,6 @@ import UsersPageReducer, {
     setUsers,
     toggleIsFetching,
     unFollowSuccess,
-    UserType
 } from "./usersPageReducer";
 
 //
@@ -103,7 +102,7 @@ test('unfollow works correctly', () => {
 
 })
 
-test('Users was set ', () => {
+test('users was set', () => {
 
     startState = {
         users: [],
