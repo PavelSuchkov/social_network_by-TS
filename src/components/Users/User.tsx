@@ -16,7 +16,7 @@ export const User: FC<UserPageType> = ({user,  userPhoto, followingInProgress, f
 
 
     return (
-        <div>
+        <div className={styles.user}>
                 <span>
                     <div>
                        <NavLink to={'/profile/' + user.id}> <img className={styles.avatar}

@@ -5,7 +5,7 @@ import {APIResponseType, ResultCodesEnum} from "../api/api";
 jest.mock('../api/users-API');
 const usersAPIMock = usersAPI as jest.Mocked<typeof usersAPI>;
 
-const result: APIResponseType = {
+const result = {
     resultCode: ResultCodesEnum.Success,
     messages: [],
     data: {}
@@ -22,7 +22,7 @@ test('follow thunk test', async () => {
 
 
     await thunk(dispatchMock, getStateMock, {});
-    // expect(dispatchMock).toBeCalledTimes(3) // was called 3 times
-    expect(dispatchMock).toHaveBeenCalledWith(1, toggleFollowingInProgress(true, 1));
+    expect(dispatchMock).toBeCalledTimes(3) // was called 3 times
+    // expect(dispatchMock).toHaveBeenCalledWith(1, toggleFollowingInProgress(true, 1));
 
 })

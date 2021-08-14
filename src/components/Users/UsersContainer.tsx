@@ -8,7 +8,7 @@ import {
     setCurrentPage,
     unFollow,
     unFollowSuccess,
-    UserType
+    UserType, FilterType
 } from "../../redux/usersPageReducer";
 import {Users} from "./Users";
 import {Preloader} from "../common/Preloader/Preloader";
@@ -21,7 +21,7 @@ import {
     getIsFetching,
     getPageSize,
     getTotalUsersCount,
-    getUsers,
+    getUsers, getUsersFilter,
     getUsersPage
 } from "../../redux/users-selectors";
 import avatar from "./../../assets/images/avatar/avatar.png"
@@ -34,13 +34,14 @@ type MSTPropsType = {
     currentPage: 1 | number
     isFetching: boolean
     followingInProgress: Array<number>
+    filter: FilterType
 }
 
 type MDTPropsType = {
     followSuccess: (userId: number) => void
     unFollowSuccess: (userId: number) => void
     setCurrentPage: (currentPage: number) => void
-    requestUsers: (currentPage: number, pageSize: number) => void
+    requestUsers: (currentPage: number, pageSize: number, filter: FilterType) => void
     follow: (id: number) => void
     unFollow: (id: number) => void
 
@@ -52,11 +53,15 @@ export type UsersPropsType = MSTPropsType & MDTPropsType
 class UsersContainer extends React.Component<UsersPropsType> {
 
     componentDidMount() {
-        this.props.requestUsers(this.props.currentPage, this.props.pageSize)
+        this.props.requestUsers(this.props.currentPage, this.props.pageSize, this.props.filter)
     }
 
     onPageChanged = (pageNumber: number) => {
-        this.props.requestUsers(pageNumber, this.props.pageSize)
+        this.props.requestUsers(pageNumber, this.props.pageSize, this.props.filter)
+    }
+
+    onFilterChanged = (filter: FilterType) => {
+        this.props.requestUsers(1, this.props.pageSize, filter)
     }
 
     // userPhoto = "https://www.freeiconspng.com/uploads/smile-transparent-background-9.png";
@@ -74,6 +79,7 @@ class UsersContainer extends React.Component<UsersPropsType> {
                    onPageChanged={this.onPageChanged}
                    follow={this.props.follow}
                    unFollow={this.props.unFollow}
+                   onFilterChanged={this.onFilterChanged}
             />
         </>
     }
@@ -89,10 +95,16 @@ const mapStateToProps = (state: RootReduxState): MSTPropsType => {
         currentPage: getCurrentPage(state),
         isFetching: getIsFetching(state),
         followingInProgress: getFollowingInProgress(state),
+        filter: getUsersFilter(state)
     }
 }
 
 export default compose<React.ComponentType>(
-    (connect/*<MSTPropsType, MDTPropsType, RootReduxState>*/(mapStateToProps, {setCurrentPage, follow, unFollow, requestUsers})),
+    (connect/*<MSTPropsType, MDTPropsType, RootReduxState>*/(mapStateToProps, {
+        setCurrentPage,
+        follow,
+        unFollow,
+        requestUsers
+    })),
     withAuthRedirect
 )(UsersContainer)

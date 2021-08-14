@@ -7,9 +7,10 @@ const FOLLOW = 'users/FOLLOW';
 const UNFOLLOW = 'users/UNFOLLOW';
 const SET_USERS = 'users/SET-USERS';
 const SET_CURRENT_PAGE = 'users/SET-CURRENT-PAGE';
+const SET_FILTER = 'users/SET-FILTER';
 const SET_TOTAL_COUNT = 'users/SET-TOTAL-COUNT';
 const TOGGLE_IS_FETCHING = 'users/TOGGLE-ISFETCHING';
-const TOGGLE_IS_FOLLOWING_PROGRESS = 'users/TOGGLE_IS_FOLLOWING_PROGRESS ';
+const TOGGLE_IS_FOLLOWING_PROGRESS = 'users/TOGGLE_IS_FOLLOWING_PROGRESS';
 
 
 export type UserType = {
@@ -24,13 +25,19 @@ export type UserType = {
     status: string | null
 }
 
+export type FilterType = typeof initialState.filter
+
 const initialState = {
     users: [] as Array<UserType>,
     pageSize: 20,
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: true,
-    followingInProgress: [] as Array<number> // Array of usersId
+    followingInProgress: [] as Array<number>, // Array of usersId
+    filter: {
+        term: '',
+        friend: null as null | boolean
+    }
 }
 export type UsersInitialType = typeof initialState
 
@@ -63,6 +70,9 @@ export const UsersPageReducer = (state: UsersInitialType = initialState, action:
         case SET_CURRENT_PAGE:
             return {...state, currentPage: action.currentPage}
 
+        case SET_FILTER:
+            return {...state,  filter: action.payload}
+
         case SET_TOTAL_COUNT:
             return {...state, totalUsersCount: action.totalUsersCount}
 
@@ -87,6 +97,7 @@ type ActionsType =
     | ReturnType<typeof unFollowSuccess>
     | ReturnType<typeof setUsers>
     | ReturnType<typeof setCurrentPage>
+    | ReturnType<typeof setFilter>
     | ReturnType<typeof setTotalUsersCount>
     | ReturnType<typeof toggleIsFetching>
     | ReturnType<typeof toggleFollowingInProgress>
@@ -114,6 +125,13 @@ export const setCurrentPage = (currentPage: number) => {
     } as const
 }
 
+export const setFilter = (filter: FilterType) => {
+    return {
+        type: SET_FILTER,
+        payload: filter
+    } as const
+}
+
 export const setTotalUsersCount = (totalUsersCount: number) => ({
     type: SET_TOTAL_COUNT, totalUsersCount: totalUsersCount
 } as const)
@@ -132,11 +150,12 @@ export type ThunkType = ThunkAction<Promise<void>, RootReduxState, unknown, Acti
 // export type ThunkType = ThunkAction<void, RootReduxState, unknown, ActionsType>
 
 
-export const requestUsers = (currentPage: number, pageSize: number): ThunkType => {
+export const requestUsers = (currentPage: number, pageSize: number, filter: FilterType): ThunkType => {
     return async (dispatch) => {
         dispatch(toggleIsFetching(true));
         dispatch(setCurrentPage(currentPage));
-        let data = await usersAPI.getUsers(currentPage, pageSize)
+        dispatch(setFilter(filter));
+        let data = await usersAPI.getUsers(currentPage, pageSize, filter.term, filter.friend)
         dispatch(toggleIsFetching(false));
         dispatch(setUsers(data.items));
         dispatch(setTotalUsersCount(data.totalCount));

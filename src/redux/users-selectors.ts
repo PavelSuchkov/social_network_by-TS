@@ -46,4 +46,7 @@ export const getIsFetching = (state: RootReduxState) => {
 export const getFollowingInProgress = (state: RootReduxState) => {
     return state.usersPage.followingInProgress;
 }
+export const getUsersFilter = (state: RootReduxState) => {
+    return state.usersPage.filter;
+}
 
