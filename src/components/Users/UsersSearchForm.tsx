@@ -18,16 +18,13 @@ type SearchFormType = {
 
 export const UsersSearchForm: React.FC<PropsType> = React.memo((props) => {
 
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
     const submit = (values: SearchFormType, {setSubmitting}: { setSubmitting: (isSubmitting: boolean) => void }) => {
-
         const filter: FilterType = {
             term: values.term,
             friend: values.friend === "null" ? null : values.friend === "true"    // friend: values.friend === "null" ? null : values.friend === "true" ? true : false
-
         }
-
         props.onFilterChanged(filter);
         setSubmitting(false);
     }

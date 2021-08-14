@@ -3,30 +3,40 @@ import {FilterType, UserType} from "../../redux/usersPageReducer";
 import {Paginator} from "../common/Paginator/Paginator";
 import {User} from "./User";
 import {UsersSearchForm} from "./UsersSearchForm";
+import {useDispatch, useSelector} from "react-redux";
+import {
+    getCurrentPage,
+    getFollowingInProgress,
+    getPageSize,
+    getTotalUsersCount,
+    getUsers
+} from "../../redux/users-selectors";
+import {RootReduxState} from "../../redux/reduxStore";
 
 
 type UsersPageType = {
-    totalUsersCount: number
-    pageSize: number
-    currentPage: number
     onPageChanged: (pageNumber: number) => void // !!! includenly
-    users: Array<UserType>
     userPhoto: string
-    followingInProgress: Array<number>
     follow: (id: number) => void
     unFollow: (id: number) => void
     onFilterChanged: (filter: FilterType) => void
 }
 
-export const Users: FC<UsersPageType> = ({
-                                             totalUsersCount, pageSize,
-                                             currentPage, onPageChanged,
-                                             users, userPhoto,
-                                             followingInProgress, follow, unFollow, onFilterChanged
+export const Users: FC<UsersPageType> = ({   onPageChanged,
+                                            userPhoto,
+                                            follow, unFollow, onFilterChanged
                                          }) => {
 
-    return <div>
+    const totalUsersCount = useSelector(getTotalUsersCount);
+    const pageSize = useSelector(getPageSize);
+    const currentPage = useSelector(getCurrentPage);
+    const users = useSelector(getUsers);
+    const followingInProgress = useSelector(getFollowingInProgress);
+    // const userPhoto = useSelector<RootReduxState, string | null>(state => state.usersPage);
 
+    const dispatch = useDispatch();
+
+    return <div>
         <UsersSearchForm onFilterChanged={onFilterChanged}/>
         <Paginator totalItemsCount={totalUsersCount}
                    pageSize={pageSize}
