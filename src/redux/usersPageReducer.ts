@@ -186,7 +186,7 @@ export const requestUsers = (currentPage: number, pageSize: number, filter: Filt
 //     }
 // }
 
-export const follow = (id: number): ThunkType => {
+export const followTC = (id: number): ThunkType => {
     return async (dispatch) => {
         dispatch(toggleFollowingInProgress(true, id));
         let data = await usersAPI.follow(id)
@@ -196,7 +196,7 @@ export const follow = (id: number): ThunkType => {
         dispatch(toggleFollowingInProgress(false, id));
     }
 }
-export const unFollow = (id: number): ThunkType => {
+export const unFollowTC = (id: number): ThunkType => {
     return async (dispatch) => {
         dispatch(toggleFollowingInProgress(true, id));
         let response = await usersAPI.unFollow(id)

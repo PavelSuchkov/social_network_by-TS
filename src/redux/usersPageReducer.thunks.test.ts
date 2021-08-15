@@ -1,4 +1,4 @@
-import {follow, toggleFollowingInProgress} from "./usersPageReducer";
+import {followTC, toggleFollowingInProgress} from "./usersPageReducer";
 import {usersAPI} from "../api/users-API";
 import {APIResponseType, ResultCodesEnum} from "../api/api";
 
@@ -16,7 +16,7 @@ usersAPIMock.follow.mockReturnValue(Promise.resolve(result))
 
 test('follow thunk test', async () => {
 
-    const thunk = follow(1);
+    const thunk = followTC(1);
     const dispatchMock = jest.fn();
     const getStateMock = jest.fn();
 

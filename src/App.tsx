@@ -14,6 +14,7 @@ import {compose} from "redux";
 import {initializeApp} from "./redux/appReducer";
 import {Preloader} from './components/common/Preloader/Preloader';
 import {withSuspense} from "./hoc/WithSuspense";
+import {UsersPage} from "./components/Users/UsersPage";
 
 
 export type mapStateToPropsType = {
@@ -25,7 +26,7 @@ export type authOwnPropsType = {
 }
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
-const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
+// const UsersPage = React.lazy(() => import('./components/Users/UsersPage'));
 
 
 class App extends React.Component<authOwnPropsType & mapStateToPropsType> {
@@ -53,7 +54,7 @@ class App extends React.Component<authOwnPropsType & mapStateToPropsType> {
                             <Route path='/profile/:userId?' render={
                                 () => <ProfileContainer/>}/>
 
-                            <Route path='/users' render={withSuspense(UsersContainer)}/>
+                            <Route path='/users' render={() => <UsersPage pageTitle={'Samurai'}/>} />
 
                             <Route path='/login' render={
                                 () => <Login/>}/>
