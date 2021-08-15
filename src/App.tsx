@@ -7,7 +7,7 @@ import Music from "./components/Music/Music";
 import News from "./components/News/News";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
-import Login from "./components/Login/LoginHookForm";
+import {Login} from "./components/Login/LoginHookForm";
 import {connect, Provider} from "react-redux";
 import store, {RootReduxState} from "./redux/reduxStore";
 import {compose} from "redux";
@@ -51,13 +51,11 @@ class App extends React.Component<authOwnPropsType & mapStateToPropsType> {
 
                             <Route path='/dialogs' render={withSuspense(DialogsContainer)}/>
 
-                            <Route path='/profile/:userId?' render={
-                                () => <ProfileContainer/>}/>
+                            <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
 
                             <Route path='/users' render={() => <UsersPage pageTitle={'Samurai'}/>} />
 
-                            <Route path='/login' render={
-                                () => <Login/>}/>
+                            <Route path='/login' render={() => <Login/>}/>
 
                             <Route path='/news' component={News}/>
                             <Route path='/music' component={Music}/>

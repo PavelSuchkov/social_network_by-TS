@@ -1,5 +1,5 @@
 import React from "react";
-import {connect, useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {login} from "../../redux/authReducer";
 import {Redirect} from "react-router-dom";
 import {RootReduxState} from "../../redux/reduxStore";
@@ -42,12 +42,11 @@ const LoginForm = (props: ForLoginPropsType) => {
         },
 
         onSubmit: values => {
-            debugger
-        dispatch(login(values.email, values.password, values.rememberMe, values.captcha));
-        formik.resetForm();
-    }
+            dispatch(login(values.email, values.password, values.rememberMe, values.captcha));
+            formik.resetForm();
+        }
 
-})
+    })
     return <form onSubmit={formik.handleSubmit} name={'login'}>
         <div>
             <input type={'text'} placeholder={'Email'} name={'email'}
@@ -66,38 +65,30 @@ const LoginForm = (props: ForLoginPropsType) => {
             }
         </div>
         <div>
-            <input name={'rememberMe'} type={'checkbox'} checked={formik.values.rememberMe} onChange={formik.handleChange}/> Remember me
+            <input name={'rememberMe'} type={'checkbox'} checked={formik.values.rememberMe}
+                   onChange={formik.handleChange}/> Remember me
         </div>
         <div>
-            {props.captchaUrl && <img src={props.captchaUrl}/>}
-            {props.captchaUrl && <input type={'text'} placeholder={'Symbols from image'} name={'captcha'} onChange={formik.handleChange}/>}
+            {props.captchaUrl && <img src={props.captchaUrl} alt={'oops'}/>}
+            {props.captchaUrl &&
+            <input type={'text'} placeholder={'Symbols from image'} name={'captcha'} onChange={formik.handleChange}/>}
         </div>
         <button type="submit">Yes</button>
 
     </form>
 }
 
+export const Login = () => {
 
-type LoginProps = {
-    isAuth: boolean
-    login: (email: string, password: string, rememberMe: boolean, captcha?: string) => void
-    captchaUrl?: string | null | undefined
-}
-const Login = (props: LoginProps) => {
+    const isAuth = useSelector<RootReduxState>(state => state.authorization.isAuth);
+    const captchaUrl = useSelector((state: RootReduxState) => state.authorization.captchaUrl);
 
-    if (props.isAuth) {
+    if (isAuth) {
         return <Redirect to={'/profile'}/>
     }
 
     return <div>
         <h1>Login</h1>
-        <LoginForm captchaUrl={props.captchaUrl}/>
+        <LoginForm captchaUrl={captchaUrl}/>
     </div>
 }
-
-const mapStateToProps = (state: RootReduxState) => ({
-    isAuth: state.authorization.isAuth,
-    captchaUrl: state.authorization.captchaUrl
-})
-
-export default connect(mapStateToProps, {login})(Login)
