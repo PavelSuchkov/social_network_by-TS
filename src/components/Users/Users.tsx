@@ -65,6 +65,10 @@ export const Users: FC<UsersPageType> = ({}) => {
                                  userPhoto={userPhoto}
                                  followingInProgress={followingInProgress}/>)
         }
+        <Paginator totalItemsCount={totalUsersCount}
+                   pageSize={pageSize}
+                   currentPage={currentPage}
+                   onPageChanged={onPageChanged}/>
     </div>
 
 }
