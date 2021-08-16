@@ -40,12 +40,19 @@ type PropsType = MapDispatchPropsType & ProfileMapStateToPropsType & RouteCompon
 class ProfileContainer extends React.Component<PropsType> {
 
     refreshProfile() {
-        let userId = +this.props.match.params.userId;
+        let userId: number | null = +this.props.match.params.userId;
         if (!userId) {
-            userId = this.props.authorizedUserId ? this.props.authorizedUserId : 2;
+            userId = this.props.authorizedUserId /*? this.props.authorizedUserId : 2*/;
+            if(!userId){
+                this.props.history.push('/login')
+            }
         }
-        this.props.getUserProfile(userId);
-        this.props.getUserStatus(userId)
+        if(!userId){
+            console.error('error was done')
+        } else {
+            this.props.getUserProfile(userId);
+            this.props.getUserStatus(userId)
+        }
     }
 
     componentDidMount() {
