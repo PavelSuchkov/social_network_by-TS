@@ -26,14 +26,10 @@ export const User: FC<UserPageType> = ({user,  userPhoto, followingInProgress, f
                     <div>
                         {user.followed ?
                             <button disabled={followingInProgress.some(id => id === user.id)}
-                                    onClick={() => {
-                                        unFollow(user.id)
-                                    }}>UnFollow</button>
+                                    onClick={() => {unFollow(user.id)}}>UnFollow</button>
 
                             : <button disabled={followingInProgress.some(id => id === user.id)}
-                                      onClick={() => {
-                                          follow(user.id)
-                                      }}>Follow</button>}
+                                      onClick={() => {follow(user.id)}}>Follow</button>}
                     </div>
                 </span>
             <span>
