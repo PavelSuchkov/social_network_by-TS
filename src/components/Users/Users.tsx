@@ -30,7 +30,6 @@ export const Users: FC<UsersPageType> = ({}) => {
     const filter = useSelector(getUsersFilter);
     const users = useSelector(getUsers);
     const followingInProgress = useSelector(getFollowingInProgress);
-    // const userPhoto = useSelector<RootReduxState, string | null>(state => state.usersPage);
 
     const dispatch = useDispatch();
 

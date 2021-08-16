@@ -1,5 +1,4 @@
 import {Field, Form, Formik, FormikValues} from "formik";
-import {useDispatch} from "react-redux";
 import React from "react";
 import {FilterType} from "../../redux/usersPageReducer";
 
@@ -18,8 +17,6 @@ type SearchFormType = {
 
 export const UsersSearchForm: React.FC<PropsType> = React.memo((props) => {
 
-    // const dispatch = useDispatch();
-
     const submit = (values: SearchFormType, {setSubmitting}: { setSubmitting: (isSubmitting: boolean) => void }) => {
         const filter: FilterType = {
             term: values.term,
@@ -34,7 +31,6 @@ export const UsersSearchForm: React.FC<PropsType> = React.memo((props) => {
             initialValues={{term: '', friend: "null"}}
             validate={usersSearchFormValidate}
             onSubmit={submit}
-
         >
             {({isSubmitting}) => (
                 <Form>
