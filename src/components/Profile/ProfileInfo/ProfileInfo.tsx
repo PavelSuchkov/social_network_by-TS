@@ -41,15 +41,21 @@ const ProfileInfo = (props: profileInfoPropsType) => {
     return (
         <div>
             <div className={classes.descriptionBlock}>
-                {props.profile.photos?.large ? <img src={props.profile.photos.large || avatar} className={classes.mainPhoto}/> : avatar }
-
-                {props.isOwner && <input type={'file'} onChange={(e) => {
-                    e.currentTarget.value.length !== 0 && onMainPhotoSelected(e)
-                }}/>}
-                {editMode ? <ProfileDataForm profile={props.profile} isOwner={props.isOwner} onMainPhotoSelected={onMainPhotoSelected}
+                <div>
+                    {props.profile.photos?.large ?
+                        <img src={props.profile.photos.large || avatar} className={classes.mainPhoto}/> : avatar}
+                </div>
+                <div>
+                    {props.isOwner && <input type={'file'} onChange={(e) => {
+                        e.currentTarget.value.length !== 0 && onMainPhotoSelected(e)
+                    }}/>}
+                </div>
+                {editMode ? <ProfileDataForm profile={props.profile} isOwner={props.isOwner}
+                                             onMainPhotoSelected={onMainPhotoSelected}
                                              editMode={editMode} toggleEditMode={toggleEditMode}/>
-                : <ProfileData profile={props.profile} isOwner={props.isOwner} onMainPhotoSelected={onMainPhotoSelected}
-                               editMode={editMode} toggleEditMode={toggleEditMode}/>}
+                    : <ProfileData profile={props.profile} isOwner={props.isOwner}
+                                   onMainPhotoSelected={onMainPhotoSelected}
+                                   editMode={editMode} toggleEditMode={toggleEditMode}/>}
 
                 <ProfileStatus status={props.status} updateUserStatus={props.updateUserStatus}/>
             </div>
@@ -81,7 +87,8 @@ const ProfileData = (props: ProfileDataType) => {
             </div>
             <div>
                 Contacts: {props.profile.contacts && Object.keys(props.profile.contacts).map(key => {
-                return <Contact key={key} contactTitle={key} contactValue={props.profile.contacts[key as keyof ContactType]}/>
+                return <Contact key={key} contactTitle={key}
+                                contactValue={props.profile.contacts[key as keyof ContactType]}/>
             })}
             </div>
             {props.isOwner && <button onClick={props.toggleEditMode}>Edit</button>}
@@ -108,6 +115,7 @@ export type ContactType = {
 }
 
 export const Contact = (contacts: ContactsType) => {
-    return <div className={classes.contact}><b>{contacts.contactTitle}</b>: <a href={contacts.contactValue}>{contacts.contactValue}</a></div>
+    return <div className={classes.contact}><b>{contacts.contactTitle}</b>: <a
+        href={contacts.contactValue}>{contacts.contactValue}</a></div>
 }
 export default ProfileInfo;

@@ -11,13 +11,13 @@ import {Preloader} from './components/common/Preloader/Preloader';
 import {withSuspense} from "./hoc/WithSuspense";
 import {UsersPage} from "./components/Users/UsersPage";
 import 'antd/dist/antd.css';
-
 import {Breadcrumb, Layout, Menu} from 'antd';
 import {LaptopOutlined, UserOutlined} from '@ant-design/icons';
 import {Header} from "./components/Header/Header";
 
 const { SubMenu } = Menu;
 const {Content, Footer, Sider } = Layout;
+
 
 
 
@@ -31,6 +31,7 @@ export type authOwnPropsType = {
 }
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
+const ChatPage = React.lazy(() => import('./pages/chat/ChatPage'));
 // const UsersPage = React.lazy(() => import('./components/Users/UsersPage'));
 
 
@@ -71,7 +72,10 @@ class App extends React.Component<authOwnPropsType & mapStateToPropsType> {
                                         <Menu.Item key="4"><Link to="/login" >Login</Link></Menu.Item>
                                     </SubMenu>
                                     <SubMenu key="sub2" icon={<LaptopOutlined />} title="Developers">
-                                        <Menu.Item key="5"><Menu.Item key="2"><Link to="/developers" >Developers</Link></Menu.Item></Menu.Item>
+                                        <Menu.Item key="5"><Menu.Item key="1"><Link to="/developers" >Developers</Link></Menu.Item></Menu.Item>
+                                    </SubMenu>
+                                    <SubMenu key="sub3" icon={<LaptopOutlined />} title="Chat">
+                                        <Menu.Item key="6"><Menu.Item key="1"><Link to="/Chat" >Chat</Link></Menu.Item></Menu.Item>
                                     </SubMenu>
 
                                 </Menu>
@@ -88,8 +92,9 @@ class App extends React.Component<authOwnPropsType & mapStateToPropsType> {
 
                                     <Route path='/login' render={() => <Login/>}/>
 
-                                    <Route path='*' render={() => <div>
-                                        404 not found</div>}/>
+                                    <Route path='/chat' render={withSuspense(ChatPage)}/>
+
+                                    <Route path='*' render={() => <div>404 not found</div>}/>
                                 </Switch>
                             </Content>
                         </Layout>
