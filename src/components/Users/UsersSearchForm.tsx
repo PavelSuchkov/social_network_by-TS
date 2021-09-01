@@ -37,6 +37,7 @@ export const UsersSearchForm: React.FC<PropsType> = React.memo((props) => {
             initialValues={{term: filter.term, friend: String(filter.friend) as FriendFormType}}
             validate={usersSearchFormValidate}
             onSubmit={submit}
+
         >
             {({isSubmitting}) => (
                 <Form>
