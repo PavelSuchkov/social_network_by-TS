@@ -19,9 +19,6 @@ const { SubMenu } = Menu;
 const {Content, Footer, Sider } = Layout;
 
 
-
-
-
 export type mapStateToPropsType = {
     initialized: boolean
 }
