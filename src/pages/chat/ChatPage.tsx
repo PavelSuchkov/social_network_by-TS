@@ -3,7 +3,7 @@ import {Button, Input} from 'antd';
 
 const {TextArea} = Input;
 
-export type ChatMessageType = {
+ type ChatMessageType = {
     message: string
     photo: string
     userId: number
@@ -12,7 +12,6 @@ export type ChatMessageType = {
 
 
 const ChatPage: React.FC = () => {
-
 
     return (
         <div>
