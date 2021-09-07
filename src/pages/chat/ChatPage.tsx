@@ -18,7 +18,7 @@ const ChatPage: React.FC = () => {
 }
 
 const Chat: React.FC = () => {
-
+    const status = useSelector((state: RootReduxState) => state.chat.status);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -30,14 +30,16 @@ const Chat: React.FC = () => {
 
 
     return <div>
-        <Messages />
-        <AddMessageForm />
+        {status === 'error' ? <div>Error. Please refresh the page</div>
+            : <><Messages/>
+                <AddMessageForm/>
+            </>}
     </div>
 }
 
 const Messages: React.FC<{}> = ({}) => {
 
-   const messages = useSelector((state: RootReduxState) => state.chat.messages)
+    const messages = useSelector((state: RootReduxState) => state.chat.messages)
 
 
     return <div style={{height: '300px', overflowY: 'auto'}}>
@@ -48,7 +50,8 @@ const Messages: React.FC<{}> = ({}) => {
 const Message: React.FC<{ message: ChatMessageType }> = ({message}) => {
 
     return <div>
-        <img src={message.photo} style={{width: '50px', borderRadius: '25px'}} alt={'avatar'}/> <b>{message.userName}</b>
+        <img src={message.photo} style={{width: '50px', borderRadius: '25px'}} alt={'avatar'}/>
+        <b>{message.userName}</b>
         <br/>
         {message.message}
         <hr/>
@@ -58,7 +61,7 @@ const Message: React.FC<{ message: ChatMessageType }> = ({message}) => {
 const AddMessageForm: React.FC<{}> = () => {
 
     const [message, setMessage] = useState('');
-    const [readyStatus, setReadyStatus] = useState<'pending' | 'ready'>('ready');
+    const status = useSelector((state: RootReduxState) => state.chat.status);
     const dispatch = useDispatch();
 
 
@@ -72,7 +75,7 @@ const AddMessageForm: React.FC<{}> = () => {
 
     return <div>
         <TextArea onChange={(e) => setMessage(e.currentTarget.value)} value={message}/>
-        <Button disabled={readyStatus !== 'ready'} type={'primary'}
+        <Button disabled={status !== 'ready'} type={'primary'}
                 onClick={sendMessageHandler}>Send</Button>
     </div>
 }
