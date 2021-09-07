@@ -39,7 +39,7 @@ const Chat: React.FC = () => {
     </div>
 }
 
-const Messages: React.FC<{}> = () => {
+const Messages: React.FC = () => {
 
     const messages = useSelector((state: RootReduxState) => state.chat.messages);
     const messagesAnchorRef = useRef<HTMLDivElement>(null);
@@ -61,7 +61,7 @@ const Messages: React.FC<{}> = () => {
     }
 
     return <div style={{height: '300px', overflowY: 'auto'}} onScroll={scrollHandler}>
-        {messages.map((m, index) => <Message key={m.id} message={m}/>)}
+        {messages.map((m) => <Message key={m.id} message={m}/>)}
         <div ref={messagesAnchorRef}/>
     </div>
 }
@@ -77,7 +77,7 @@ const Message: React.FC<{ message: ChatMessageAPIType }> = React.memo(({message}
     </div>
 })
 
-const AddMessageForm: React.FC<{}> = () => {
+const AddMessageForm: React.FC = () => {
 
     const [message, setMessage] = useState('');
     const status = useSelector((state: RootReduxState) => state.chat.status);
